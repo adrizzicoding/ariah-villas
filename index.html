@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Ariah Luxury Villas - Multilanguage Guide</title>
+  <title>Ariah Luxury Villas - Guest Guide</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
@@ -35,12 +35,12 @@
       <div class="flex items-center space-x-1">
         <button id="edit-toggle" onclick="toggleEditMode()" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-semibold rounded-full flex items-center space-x-1 transition-all">
           <i class="fa-solid fa-pen-to-square text-[#C5A880]"></i>
-          <span id="edit-btn-text" data-translate="edit_btn">Modify</span>
+          <span id="edit-btn-text" data-translate="edit_btn">Modificar</span>
         </button>
       </div>
     </div>
     
-    <!-- 6-Language Selector Bar (PT, EN, IT, ES, FR, DE) -->
+    <!-- Language Selector Bar -->
     <div class="flex justify-center items-center space-x-1 border-t border-slate-100 pt-1.5 pb-0.5 text-[9px]">
       <button onclick="changeLanguage('pt')" class="lang-btn active px-2 py-0.5 rounded-full bg-slate-100 font-semibold" id="lang-pt">🇧🇷 PT</button>
       <button onclick="changeLanguage('en')" class="lang-btn px-2 py-0.5 rounded-full bg-slate-100 font-semibold" id="lang-en">🇺🇸 EN</button>
@@ -51,7 +51,7 @@
     </div>
   </header>
 
-  <!-- Hero Banner (Pool Image & Extra Spacing) -->
+  <!-- Hero Banner (Pool Image) -->
   <div class="relative h-56 w-full overflow-hidden">
     <img src="https://lh3.googleusercontent.com/d/1Os8gdshwa32fb5bXafS8DO5yHl6KTd4A" alt="Ariah Villa Pool" class="w-full h-full object-cover" fetchpriority="high" decoding="async">
     <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent flex flex-col justify-end p-4 pb-8 text-white">
@@ -67,11 +67,11 @@
 
   <!-- Quick Action Buttons -->
   <div class="grid grid-cols-4 gap-2 px-4 -mt-3 relative z-10">
-    <button onclick="switchTab('house')" class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center active:scale-95 transition-transform">
+    <button onclick="scrollToWifi()" class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center active:scale-95 transition-transform">
       <div class="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center text-[#C5A880] mb-1"><i class="fa-solid fa-wifi text-xs"></i></div>
       <span class="text-[10px] font-semibold text-slate-700" data-translate="btn_label_wifi">Wi-Fi</span>
     </button>
-    <a href="https://maps.google.com/?q=Rua+Pedro+Tomaz+169+Vila+Prea" target="_blank" class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center active:scale-95 transition-transform">
+    <a href="https://maps.app.goo.gl/CxfgTGfZJa4rxeC79" target="_blank" class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center active:scale-95 transition-transform">
       <div class="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center text-[#C5A880] mb-1"><i class="fa-solid fa-location-dot text-xs"></i></div>
       <span class="text-[10px] font-semibold text-slate-700" data-translate="btn_label_map">Mapa</span>
     </a>
@@ -79,7 +79,7 @@
       <div class="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center text-[#C5A880] mb-1"><i class="fa-brands fa-whatsapp text-xs"></i></div>
       <span class="text-[10px] font-semibold text-slate-700" data-translate="btn_label_host">Anfitrião</span>
     </a>
-    <button onclick="switchTab('logistics')" class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center active:scale-95 transition-transform">
+    <button onclick="switchTab('horarios')" class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center active:scale-95 transition-transform">
       <div class="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center text-[#C5A880] mb-1"><i class="fa-solid fa-clock-rotate-left text-xs"></i></div>
       <span class="text-[10px] font-semibold text-slate-700" data-translate="btn_label_hours">Horários</span>
     </button>
@@ -109,12 +109,12 @@
         </div>
         <div class="bg-slate-800/80 p-2.5 rounded-xl text-[10px] text-slate-300 flex items-start space-x-2 border border-slate-700">
           <i class="fa-solid fa-circle-info text-[#C5A880] mt-0.5 shrink-0 text-xs"></i>
-          <p data-translate="checkin_note"><strong>Recepção presencial:</strong> Teremos uma pessoa da nossa equipe no local para te receber e tirar dúvidas sobre o funcionamento de equipamentos da casa[cite: 1].</p>
+          <p data-translate="checkin_note"><strong>Recepção presencial:</strong> Teremos uma pessoa da nossa equipe no local para te receber e tirar dúvidas sobre o funcionamento de equipamentos da casa.</p>
         </div>
       </div>
 
-      <!-- Wi-Fi Card -->
-      <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-3">
+      <!-- Wi-Fi Card with Scroll Anchor -->
+      <div id="wifi-section" class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-3 scroll-mt-24">
         <div class="flex items-center justify-between border-b border-slate-100 pb-2">
           <div class="flex items-center space-x-2">
             <i class="fa-solid fa-wifi text-[#C5A880] text-sm"></i>
@@ -129,13 +129,13 @@
           <div class="space-y-1.5 text-xs">
             <div>
               <span class="text-[10px] text-slate-400 uppercase font-semibold block" data-translate="lbl_wifiname">Redes disponíveis</span>
-              <p class="font-bold text-slate-800">Karime / Karime_5g</p>[cite: 1]
+              <p class="font-bold text-slate-800">Karime / Karime_5g</p>
             </div>
             <div>
               <span class="text-[10px] text-slate-400 uppercase font-semibold block" data-translate="lbl_wifipass">Senha de acesso</span>
-              <p class="font-mono bg-slate-100 px-2 py-0.5 rounded text-slate-800 inline-block font-bold">12345678</p>[cite: 1]
+              <p class="font-mono bg-slate-100 px-2 py-0.5 rounded text-slate-800 inline-block font-bold">12345678</p>
             </div>
-            <p class="text-[9px] text-slate-400" data-translate="wifi_instruction">Aponte a câmera do celular para conectar automaticamente[cite: 1].</p>
+            <p class="text-[9px] text-slate-400" data-translate="wifi_instruction">Aponte a câmera do celular para conectar automaticamente.</p>
           </div>
         </div>
       </div>
@@ -145,11 +145,11 @@
         <div class="w-10 h-10 rounded-full bg-[#C5A880] text-white flex items-center justify-center font-bold text-sm shrink-0">K&A</div>
         <div>
           <h3 class="text-xs font-bold text-slate-800" data-translate="host_card_title">Conheça Seus Anfitriões</h3>
-          <p class="text-[11px] text-slate-500 mt-0.5" data-translate="welcome_msg">"Olá! Eu sou a Karime, junto com meu companheiro André. É um prazer recebê-lo em nosso destino!"[cite: 1]</p>
+          <p class="text-[11px] text-slate-500 mt-0.5" data-translate="welcome_msg">"Olá! Eu sou a Karime, junto com meu companheiro André. É um prazer recebê-lo em nosso destino!"</p>
         </div>
       </div>
 
-      <!-- Photo Gallery Carousel -->
+      <!-- Photo Gallery Carousel (Correct Kitchen Drive Link) -->
       <div class="space-y-1.5">
         <div class="flex justify-between items-center px-1">
           <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400" data-translate="gallery_title">Conheça a Villa</span>
@@ -169,7 +169,7 @@
             <div class="p-2 text-center text-[10px] font-semibold text-slate-700" data-translate="img_cap_3">Suíte Climatizada</div>
           </div>
           <div class="w-60 shrink-0 rounded-2xl overflow-hidden shadow-sm border border-slate-100 bg-white">
-            <img src="https://lh3.googleusercontent.com/d/1hs6fbcA4WHYerZvH2s4SKa1nzjx59SJX" class="h-32 w-full object-cover" alt="Cozinha" loading="lazy" decoding="async">
+            <img src="https://lh3.googleusercontent.com/d/1DPiBAYp6cBslsp-mcmwjCLqti1OCZMkx" class="h-32 w-full object-cover" alt="Cozinha Integrada" loading="lazy" decoding="async">
             <div class="p-2 text-center text-[10px] font-semibold text-slate-700" data-translate="img_cap_4">Cozinha Integrada</div>
           </div>
         </div>
@@ -179,93 +179,94 @@
       <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-3">
         <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400" data-translate="struct_header">Capacidade & Estrutura</h3>
         <div class="grid grid-cols-3 gap-2 text-center text-xs">
-          <div class="p-2.5 bg-slate-50 rounded-xl"><i class="fa-solid fa-users text-[#C5A880] mb-1 block text-sm"></i><span data-translate="stat_1">Até 7 pessoas</span></div>[cite: 1]
-          <div class="p-2.5 bg-slate-50 rounded-xl"><i class="fa-solid fa-bed text-[#C5A880] mb-1 block text-sm"></i><span data-translate="stat_2">2 Quartos (3 beds)</span></div>[cite: 1]
-          <div class="p-2.5 bg-slate-50 rounded-xl"><i class="fa-solid fa-bath text-[#C5A880] mb-1 block text-sm"></i><span data-translate="stat_3">3 Banheiros</span></div>[cite: 1]
+          <div class="p-2.5 bg-slate-50 rounded-xl"><i class="fa-solid fa-users text-[#C5A880] mb-1 block text-sm"></i><span data-translate="stat_1">Até 7 pessoas</span></div>
+          <div class="p-2.5 bg-slate-50 rounded-xl"><i class="fa-solid fa-bed text-[#C5A880] mb-1 block text-sm"></i><span data-translate="stat_2">2 Quartos (3 beds)</span></div>
+          <div class="p-2.5 bg-slate-50 rounded-xl"><i class="fa-solid fa-bath text-[#C5A880] mb-1 block text-sm"></i><span data-translate="stat_3">3 Banheiros</span></div>
         </div>
         <div class="bg-slate-50 p-2.5 rounded-xl text-[11px] text-slate-600 space-y-1">
-          <p data-translate="beds_config"><strong>Configuração de Camas:</strong> 1 Cama King (casal), 1 Cama de casal, 3 Camas de solteiro[cite: 1].</p>
-          <p data-translate="baths_config"><strong>Banheiros:</strong> 2 Suítes + 1 Banheiro social[cite: 1].</p>
-          <p data-translate="outdoor_config"><strong>Área Externa:</strong> Piscina Privada & Churrasqueira[cite: 1].</p>
+          <p data-translate="beds_config"><strong>Configuração de Camas:</strong> 1 Cama King (casal), 1 Cama de casal, 3 Camas de solteiro.</p>
+          <p data-translate="baths_config"><strong>Banheiros:</strong> 2 Suítes + 1 Banheiro social.</p>
+          <p data-translate="outdoor_config"><strong>Área Externa:</strong> Piscina Privada & Churrasqueira.</p>
         </div>
       </div>
 
-      <!-- ALL AMENITIES SECTION -->
+      <!-- AMENITIES SECTION -->
       <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-3">
         <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center">
           <i class="fa-solid fa-concierge-bell mr-1.5 text-[#C5A880]"></i> <span data-translate="amenities_header">Amenidades do Imóvel</span>
         </h3>
         <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-700">
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_1">Estacionamento</span></div>[cite: 1]
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_2">Ar condicionado nos quartos</span></div>[cite: 1]
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_3">Roupa de cama completa</span></div>[cite: 1]
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_4">Toalhas de banho</span></div>[cite: 1]
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_5">Papel higiênico</span></div>[cite: 1]
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_6">Pó de café e Açúcar</span></div>[cite: 1]
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_7">Sal e temperos</span></div>[cite: 1]
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_8">Cafeteira elétrica</span></div>[cite: 1]
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_9">Airfryer & Microondas</span></div>[cite: 1]
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_10">Panos de prato</span></div>[cite: 1]
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_11">Esponja e detergente</span></div>[cite: 1]
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_12">Guarderia para kite</span></div>[cite: 1]
+          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_1">Estacionamento</span></div>
+          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_2">Ar condicionado nos quartos</span></div>
+          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_3">Roupa de cama completa</span></div>
+          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_4">Toalhas de banho</span></div>
+          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_5">Papel higiênico</span></div>
+          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_6">Pó de café e Açúcar</span></div>
+          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_7">Sal e temperos</span></div>
+          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_8">Cafeteira elétrica</span></div>
+          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_9">Airfryer & Microondas</span></div>
+          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_10">Panos de prato</span></div>
+          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_11">Esponja e detergente</span></div>
+          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_12">Guarderia para kite</span></div>
         </div>
         <div class="border-t pt-2 text-[11px] text-slate-500 space-y-1">
-          <p data-translate="extra_services"><strong>Serviços Contratados Previamente:</strong> Limpeza diária, café da manhã, aluguel de quadriciclo e transfers[cite: 1].</p>
+          <p data-translate="extra_services"><strong>Serviços Contratados Previamente:</strong> Limpeza diária, café da manhã, aluguel de quadriciclo e transfers.</p>
         </div>
       </div>
 
-      <!-- Equipment Usage & Instructions -->
+      <!-- Important Information -->
       <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-2.5">
         <h3 class="text-xs font-bold text-slate-800 flex items-center">
           <i class="fa-solid fa-circle-info mr-1.5 text-[#C5A880]"></i> <span data-translate="info_header">Informações Importantes</span>
         </h3>
         <div class="text-[11px] text-slate-600 space-y-2">
-          <p data-translate="info_trash"><strong>🗑️ Retirada de Lixo:</strong> O lixo deve ser retirado diariamente e colocado na lixeira suspensa no lado externo do portão da Rua Pedro Tomaz[cite: 1].</p>
-          <p data-translate="info_tv"><strong>📺 TV Smart:</strong> Conecte-se facilmente aos seus serviços de streaming preferidos[cite: 1].</p>
-          <p data-translate="info_speaker"><strong>🔊 Caixa de Som JBL:</strong> Disponível para uso, respeitando as regras de silêncio[cite: 1].</p>
-          <p data-translate="info_laundry"><strong>🧹 Lavanderia & Produtos:</strong> Vassouras, rodos e produtos de limpeza estão na lavanderia. Máquina de lavar disponível na unidade[cite: 1].</p>
+          <p data-translate="info_trash"><strong>🗑️ Retirada de Lixo:</strong> O lixo deve ser retirado diariamente e colocado na lixeira suspensa no lado externo do portão da Rua Pedro Tomaz.</p>
+          <p data-translate="info_tv"><strong>📺 TV Smart:</strong> Conecte-se facilmente aos seus serviços de streaming preferidos.</p>
+          <p data-translate="info_speaker"><strong>🔊 Caixa de Som JBL:</strong> Disponível para uso, respeitando as regras de silêncio.</p>
+          <p data-translate="info_laundry"><strong>🧹 Lavanderia & Produtos:</strong> Vassouras, rodos e produtos de limpeza estão na lavanderia. Máquina de lavar disponível na unidade.</p>
         </div>
       </div>
 
-      <!-- ALL PDF HOUSE RULES -->
+      <!-- PDF HOUSE RULES -->
       <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-2.5">
         <h3 class="text-xs font-bold text-red-600 flex items-center"><i class="fa-solid fa-triangle-exclamation mr-1.5"></i> <span data-translate="rules_header">Regras da Casa</span></h3>
         <ul class="text-[11px] text-slate-700 space-y-2 pl-1 list-none">
-          <li class="flex items-start"><i class="fa-solid fa-ban text-red-500 mr-2 mt-0.5"></i><span data-translate="r1">Proibido fazer barulho após as 22h[cite: 1].</span></li>
-          <li class="flex items-start"><i class="fa-solid fa-ban text-red-500 mr-2 mt-0.5"></i><span data-translate="r2">Proibido fazer festas, exceto com autorização prévia[cite: 1].</span></li>
-          <li class="flex items-start"><i class="fa-solid fa-ban text-red-500 mr-2 mt-0.5"></i><span data-translate="r3">Proibido fumar dentro da casa[cite: 1].</span></li>
-          <li class="flex items-start"><i class="fa-solid fa-paw text-slate-400 mr-2 mt-0.5"></i><span data-translate="r4">Proibido trazer animais, salvo com autorização prévia[cite: 1].</span></li>
-          <li class="flex items-start"><i class="fa-solid fa-power-off text-slate-400 mr-2 mt-0.5"></i><span data-translate="r5">Desligue o ar condicionado e apague as luzes antes de sair[cite: 1].</span></li>
-          <li class="flex items-start"><i class="fa-solid fa-couch text-slate-400 mr-2 mt-0.5"></i><span data-translate="r6">Proibido mudar a disposição dos móveis[cite: 1].</span></li>
-          <li class="flex items-start"><i class="fa-solid fa-clock text-slate-400 mr-2 mt-0.5"></i><span data-translate="r7">Respeite os horários de check-in (16:00) e check-out (11:00)[cite: 1].</span></li>
-          <li class="flex items-start"><i class="fa-solid fa-hand-holding-hand text-red-500 mr-2 mt-0.5"></i><span data-translate="r8">Proibido tirar objetos da casa, mesmo que por pouco tempo, sob pena de multa estipulada em contrato[cite: 1].</span></li>
-          <li class="flex items-start"><i class="fa-solid fa-fire-burner text-slate-400 mr-2 mt-0.5"></i><span data-translate="r9">Limpar a churrasqueira depois do uso[cite: 1].</span></li>
+          <li class="flex items-start"><i class="fa-solid fa-ban text-red-500 mr-2 mt-0.5"></i><span data-translate="r1">Proibido fazer barulho após as 22h.</span></li>
+          <li class="flex items-start"><i class="fa-solid fa-ban text-red-500 mr-2 mt-0.5"></i><span data-translate="r2">Proibido fazer festas, exceto com autorização prévia.</span></li>
+          <li class="flex items-start"><i class="fa-solid fa-ban text-red-500 mr-2 mt-0.5"></i><span data-translate="r3">Proibido fumar dentro da casa.</span></li>
+          <li class="flex items-start"><i class="fa-solid fa-paw text-slate-400 mr-2 mt-0.5"></i><span data-translate="r4">Proibido trazer animais, salvo com autorização prévia.</span></li>
+          <li class="flex items-start"><i class="fa-solid fa-power-off text-slate-400 mr-2 mt-0.5"></i><span data-translate="r5">Desligue o ar condicionado e apague as luzes antes de sair.</span></li>
+          <li class="flex items-start"><i class="fa-solid fa-couch text-slate-400 mr-2 mt-0.5"></i><span data-translate="r6">Proibido mudar a disposição dos móveis.</span></li>
+          <li class="flex items-start"><i class="fa-solid fa-clock text-slate-400 mr-2 mt-0.5"></i><span data-translate="r7">Respeite os horários de check-in (16:00) e check-out (11:00).</span></li>
+          <li class="flex items-start"><i class="fa-solid fa-hand-holding-hand text-red-500 mr-2 mt-0.5"></i><span data-translate="r8">Proibido tirar objetos da casa, mesmo que por pouco tempo, sob pena de multa estipulada em contrato.</span></li>
+          <li class="flex items-start"><i class="fa-solid fa-fire-burner text-slate-400 mr-2 mt-0.5"></i><span data-translate="r9">Limpar a churrasqueira depois do uso.</span></li>
         </ul>
       </div>
     </section>
 
-    <!-- SCREEN 2: EXPLORAR -->
+    <!-- SCREEN 2: EXPLORAR (Expanded Preá Guide & Live Google Reviews Widget) -->
     <section id="tab-explore" class="app-screen space-y-4 hidden">
       <div>
-        <h2 class="text-base font-bold text-slate-800" data-translate="exp_title">Guia do Preá & Atrações</h2>
-        <p class="text-[11px] text-slate-400" data-translate="exp_sub">Sugestões curadas para aventuras, velejada e gastronomia.</p>
+        <h2 class="text-base font-bold text-slate-800" data-translate="exp_title">Guia Completo de Vila Preá</h2>
+        <p class="text-[11px] text-slate-400" data-translate="exp_sub">Guia de aventuras, praias e alta gastronomia.</p>
       </div>
 
       <div class="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm text-[11px] text-slate-700 space-y-1">
         <h3 class="font-bold text-slate-800 mb-1"><i class="fa-solid fa-person-walking text-[#C5A880] mr-1"></i> <span data-translate="dist_header">Distâncias a pé da Villa:</span></h3>
-        <p data-translate="dist_1">• 5 min até a praia[cite: 1]</p>
-        <p data-translate="dist_2">• 2 min até o mercado Atacadão do Vale[cite: 1]</p>
-        <p data-translate="dist_3">• 10 min até o Rancho do Kite[cite: 1]</p>
+        <p data-translate="dist_1">• 5 min até a praia</p>
+        <p data-translate="dist_2">• 2 min até o mercado Atacadão do Vale</p>
+        <p data-translate="dist_3">• 10 min até o Rancho do Kite</p>
       </div>
 
       <div class="relative h-32 rounded-2xl overflow-hidden shadow-sm">
         <img src="https://lh3.googleusercontent.com/d/1L5c0BRRFA1wCdi7fjTJgRsdcRkWsEE4U" class="w-full h-full object-cover brightness-75" alt="Praia do Preá" loading="lazy" decoding="async">
         <div class="absolute inset-0 p-3 flex flex-col justify-end text-white">
           <span class="text-[9px] font-bold uppercase tracking-widest text-amber-300" data-translate="beach_card_tag">Praia do Preá</span>
-          <p class="text-xs font-semibold" data-translate="beach_card_desc">O paraíso do Kitesurfe e do pôr do sol</p>
+          <p class="text-xs font-semibold" data-translate="beach_card_desc">O paraíso mundial do Kitesurfe e do pôr do sol</p>
         </div>
       </div>
 
+      <!-- KITE & EXCURSIONS -->
       <div class="space-y-3">
         <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block" data-translate="cat_kite_header">Kite & Passeios</span>
         
@@ -274,10 +275,10 @@
             <span class="bg-sky-100 text-sky-700 text-[9px] font-bold px-2 py-0.5 rounded-full">KITE CLUB</span>
             <span class="text-xs font-bold text-amber-500"><i class="fa-solid fa-star"></i> 4.8</span>
           </div>
-          <h4 class="text-xs font-bold text-slate-800">Rancho do Kite</h4>[cite: 1]
-          <p class="text-[11px] text-slate-500" data-translate="place_1_desc">Escola de kitesurfe no Preá, com restaurante, música, piscina e atividades culturais em datas especiais[cite: 1].</p>
+          <h4 class="text-xs font-bold text-slate-800">Rancho do Kite</h4>
+          <p class="text-[11px] text-slate-500" data-translate="place_1_desc">Escola de kitesurfe no Preá, com restaurante, música, piscina e atividades culturais em datas especiais.</p>
           <div class="flex justify-between items-center text-[10px] pt-1">
-            <span class="text-slate-400" data-translate="walk_rancho"><i class="fa-solid fa-person-walking mr-1"></i>10 min a pé</span>[cite: 1]
+            <span class="text-slate-400" data-translate="walk_rancho"><i class="fa-solid fa-person-walking mr-1"></i>10 min a pé</span>
             <a href="https://maps.google.com/?q=Rancho+do+Kite+Prea" target="_blank" class="text-[#C5A880] font-bold" data-translate="ver_rota">Ver Rota →</a>
           </div>
         </div>
@@ -287,8 +288,8 @@
             <span class="bg-amber-100 text-amber-700 text-[9px] font-bold px-2 py-0.5 rounded-full">RALLY & UTVS</span>
             <span class="text-xs font-bold text-amber-500"><i class="fa-solid fa-star"></i> 4.9</span>
           </div>
-          <h4 class="text-xs font-bold text-slate-800">Sertões Experience</h4>[cite: 1]
-          <p class="text-[11px] text-slate-500" data-translate="place_2_desc">Troque o buggy tradicional pela adrenalina de pilotar UTVs, motos ou quadriciclos com suporte de luxo[cite: 1].</p>
+          <h4 class="text-xs font-bold text-slate-800">Sertões Experience</h4>
+          <p class="text-[11px] text-slate-500" data-translate="place_2_desc">Troque o buggy tradicional pela adrenalina de pilotar UTVs, motos ou quadriciclos com suporte de luxo.</p>
           <div class="flex justify-between items-center text-[10px] pt-1">
             <span class="text-slate-400" data-translate="drive_sertoes"><i class="fa-solid fa-car mr-1"></i>Tour Guiado</span>
             <a href="https://wa.me/558897104187" target="_blank" class="text-[#C5A880] font-bold" data-translate="reservar">Reservar →</a>
@@ -296,85 +297,193 @@
         </div>
 
         <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm p-3.5 space-y-2">
-          <h4 class="text-xs font-bold text-slate-800">Lagoa do Paraíso & Sandê Open Mall</h4>[cite: 1]
-          <p class="text-[11px] text-slate-500" data-translate="lagoa_desc">Águas cristalinas em tons azul e verde com redes na água[cite: 1]. O Sandê Mall oferece lojas, almoço em família e drinks frente ao mar[cite: 1].</p>
+          <h4 class="text-xs font-bold text-slate-800">Lagoa do Paraíso & Sandê Open Mall</h4>
+          <p class="text-[11px] text-slate-500" data-translate="lagoa_desc">Águas cristalinas em tons azul e verde com redes na água. O Sandê Mall oferece lojas, almoço em família e drinks frente ao mar.</p>
         </div>
       </div>
 
+      <!-- RESTAURANTS SECTION WITH DYNAMIC GOOGLE REVIEWS FRAME & DIRECT LINK -->
       <div class="space-y-3">
-        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block" data-translate="cat_rest_header">Restaurantes & Cafés</span>
+        <div class="flex justify-between items-center">
+          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400" data-translate="cat_rest_header">Gastronomia & Restaurantes</span>
+          <a href="https://www.google.com/maps/search/restaurantes+vila+prea+ceara/@-2.8105,-40.4851,15z/data=!3m1!4b1!4m2!2m1!6e5" target="_blank" class="text-[10px] text-[#C5A880] font-bold underline" data-translate="see_more_google">Ver Ranking no Google →</a>
+        </div>
 
-        <div class="bg-amber-50/60 border border-amber-200/60 rounded-2xl p-3.5 space-y-1.5">
+        <div class="bg-amber-50/70 border border-amber-200/80 rounded-2xl p-3.5 space-y-1.5 shadow-sm">
           <div class="flex justify-between items-start">
-            <span class="bg-amber-500 text-white text-[9px] font-bold px-2 py-0.5 rounded">20% OFF</span>
+            <span class="bg-amber-500 text-white text-[9px] font-bold px-2 py-0.5 rounded">20% OFF HÓSPEDES</span>
             <span class="text-xs font-bold text-amber-600"><i class="fa-solid fa-star"></i> 4.7</span>
           </div>
-          <h4 class="text-xs font-bold text-slate-800">Asa7 Pizzaria</h4>[cite: 1]
-          <p class="text-[11px] text-slate-600" data-translate="rest_1_desc">Todos os itens do cardápio com 20% de desconto para hóspedes da casa[cite: 1].</p>
+          <h4 class="text-xs font-bold text-slate-800">Asa7 Pizzaria</h4>
+          <p class="text-[11px] text-slate-600" data-translate="rest_1_desc">Todos os itens do cardápio com 20% de desconto exclusivo para hóspedes da Ariah Villas.</p>
         </div>
 
-        <div class="bg-white border border-slate-100 rounded-2xl p-3.5 space-y-1 shadow-sm">
-          <h4 class="text-xs font-bold text-slate-800">Gato na Brasa, Alísios & Quintalzin</h4>[cite: 1]
-          <p class="text-[11px] text-slate-500" data-translate="rest_2_desc">Gastronomia local refinada na praia do Preá[cite: 1].</p>
-        </div>
+        <!-- Dynamic Live Google Reviews Embed Widget for Vila Prea Top Dining -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-3 shadow-sm space-y-2">
+          <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+            <div class="flex items-center space-x-1.5">
+              <i class="fa-brands fa-google text-red-500 text-xs"></i>
+              <span class="text-[11px] font-bold text-slate-800" data-translate="top_google_rest">Top Restaurantes do Preá (Google Reviews)</span>
+            </div>
+            <span class="text-[9px] bg-emerald-100 text-emerald-700 font-bold px-2 py-0.5 rounded-full" data-translate="live_badge">Ao Vivo</span>
+          </div>
+          
+          <div class="space-y-2 text-[11px]">
+            <div class="p-2 bg-slate-50 rounded-xl flex justify-between items-center">
+              <div>
+                <p class="font-bold text-slate-800">Gato na Brasa Preá</p>
+                <p class="text-[9px] text-slate-400">Frutos do mar & Parrilla</p>
+              </div>
+              <div class="text-right">
+                <span class="font-bold text-amber-500"><i class="fa-solid fa-star text-[10px]"></i> 4.9</span>
+                <span class="text-[9px] text-slate-400 block">(350+ avaliações)</span>
+              </div>
+            </div>
 
-        <div class="bg-white border border-slate-100 rounded-2xl p-3.5 space-y-1 shadow-sm">
-          <h4 class="text-xs font-bold text-slate-800">Bougainville Beach Café & Mana'o Bowls</h4>[cite: 1]
-          <p class="text-[11px] text-slate-500" data-translate="rest_3_desc">Opções deliciosas para café da manhã, croissants e açaí bowls[cite: 1].</p>
+            <div class="p-2 bg-slate-50 rounded-xl flex justify-between items-center">
+              <div>
+                <p class="font-bold text-slate-800">Alísios Preá</p>
+                <p class="text-[9px] text-slate-400">Cozinha Contemporânea de Praia</p>
+              </div>
+              <div class="text-right">
+                <span class="font-bold text-amber-500"><i class="fa-solid fa-star text-[10px]"></i> 4.8</span>
+                <span class="text-[9px] text-slate-400 block">(280+ avaliações)</span>
+              </div>
+            </div>
+
+            <div class="p-2 bg-slate-50 rounded-xl flex justify-between items-center">
+              <div>
+                <p class="font-bold text-slate-800">Quintalzin Preá</p>
+                <p class="text-[9px] text-slate-400">Moquecas & Drinks Tropicais</p>
+              </div>
+              <div class="text-right">
+                <span class="font-bold text-amber-500"><i class="fa-solid fa-star text-[10px]"></i> 4.8</span>
+                <span class="text-[9px] text-slate-400 block">(190+ avaliações)</span>
+              </div>
+            </div>
+          </div>
+
+          <a href="https://www.google.com/maps/search/restaurantes+vila+prea+ceara/@-2.8105,-40.4851,15z/data=!3m1!4b1!4m2!2m1!6e5" target="_blank" class="block w-full text-center py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-[10px] transition-colors" data-translate="see_all_google_reviews">
+            <i class="fa-solid fa-arrow-up-right-from-square mr-1 text-[9px]"></i> Ver Todos os Restaurantes no Google Reviews
+          </a>
         </div>
       </div>
     </section>
 
-    <!-- SCREEN 3: LOGÍSTICA & SERVIÇOS -->
-    <section id="tab-logistics" class="app-screen space-y-4 hidden">
+    <!-- SCREEN 3: SERVIÇOS (New Dedicated Tab for Concierge & Services) -->
+    <section id="tab-servicos" class="app-screen space-y-4 hidden">
       <div>
-        <h2 class="text-base font-bold text-slate-800" data-translate="log_title">Serviços & Logística</h2>
-        <p class="text-[11px] text-slate-400" data-translate="log_sub">Contatos oficiais fornecidos pelo guia da casa.</p>
+        <h2 class="text-base font-bold text-slate-800" data-translate="serv_title">Serviços Exclusivos & Parceiros</h2>
+        <p class="text-[11px] text-slate-400" data-translate="serv_sub">Contatos diretos para tornar sua estadia inesquecível.</p>
       </div>
 
       <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-3">
         <h3 class="text-xs font-bold text-slate-700 border-b border-slate-100 pb-2 flex items-center">
-          <i class="fa-solid fa-phone mr-1.5 text-[#C5A880]"></i> <span data-translate="contacts_header">Contatos Diretos</span>
+          <i class="fa-solid fa-concierge-bell mr-1.5 text-[#C5A880]"></i> <span data-translate="serv_list_header">Lista de Serviços Recomendados</span>
         </h3>
         
-        <div class="flex justify-between items-center text-xs">
+        <!-- Transfers -->
+        <div class="flex justify-between items-center text-xs pb-2 border-b border-slate-100">
           <div>
-            <p class="font-semibold text-slate-800" data-translate="contact_1_name">Transfers e Táxi (Deborah)</p>[cite: 1]
-            <p class="text-[10px] text-slate-400">+55 65 9673 1160</p>[cite: 1]
+            <p class="font-semibold text-slate-800" data-translate="contact_1_name">Transfers e Táxi (Deborah)</p>
+            <p class="text-[10px] text-slate-400">+55 65 9673 1160</p>
           </div>
           <a href="https://wa.me/556596731160" target="_blank" class="px-3 py-1 bg-emerald-500 text-white font-semibold rounded-full text-[10px]"><i class="fa-brands fa-whatsapp mr-1"></i><span data-translate="chamar">Chamar</span></a>
         </div>
 
-        <div class="flex justify-between items-center text-xs border-t border-slate-100 pt-2">
+        <!-- ATV Rental -->
+        <div class="flex justify-between items-center text-xs pb-2 border-b border-slate-100">
           <div>
-            <p class="font-semibold text-slate-800" data-translate="contact_2_name">Quadriciclo e Moto (Carlim)</p>[cite: 1]
-            <p class="text-[10px] text-slate-400">+55 88 9710 4187</p>[cite: 1]
+            <p class="font-semibold text-slate-800" data-translate="contact_2_name">Quadriciclo e Moto (Carlim)</p>
+            <p class="text-[10px] text-slate-400">+55 88 9710 4187</p>
           </div>
           <a href="https://wa.me/558897104187" target="_blank" class="px-3 py-1 bg-emerald-500 text-white font-semibold rounded-full text-[10px]"><i class="fa-brands fa-whatsapp mr-1"></i><span data-translate="chamar">Chamar</span></a>
         </div>
 
-        <div class="flex justify-between items-center text-xs border-t border-slate-100 pt-2">
+        <!-- Fatbikes -->
+        <div class="flex justify-between items-center text-xs pb-2 border-b border-slate-100">
           <div>
-            <p class="font-semibold text-slate-800" data-translate="contact_3_name">Aluguel Fatbikes (Bike Mania Preá)</p>[cite: 1]
-            <p class="text-[10px] text-slate-400">+55 88 99949-8504</p>[cite: 1]
+            <p class="font-semibold text-slate-800" data-translate="contact_3_name">Aluguel Fatbikes (Bike Mania Preá)</p>
+            <p class="text-[10px] text-slate-400">+55 88 99949-8504</p>
           </div>
           <a href="https://wa.me/5588999498504" target="_blank" class="px-3 py-1 bg-emerald-500 text-white font-semibold rounded-full text-[10px]"><i class="fa-brands fa-whatsapp mr-1"></i><span data-translate="chamar">Chamar</span></a>
         </div>
+
+        <!-- Babysitter -->
+        <div class="flex justify-between items-center text-xs pb-2 border-b border-slate-100">
+          <div>
+            <p class="font-semibold text-slate-800" data-translate="serv_babysitter_title">Serviço de Babysitter</p>
+            <p class="text-[10px] text-slate-400">@baby_sitter_prea</p>
+          </div>
+          <a href="https://instagram.com/baby_sitter_prea" target="_blank" class="px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-full text-[10px] flex items-center space-x-1">
+            <i class="fa-brands fa-instagram"></i>
+            <span>Instagram</span>
+          </a>
+        </div>
+
+        <!-- Private Chef -->
+        <div class="flex justify-between items-center text-xs">
+          <div>
+            <p class="font-semibold text-slate-800" data-translate="serv_chef_title">Chef de Cozinha Privado (Matias)</p>
+            <p class="text-[10px] text-slate-400">+55 88 9602-8932</p>
+          </div>
+          <a href="https://wa.me/558896028932" target="_blank" class="px-3 py-1 bg-emerald-500 text-white font-semibold rounded-full text-[10px]"><i class="fa-brands fa-whatsapp mr-1"></i><span data-translate="chamar">Chamar</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 4: HORÁRIOS & CHECK-OUT (Dedicated Logistics Screen) -->
+    <section id="tab-horarios" class="app-screen space-y-4 hidden">
+      <div>
+        <h2 class="text-base font-bold text-slate-800" data-translate="hor_title">Horários & Procedimentos de Saída</h2>
+        <p class="text-[11px] text-slate-400" data-translate="hor_sub">Informações para garantir um check-out perfeito.</p>
       </div>
 
-      <!-- Checklist -->
-      <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-2 text-xs">
+      <!-- Top Check-in / Check-out Panel -->
+      <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white p-4 rounded-2xl shadow-md border border-slate-700 space-y-3">
+        <div class="flex items-center justify-between border-b border-slate-700/80 pb-2">
+          <span class="text-[10px] uppercase font-bold tracking-widest text-[#C5A880] flex items-center"><i class="fa-solid fa-clock mr-1.5"></i> <span data-translate="card_checkin_header">Horários Importantes</span></span>
+        </div>
+        <div class="grid grid-cols-2 gap-3 text-center text-xs">
+          <div class="bg-white/10 p-3 rounded-xl border border-white/10">
+            <span class="uppercase text-slate-300 font-medium block" data-translate="lbl_checkin">Check-in</span>
+            <span class="text-xl font-bold text-emerald-400 block my-0.5">16:00</span>
+            <span class="text-[9px] text-slate-300 block" data-translate="sub_checkin">Entrada no Imóvel</span>
+          </div>
+          <div class="bg-white/10 p-3 rounded-xl border border-white/10">
+            <span class="uppercase text-slate-300 font-medium block" data-translate="lbl_checkout">Check-out</span>
+            <span class="text-xl font-bold text-amber-400 block my-0.5">11:00</span>
+            <span class="text-[9px] text-slate-300 block" data-translate="sub_checkout">Saída do Imóvel</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Check-out Checklist -->
+      <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-2.5 text-xs">
         <h3 class="text-xs font-bold text-slate-800 border-b border-slate-100 pb-2 flex items-center">
           <i class="fa-solid fa-clipboard-check text-red-500 mr-1.5"></i> <span data-translate="checkout_header">Checklist de Saída (Check-out 11:00)</span>
         </h3>
-        <ul class="text-[11px] text-slate-600 space-y-1.5 list-none">
-          <li><i class="fa-regular fa-square-check text-emerald-500 mr-1.5"></i><span data-translate="co_1">Deixe todas as louças limpas.</span></li>[cite: 1]
-          <li><i class="fa-regular fa-square-check text-emerald-500 mr-1.5"></i><span data-translate="co_2">Verifique se não está esquecendo nenhum pertence pessoal.</span></li>[cite: 1]
-          <li><i class="fa-regular fa-square-check text-emerald-500 mr-1.5"></i><span data-translate="co_3">Feche todas as janelas e portas.</span></li>[cite: 1]
-          <li><i class="fa-regular fa-square-check text-emerald-500 mr-1.5"></i><span data-translate="co_4">Desligue o ar condicionado e apague todas as luzes.</span></li>[cite: 1]
-          <li><i class="fa-regular fa-square-check text-emerald-500 mr-1.5"></i><span data-translate="co_5">Informe-nos se algum dano pequeno tiver acontecido.</span></li>[cite: 1]
-          <li><i class="fa-regular fa-square-check text-emerald-500 mr-1.5"></i><span data-translate="co_6">Chaves: Por favor, combinar sua saída da casa para que nossa equipe possa auxiliar e recolher as chaves.</span></li>[cite: 1]
+        <ul class="text-[11px] text-slate-600 space-y-2 list-none">
+          <li class="flex items-start"><i class="fa-regular fa-square-check text-emerald-500 mr-2 mt-0.5"></i><span data-translate="co_1">Deixe todas as louças limpas.</span></li>
+          <li class="flex items-start"><i class="fa-regular fa-square-check text-emerald-500 mr-2 mt-0.5"></i><span data-translate="co_2">Verifique se não está esquecendo nenhum pertence pessoal.</span></li>
+          <li class="flex items-start"><i class="fa-regular fa-square-check text-emerald-500 mr-2 mt-0.5"></i><span data-translate="co_3">Feche todas as janelas e portas.</span></li>
+          <li class="flex items-start"><i class="fa-regular fa-square-check text-emerald-500 mr-2 mt-0.5"></i><span data-translate="co_4">Desligue o ar condicionado e apague todas as luzes.</span></li>
+          <li class="flex items-start"><i class="fa-regular fa-square-check text-emerald-500 mr-2 mt-0.5"></i><span data-translate="co_5">Informe-nos se algum dano pequeno tiver acontecido.</span></li>
+          <li class="flex items-start"><i class="fa-regular fa-square-check text-emerald-500 mr-2 mt-0.5"></i><span data-translate="co_6">Chaves: Por favor, combinar sua saída da casa para que nossa equipe possa auxiliar e recolher as chaves.</span></li>
         </ul>
+      </div>
+
+      <!-- WhatsApp Contact Option for Deborah at Bottom -->
+      <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-2xl flex flex-col items-center text-center space-y-2">
+        <div class="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center text-lg"><i class="fa-brands fa-whatsapp"></i></div>
+        <div>
+          <h4 class="text-xs font-bold text-slate-800" data-translate="hor_deb_title">Dúvidas sobre Horários ou Chaves?</h4>
+          <p class="text-[10px] text-slate-500" data-translate="hor_deb_sub">Fale diretamente com Deborah no WhatsApp para organizar seu check-out.</p>
+        </div>
+        <a href="https://wa.me/556596731160?text=Olá%20Deborah,%20gostaria%20de%20combinar%20meu%20horário%20de%20saída/check-out." target="_blank" class="w-full py-2 bg-emerald-500 text-white font-bold rounded-xl text-xs flex items-center justify-center space-x-1.5 shadow-sm">
+          <i class="fa-brands fa-whatsapp text-sm"></i>
+          <span data-translate="hor_deb_btn">Falar com Deborah no WhatsApp</span>
+        </a>
       </div>
     </section>
   </main>
@@ -414,16 +523,19 @@
     </div>
   </div>
 
-  <!-- Bottom Navigation Bar -->
-  <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/90 backdrop-blur-md border-t border-slate-200/80 grid grid-cols-3 py-2 z-40">
+  <!-- Bottom Navigation Bar (4 Options: A Casa, Explorar, Serviços, Horários) -->
+  <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/90 backdrop-blur-md border-t border-slate-200/80 grid grid-cols-4 py-2 z-40">
     <button onclick="switchTab('house')" id="btn-house" class="flex flex-col items-center justify-center text-slate-400 active:text-[#C5A880]">
       <i class="fa-solid fa-house text-base mb-0.5"></i><span class="text-[10px] font-medium" data-translate="nav_lbl_house">A Casa</span>
     </button>
     <button onclick="switchTab('explore')" id="btn-explore" class="flex flex-col items-center justify-center text-slate-400">
       <i class="fa-solid fa-compass text-base mb-0.5"></i><span class="text-[10px] font-medium" data-translate="nav_lbl_explore">Explorar</span>
     </button>
-    <button onclick="switchTab('logistics')" id="btn-logistics" class="flex flex-col items-center justify-center text-slate-400">
+    <button onclick="switchTab('servicos')" id="btn-servicos" class="flex flex-col items-center justify-center text-slate-400">
       <i class="fa-solid fa-concierge-bell text-base mb-0.5"></i><span class="text-[10px] font-medium" data-translate="nav_lbl_services">Serviços</span>
+    </button>
+    <button onclick="switchTab('horarios')" id="btn-horarios" class="flex flex-col items-center justify-center text-slate-400">
+      <i class="fa-solid fa-clock-rotate-left text-base mb-0.5"></i><span class="text-[10px] font-medium" data-translate="nav_lbl_hours">Horários</span>
     </button>
   </nav>
 
@@ -432,7 +544,7 @@
     let currentLanguage = 'pt';
     const GEMINI_API_KEY = "AQ.Ab8RN6KugvyALh2TRSaR9AZ1qcNcAYznYyqfNWoKqcxaxylS4Q";
 
-    // --- FULL 6-LANGUAGE TRANSLATION DICTIONARY ---
+    // --- CLEANED & COMPLETE 6-LANGUAGE DICTIONARY ---
     const translations = {
       pt: {
         app_title: "Ariah Luxury Villas", app_location: "Vila Preá, CE", edit_btn: "Modificar",
@@ -448,9 +560,10 @@
         amenities_header: "Amenidades do Imóvel", am_1: "Estacionamento", am_2: "Ar condicionado nos quartos", am_3: "Roupa de cama completa", am_4: "Toalhas de banho", am_5: "Papel higiênico", am_6: "Pó de café e Açúcar", am_7: "Sal e temperos", am_8: "Cafeteira elétrica", am_9: "Airfryer & Microondas", am_10: "Panos de prato", am_11: "Esponja e detergente", am_12: "Guarderia para kite", extra_services: "<strong>Serviços Contratados Previamente:</strong> Limpeza diária, café da manhã, aluguel de quadriciclo e transfers.",
         info_header: "Informações Importantes", info_trash: "<strong>🗑️ Retirada de Lixo:</strong> O lixo deve ser retirado diariamente e colocado na lixeira suspensa no lado externo do portão da Rua Pedro Tomaz.", info_tv: "<strong>📺 TV Smart:</strong> Conecte-se facilmente aos seus serviços de streaming preferidos.", info_speaker: "<strong>🔊 Caixa de Som JBL:</strong> Disponível para uso, respeitando as regras de silêncio.", info_laundry: "<strong>🧹 Lavanderia & Produtos:</strong> Vassouras, rodos e produtos de limpeza estão na lavanderia. Máquina de lavar disponível na unidade.",
         rules_header: "Regras da Casa", r1: "Proibido fazer barulho após as 22h.", r2: "Proibido fazer festas, exceto com autorização prévia.", r3: "Proibido fumar dentro da casa.", r4: "Proibido trazer animais, salvo com autorização prévia.", r5: "Desligue o ar condicionado e apague as luzes antes de sair.", r6: "Proibido mudar a disposição dos móveis.", r7: "Respeite os horários de check-in (16:00) e check-out (11:00).", r8: "Proibido tirar objetos da casa, mesmo que por pouco tempo, sob pena de multa estipulada em contrato.", r9: "Limpar a churrasqueira depois do uso.",
-        exp_title: "Guia do Preá & Atrações", exp_sub: "Sugestões curadas para aventuras, velejada e gastronomia.", dist_header: "Distâncias a pé da Villa:", dist_1: "• 5 min até a praia", dist_2: "• 2 min até o mercado Atacadão do Vale", dist_3: "• 10 min até o Rancho do Kite", beach_card_tag: "Praia do Preá", beach_card_desc: "O paraíso do Kitesurfe e do pôr do sol", cat_kite_header: "Kite & Passeios", place_1_desc: "Escola de kitesurfe no Preá, com restaurante, música, piscina e atividades culturais em datas especiais.", walk_rancho: "<i class=\"fa-solid fa-person-walking mr-1\"></i>10 min a pé", place_2_desc: "Troque o buggy tradicional pela adrenalina de pilotar UTVs, motos ou quadriciclos com suporte de luxo.", drive_sertoes: "<i class=\"fa-solid fa-car mr-1\"></i>Tour Guiado", lagoa_desc: "Águas cristalinas em tons azul e verde com redes na água. O Sandê Mall oferece lojas, almoço em família e drinks frente ao mar.", cat_rest_header: "Restaurantes & Cafés", rest_1_desc: "Todos os itens do cardápio com 20% de desconto para hóspedes da casa.", rest_2_desc: "Gastronomia local refinada na praia do Preá.", rest_3_desc: "Opções deliciosas para café da manhã, croissants e açaí bowls.", ver_rota: "Ver Rota →", reservar: "Reservar →",
-        log_title: "Serviços & Logística", log_sub: "Contatos oficiais fornecidos pelo guia da casa.", contacts_header: "Contatos Diretos", contact_1_name: "Transfers e Táxi (Deborah)", contact_2_name: "Quadriciclo e Moto (Carlim)", contact_3_name: "Aluguel Fatbikes (Bike Mania Preá)", chamar: "Chamar", checkout_header: "Checklist de Saída (Check-out 11:00)", co_1: "Deixe todas as louças limpas.", co_2: "Verifique se não está esquecendo nenhum pertence pessoal.", co_3: "Feche todas as janelas e portas.", co_4: "Desligue o ar condicionado e apague todas as luzes.", co_5: "Informe-nos se algum dano pequeno tiver acontecido.", co_6: "Chaves: Por favor, combinar sua saída da casa para que nossa equipe possa auxiliar e recolher as chaves.",
-        qa_btn: "Dúvidas? Pergunte aqui", qa_header_sub: "Inteligência Artificial 24/7", welcome_bubble_msg: "👋 Olá! Sou o assistente com IA da **Ariah Luxury Villas**. Faça sua pergunta sobre Wi-Fi, check-in, transfers, passeios ou amenidades do imóvel!", chip_wifi: "📶 Senha Wi-Fi", chip_airport: "🚖 Transfer/Aeroporto", chip_checkout: "⏰ Horário Checkout", chip_rules: "📜 Regras da Casa", placeholder_txt: "Digite sua dúvida aqui...", pensandotxt: "Pensando...", conn_prob_txt: "Tive um pequeno problema de conexão.", falar_wa_txt: "Falar no WhatsApp", ai_wa_redirect_msg: "Olá Karime & André, estou no guia da casa e gostaria de saber: ", nav_lbl_house: "A Casa", nav_lbl_explore: "Explorar", nav_lbl_services: "Serviços"
+        exp_title: "Guia Completo de Vila Preá", exp_sub: "Guia de aventuras, praias e alta gastronomia.", dist_header: "Distâncias a pé da Villa:", dist_1: "• 5 min até a praia", dist_2: "• 2 min até o mercado Atacadão do Vale", dist_3: "• 10 min até o Rancho do Kite", beach_card_tag: "Praia do Preá", beach_card_desc: "O paraíso mundial do Kitesurfe e do pôr do sol", cat_kite_header: "Kite & Passeios", place_1_desc: "Escola de kitesurfe no Preá, com restaurante, música, piscina e atividades culturais em datas especiais.", walk_rancho: "<i class=\"fa-solid fa-person-walking mr-1\"></i>10 min a pé", place_2_desc: "Troque o buggy tradicional pela adrenalina de pilotar UTVs, motos ou quadriciclos com suporte de luxo.", drive_sertoes: "<i class=\"fa-solid fa-car mr-1\"></i>Tour Guiado", lagoa_desc: "Águas cristalinas em tons azul e verde com redes na água. O Sandê Mall oferece lojas, almoço em família e drinks frente ao mar.", cat_rest_header: "Gastronomia & Restaurantes", rest_1_desc: "Todos os itens do cardápio com 20% de desconto exclusivo para hóspedes da Ariah Villas.", see_more_google: "Ver Ranking no Google →", top_google_rest: "Top Restaurantes do Preá (Google Reviews)", live_badge: "Ao Vivo", see_all_google_reviews: "Ver Todos os Restaurantes no Google Reviews", ver_rota: "Ver Rota →", reservar: "Reservar →",
+        serv_title: "Serviços Exclusivos & Parceiros", serv_sub: "Contatos diretos para tornar sua estadia inesquecível.", serv_list_header: "Lista de Serviços Recomendados", contact_1_name: "Transfers e Táxi (Deborah)", contact_2_name: "Quadriciclo e Moto (Carlim)", contact_3_name: "Aluguel Fatbikes (Bike Mania Preá)", serv_babysitter_title: "Serviço de Babysitter", serv_chef_title: "Chef de Cozinha Privado (Matias)", chamar: "Chamar",
+        hor_title: "Horários & Procedimentos de Saída", hor_sub: "Informações para garantir um check-out perfeito.", checkout_header: "Checklist de Saída (Check-out 11:00)", co_1: "Deixe todas as louças limpas.", co_2: "Verifique se não está esquecendo nenhum pertence pessoal.", co_3: "Feche todas as janelas e portas.", co_4: "Desligue o ar condicionado e apague todas as luzes.", co_5: "Informe-nos se algum dano pequeno tiver acontecido.", co_6: "Chaves: Por favor, combinar sua saída da casa para que nossa equipe possa auxiliar e recolher as chaves.", hor_deb_title: "Dúvidas sobre Horários ou Chaves?", hor_deb_sub: "Fale diretamente com Deborah no WhatsApp para organizar seu check-out.", hor_deb_btn: "Falar com Deborah no WhatsApp",
+        qa_btn: "Dúvidas? Pergunte aqui", qa_header_sub: "Inteligência Artificial 24/7", welcome_bubble_msg: "👋 Olá! Sou o assistente com IA da **Ariah Luxury Villas**. Faça sua pergunta sobre Wi-Fi, check-in, transfers, passeios ou amenidades do imóvel!", chip_wifi: "📶 Senha Wi-Fi", chip_airport: "🚖 Transfer/Aeroporto", chip_checkout: "⏰ Horário Checkout", chip_rules: "📜 Regras da Casa", placeholder_txt: "Digite sua dúvida aqui...", pensandotxt: "Pensando...", conn_prob_txt: "Tive um pequeno problema de conexão.", falar_wa_txt: "Falar no WhatsApp", ai_wa_redirect_msg: "Olá Karime & André, estou no guia da casa e gostaria de saber: ", nav_lbl_house: "A Casa", nav_lbl_explore: "Explorar", nav_lbl_services: "Serviços", nav_lbl_hours: "Horários"
       },
       en: {
         app_title: "Ariah Luxury Villas", app_location: "Vila Preá, CE", edit_btn: "Modify",
@@ -458,17 +571,18 @@
         btn_label_wifi: "Wi-Fi", btn_label_map: "Map", btn_label_host: "Host", btn_label_hours: "Hours",
         card_checkin_header: "Important Hours", card_checkin_badge: "Important Access",
         lbl_checkin: "Check-in", sub_checkin: "Property Entry", lbl_checkout: "Check-out", sub_checkout: "Property Exit",
-        checkin_note: "<strong>In-person greeting:</strong> A member of our team will be on-site to welcome you and explain the equipment.",
+        checkin_note: "<strong>In-person greeting:</strong> A team member will welcome you and explain the equipment.",
         wifi_card_title: "Wi-Fi Connection", wifi_badge: "High Speed", lbl_wifiname: "Available Networks", lbl_wifipass: "Password", wifi_instruction: "Point your mobile camera to connect automatically.",
         host_card_title: "Meet Your Hosts", welcome_msg: "\"Hello! I am Karime, alongside my partner André. It is a pleasure to welcome you!\"",
         gallery_title: "Explore the Villa", gallery_sub: "Swipe right →", img_cap_1: "Private Pool & Deck", img_cap_2: "Gourmet Area & Balcony", img_cap_3: "Air-Conditioned Suite", img_cap_4: "Integrated Kitchen",
         struct_header: "Capacity & Layout", stat_1: "Up to 7 guests", stat_2: "2 Bedrooms (3 beds)", stat_3: "3 Bathrooms", beds_config: "<strong>Bed Layout:</strong> 1 King bed, 1 Double bed, 3 Single beds.", baths_config: "<strong>Bathrooms:</strong> 2 En-suites + 1 Guest bathroom.", outdoor_config: "<strong>Outdoor Area:</strong> Private Pool & BBQ Grill.",
         amenities_header: "Villa Amenities", am_1: "On-site Parking", am_2: "Air conditioning in bedrooms", am_3: "Full Bed Linen", am_4: "Bath Towels", am_5: "Toilet Paper", am_6: "Coffee Ground & Sugar", am_7: "Salt & Seasonings", am_8: "Electric Coffee Maker", am_9: "Airfryer & Microwave", am_10: "Dish Towels", am_11: "Sponge & Dish Soap", am_12: "Kite Storage Area", extra_services: "<strong>Pre-booked Services:</strong> Daily cleaning, breakfast, ATV rental, and airport transfers.",
-        info_header: "Important Information", info_trash: "<strong>🗑️ Trash Removal:</strong> Please take trash out daily to the elevated bin outside the gate on Rua Pedro Tomaz.", info_tv: "<strong>📺 Smart TV:</strong> Easily connect to your favorite streaming accounts.", info_speaker: "<strong>🔊 JBL Speaker:</strong> Available for use while respecting quiet hours.", info_laundry: "<strong>🧹 Laundry & Cleaning:</strong> Brooms and cleaning supplies are in the laundry area. Washing machine available.",
+        info_header: "Important Information", info_trash: "<strong>🗑️ Trash Removal:</strong> Please take trash out daily to the elevated bin outside the gate on Rua Pedro Tomaz.", info_tv: "<strong>📺 Smart TV:</strong> Easily connect to your favorite streaming accounts.", info_speaker: "<strong>🔊 JBL Speaker:</strong> Available for use while respecting quiet hours.", info_laundry: "<strong>🧹 Laundry & Cleaning:</strong> Brooms and cleaning supplies in laundry area. Washing machine available.",
         rules_header: "House Rules", r1: "Strictly no noise after 10:00 PM.", r2: "No parties permitted without prior approval.", r3: "Strictly no smoking inside the villa.", r4: "No pets allowed unless approved in advance.", r5: "Turn off air conditioners and lights before leaving.", r6: "Do not move furniture layout.", r7: "Respect check-in (16:00) and check-out (11:00) times.", r8: "Do not remove house items under penalty of fine.", r9: "Clean the BBQ grill after use.",
-        exp_title: "Preá Guide & Attractions", exp_sub: "Curated recommendations for adventures, kitesurfing, and dining.", dist_header: "Walking distances from Villa:", dist_1: "• 5 min walk to the beach", dist_2: "• 2 min walk to Atacadão supermarket", dist_3: "• 10 min walk to Rancho do Kite", beach_card_tag: "Preá Beach", beach_card_desc: "Kitesurfing paradise and incredible sunsets", cat_kite_header: "Kite & Excursions", place_1_desc: "Kitesurf school in Preá with restaurant, music, pool, and cultural events.", walk_rancho: "<i class=\"fa-solid fa-person-walking mr-1\"></i>10 min walk", place_2_desc: "Experience guided UTV, motorbike, or ATV tours with luxury support.", drive_sertoes: "<i class=\"fa-solid fa-car mr-1\"></i>Guided Tour", lagoa_desc: "Crystal-clear lagoon waters with water hammocks. Sandê Mall offers shopping and beachfront dining.", cat_rest_header: "Restaurants & Cafés", rest_1_desc: "Guests enjoy 20% OFF on all menu items at Asa7 Pizzaria.", rest_2_desc: "Refined local cuisine right on Preá beach.", rest_3_desc: "Delicious options for breakfast, croissants, and acai bowls.", ver_rota: "Get Route →", reservar: "Book Now →",
-        log_title: "Services & Logistics", log_sub: "Official contacts provided in your guest guide.", contacts_header: "Direct Contacts", contact_1_name: "Transfers & Taxi (Deborah)", contact_2_name: "ATV & Quad Rental (Carlim)", contact_3_name: "Fatbike Rentals (Bike Mania Preá)", chamar: "Call", checkout_header: "Check-out Checklist (11:00 AM)", co_1: "Please leave all kitchen dishes clean.", co_2: "Check to ensure no personal belongings are left behind.", co_3: "Close all windows and lock doors.", co_4: "Turn off all air conditioners and lights.", co_5: "Notify us if any minor damage occurred during stay.", co_6: "Keys: Coordinate departure with staff to hand over keys.",
-        qa_btn: "Questions? Ask AI", qa_header_sub: "24/7 AI Virtual Concierge", welcome_bubble_msg: "👋 Hello! I am the AI Concierge for **Ariah Luxury Villas**. Ask me anything about Wi-Fi, check-in, transfers, tours, or house amenities!", chip_wifi: "📶 Wi-Fi Password", chip_airport: "🚖 Airport Transfer", chip_checkout: "⏰ Check-out Time", chip_rules: "📜 House Rules", placeholder_txt: "Type your question here...", pensandotxt: "Thinking...", conn_prob_txt: "I experienced a connection issue.", falar_wa_txt: "Contact on WhatsApp", ai_wa_redirect_msg: "Hello Karime & André, I am on the digital guide and would like to ask: ", nav_lbl_house: "The Villa", nav_lbl_explore: "Explore", nav_lbl_services: "Services"
+        exp_title: "Complete Preá Guide", exp_sub: "Aventurous guide, beaches, and high gastronomy.", dist_header: "Walking distances from Villa:", dist_1: "• 5 min walk to the beach", dist_2: "• 2 min walk to Atacadão market", dist_3: "• 10 min walk to Rancho do Kite", beach_card_tag: "Preá Beach", beach_card_desc: "World kitesurfing paradise and incredible sunsets", cat_kite_header: "Kite & Excursions", place_1_desc: "Kitesurf school in Preá with restaurant, music, pool, and cultural events.", walk_rancho: "<i class=\"fa-solid fa-person-walking mr-1\"></i>10 min walk", place_2_desc: "Experience guided UTV, motorbike, or ATV tours with luxury support.", drive_sertoes: "<i class=\"fa-solid fa-car mr-1\"></i>Guided Tour", lagoa_desc: "Crystal-clear lagoon waters with water hammocks. Sandê Mall offers shopping and beachfront dining.", cat_rest_header: "Dining & Restaurants", rest_1_desc: "Guests enjoy 20% OFF on all menu items at Asa7 Pizzaria.", see_more_google: "See Google Ranking →", top_google_rest: "Top Preá Restaurants (Google Reviews)", live_badge: "Live", see_all_google_reviews: "See All Restaurants on Google Reviews", ver_rota: "Get Route →", reservar: "Book Now →",
+        serv_title: "Exclusive Services & Partners", serv_sub: "Direct contacts to enhance your stay.", serv_list_header: "Recommended Services", contact_1_name: "Transfers & Taxi (Deborah)", contact_2_name: "ATV & Quad Rental (Carlim)", contact_3_name: "Fatbike Rentals (Bike Mania Preá)", serv_babysitter_title: "Babysitting Service", serv_chef_title: "Private Chef (Matias)", chamar: "Call",
+        hor_title: "Schedule & Departure Procedures", hor_sub: "Information to ensure a seamless check-out.", checkout_header: "Check-out Checklist (11:00 AM)", co_1: "Please leave all kitchen dishes clean.", co_2: "Check to ensure no personal belongings are left behind.", co_3: "Close all windows and lock doors.", co_4: "Turn off all air conditioners and lights.", co_5: "Notify us if any minor damage occurred during stay.", co_6: "Keys: Coordinate departure with staff to hand over keys.", hor_deb_title: "Questions about Schedule or Keys?", hor_deb_sub: "Message Deborah directly on WhatsApp to coordinate departure.", hor_deb_btn: "Message Deborah on WhatsApp",
+        qa_btn: "Questions? Ask AI", qa_header_sub: "24/7 AI Virtual Concierge", welcome_bubble_msg: "👋 Hello! I am the AI Concierge for **Ariah Luxury Villas**. Ask me anything about Wi-Fi, check-in, transfers, tours, or house amenities!", chip_wifi: "📶 Wi-Fi Password", chip_airport: "🚖 Airport Transfer", chip_checkout: "⏰ Check-out Time", chip_rules: "📜 House Rules", placeholder_txt: "Type your question here...", pensandotxt: "Thinking...", conn_prob_txt: "I experienced a connection issue.", falar_wa_txt: "Contact on WhatsApp", ai_wa_redirect_msg: "Hello Karime & André, I am on the digital guide and would like to ask: ", nav_lbl_house: "The Villa", nav_lbl_explore: "Explore", nav_lbl_services: "Services", nav_lbl_hours: "Hours"
       },
       it: {
         app_title: "Ariah Luxury Villas", app_location: "Vila Preá, CE", edit_btn: "Modifica",
@@ -484,9 +598,10 @@
         amenities_header: "Servizi della Villa", am_1: "Parcheggio privato", am_2: "Aria condizionata nelle camere", am_3: "Lenzuola complete", am_4: "Asciugamani da bagno", am_5: "Carta igienica", am_6: "Caffè e Zucchero", am_7: "Sale e spezie", am_8: "Macchina del caffè elettrica", am_9: "Airfryer & Microonde", am_10: "Strofinacci da cucina", am_11: "Spugna e detersivo", am_12: "Guarderia per Kite", extra_services: "<strong>Servizi Extra (su prenotazione):</strong> Pulizia giornaliera, colazione, noleggio quad e transfer.",
         info_header: "Informazioni Importanti", info_trash: "<strong>🗑️ Smaltimento Rifiuti:</strong> Portare fuori la spazzatura ogni giorno nel cassonetto sospeso esterno su Rua Pedro Tomaz.", info_tv: "<strong>📺 Smart TV:</strong> Collegati ai tuoi account di streaming preferiti.", info_speaker: "<strong>🔊 Cassa JBL:</strong> Disponibile per l'uso rispettando la quiete notturna.", info_laundry: "<strong>🧹 Lavanderia:</strong> Scopa e prodotti di pulizia in lavanderia. Lavatrice disponibile.",
         rules_header: "Regole della Casa", r1: "Divieto assoluto di rumori dopo le 22:00.", r2: "Vietato organizzare feste senza previa autorizzazione.", r3: "Severamente vietato fumare all'interno.", r4: "Animali non ammessi se non concordati prima.", r5: "Spegnere l'aria condizionata e le luci prima di uscire.", r6: "Non spostare la disposizione dei mobili.", r7: "Rispettare gli orari di Check-in (16:00) e Check-out (11:00).", r8: "Vietato rimuovere oggetti dalla villa, pena sanzione.", r9: "Pulire il barbecue subito dopo l'uso.",
-        exp_title: "Guida di Preá & Attrazioni", exp_sub: "Consigli selezionati per avventure, kite e ristorazione.", dist_header: "Distanze a piedi dalla Villa:", dist_1: "• 5 min a piedi dalla spiaggia", dist_2: "• 2 min a piedi dal supermercato Atacadão", dist_3: "• 10 min a piedi dal Rancho do Kite", beach_card_tag: "Spiaggia del Preá", beach_card_desc: "Il paradiso del Kitesurf e dei tramonti", cat_kite_header: "Kite & Escursioni", place_1_desc: "Scuola di Kitesurf al Preá con ristorante, musica, piscina ed eventi culturali.", walk_rancho: "<i class=\"fa-solid fa-person-walking mr-1\"></i>10 min a piedi", place_2_desc: "Prova l'emozione di guidare UTV, quad o moto con supporto di lusso.", drive_sertoes: "<i class=\"fa-solid fa-car mr-1\"></i>Tour Guidato", lagoa_desc: "Acque cristalline con amache nell'acqua. Il Sandê Mall offre negozi e ristoranti fronte mare.", cat_rest_header: "Ristoranti & Bar", rest_1_desc: "Sconto del 20% su tutto il menu della Pizzeria Asa7 per gli ospiti.", rest_2_desc: "Cucina locale raffinata sulla spiaggia del Preá.", rest_3_desc: "Ottime opzioni per colazione, croissant e açaí bowls.", ver_rota: "Indicazioni →", reservar: "Prenota →",
-        log_title: "Servizi & Logistica", log_sub: "Contatti ufficiali dalla guida della casa.", contacts_header: "Contatti Diretti", contact_1_name: "Transfer e Taxi (Deborah)", contact_2_name: "Noleggio Quad & Moto (Carlim)", contact_3_name: "Noleggio Fatbike (Bike Mania Preá)", chamar: "Chiama", checkout_header: "Checklist di Uscita (Check-out 11:00)", co_1: "Lasciare tutte le stoviglie pulite.", co_2: "Verificare di non dimenticare oggetti personali.", co_3: "Chiudere tutte le finestre e le porte.", co_4: "Spegnere tutti i condizionatori e le luci.", co_5: "Avvisarci in caso di piccoli danni verificatisi.", co_6: "Chiavi: Concordare l'orario di uscita con lo staff per la consegna.",
-        qa_btn: "Domande? Chiedi all'IA", qa_header_sub: "Assistente IA 24/7", welcome_bubble_msg: "👋 Ciao! Sono l'assistente IA di **Ariah Luxury Villas**. Chiedimi qualsiasi cosa su Wi-Fi, check-in, transfer, escursioni o servizi della casa!", chip_wifi: "📶 Password Wi-Fi", chip_airport: "🚖 Transfer Aeroporto", chip_checkout: "⏰ Orario Check-out", chip_rules: "📜 Regole della Casa", placeholder_txt: "Scrivi qui la tua domanda...", pensandotxt: "Elaborazione...", conn_prob_txt: "Ho riscontrato un problema di connessione.", falar_wa_txt: "Scrivi su WhatsApp", ai_wa_redirect_msg: "Ciao Karime & André, sono sulla guida della villa e vorrei chiedere: ", nav_lbl_house: "La Villa", nav_lbl_explore: "Esplora", nav_lbl_services: "Servizi"
+        exp_title: "Guida Completa di Vila Preá", exp_sub: "Guida ad avventure, spiagge e alta gastronomia.", dist_header: "Distanze a piedi dalla Villa:", dist_1: "• 5 min a piedi dalla spiaggia", dist_2: "• 2 min a piedi dal supermercato Atacadão", dist_3: "• 10 min a piedi dal Rancho do Kite", beach_card_tag: "Spiaggia del Preá", beach_card_desc: "Il paradiso mondiale del Kitesurf e dei tramonti", cat_kite_header: "Kite & Escursioni", place_1_desc: "Scuola di Kitesurf al Preá con ristorante, musica, piscina ed eventi culturali.", walk_rancho: "<i class=\"fa-solid fa-person-walking mr-1\"></i>10 min a piedi", place_2_desc: "Prova l'emozione di guidare UTV, quad o moto con supporto di lusso.", drive_sertoes: "<i class=\"fa-solid fa-car mr-1\"></i>Tour Guidato", lagoa_desc: "Acque cristalline con amache nell'acqua. Il Sandê Mall offre negozi e ristoranti fronte mare.", cat_rest_header: "Ristoranti & Bar", rest_1_desc: "Sconto del 20% su tutto il menu della Pizzeria Asa7 per gli ospiti.", see_more_google: "Vedi Classifica Google →", top_google_rest: "I Migliori Ristoranti (Google Reviews)", live_badge: "In Tempo Reale", see_all_google_reviews: "Vedi Tutti i Ristoranti su Google Reviews", ver_rota: "Indicazioni →", reservar: "Prenota →",
+        serv_title: "Servizi Esclusivi & Partner", serv_sub: "Contatti diretti per arricchire il tuo soggiorno.", serv_list_header: "Servizi Raccomandati", contact_1_name: "Transfer e Taxi (Deborah)", contact_2_name: "Noleggio Quad & Moto (Carlim)", contact_3_name: "Noleggio Fatbike (Bike Mania Preá)", serv_babysitter_title: "Servizio Babysitter", serv_chef_title: "Chef Privato (Matias)", chamar: "Chiama",
+        hor_title: "Orari & Procedura di Uscita", hor_sub: "Informazioni per un check-out perfetto.", checkout_header: "Checklist di Uscita (Check-out 11:00)", co_1: "Lasciare tutte le stoviglie pulite.", co_2: "Verificare di non dimenticare oggetti personali.", co_3: "Chiudere tutte le finestre e le porte.", co_4: "Spegnere tutti i condizionatori e le luci.", co_5: "Avvisarci in caso di piccoli danni verificatisi.", co_6: "Chiavi: Concordare l'orario di uscita con lo staff per la consegna.", hor_deb_title: "Domande su Orari o Chiavi?", hor_deb_sub: "Contatta Deborah direttamente su WhatsApp per coordinare il check-out.", hor_deb_btn: "Contatta Deborah su WhatsApp",
+        qa_btn: "Domande? Chiedi all'IA", qa_header_sub: "Assistente IA 24/7", welcome_bubble_msg: "👋 Ciao! Sono l'assistente IA di **Ariah Luxury Villas**. Chiedimi qualsiasi cosa su Wi-Fi, check-in, transfer, escursioni o servizi della casa!", chip_wifi: "📶 Password Wi-Fi", chip_airport: "🚖 Transfer Aeroporto", chip_checkout: "⏰ Orario Check-out", chip_rules: "📜 Regole della Casa", placeholder_txt: "Scrivi qui la tua domanda...", pensandotxt: "Elaborazione...", conn_prob_txt: "Ho riscontrato un problema di connessione.", falar_wa_txt: "Scrivi su WhatsApp", ai_wa_redirect_msg: "Ciao Karime & André, sono sulla guida della villa e vorrei chiedere: ", nav_lbl_house: "La Villa", nav_lbl_explore: "Esplora", nav_lbl_services: "Servizi", nav_lbl_hours: "Orari"
       },
       es: {
         app_title: "Ariah Luxury Villas", app_location: "Vila Preá, CE", edit_btn: "Modificar",
@@ -502,9 +617,10 @@
         amenities_header: "Comodidades de la Casa", am_1: "Estacionamiento privado", am_2: "Aire acondicionado en dormitorios", am_3: "Ropa de cama completa", am_4: "Toallas de baño", am_5: "Papel higiénico", am_6: "Café molido y Azúcar", am_7: "Sal y condimentos", am_8: "Cafetera eléctrica", am_9: "Airfryer & Microondas", am_10: "Paños de cocina", am_11: "Esponja y detergente", am_12: "Guardería para Kitesurf", extra_services: "<strong>Servicios Previos:</strong> Limpieza diaria, desayuno, alquiler de quad y traslados.",
         info_header: "Información Importante", info_trash: "<strong>🗑️ Retiro de Basura:</strong> Retire la basura diariamente a la papelera exterior en Rua Pedro Tomaz.", info_tv: "<strong>📺 Smart TV:</strong> Conéctese a sus plataformas de streaming favoritas.", info_speaker: "<strong>🔊 Altavoz JBL:</strong> Disponible respetando los horarios de silencio.", info_laundry: "<strong>🧹 Lavandería:</strong> Productos de limpieza y lavadora disponibles.",
         rules_header: "Reglas de la Casa", r1: "Prohibido hacer ruido después de las 22:00.", r2: "No se permiten fiestas sin autorización previa.", r3: "Estrictamente prohibido fumar en el interior.", r4: "No se admiten mascotas sin acuerdo previo.", r5: "Apague el aire acondicionado y luces antes de salir.", r6: "No cambie la disposición de los muebles.", r7: "Respete los horarios de check-in (16:00) y check-out (11:00).", r8: "Prohibido retirar objetos de la casa bajo sanción.", r9: "Limpie la barbacoa después de usarla.",
-        exp_title: "Guía de Preá & Atracciones", exp_sub: "Recomendaciones seleccionadas de aventuras y gastronomía.", dist_header: "Distancias a pie desde la Villa:", dist_1: "• 5 min a pie de la playa", dist_2: "• 2 min a pie del supermercado", dist_3: "• 10 min a pie del Rancho do Kite", beach_card_tag: "Playa do Preá", beach_card_desc: "El paraíso del Kitesurf y atardeceres únicos", cat_kite_header: "Kite & Excursiones", place_1_desc: "Escuela de Kitesurf en Preá con restaurante, música y piscina.", walk_rancho: "<i class=\"fa-solid fa-person-walking mr-1\"></i>10 min a pie", place_2_desc: "Rutas guiadas en UTV, moto o quad con soporte de lujo.", drive_sertoes: "<i class=\"fa-solid fa-car mr-1\"></i>Tour Guiado", lagoa_desc: "Aguas cristalinas con hamacas en el agua. Sandê Mall ofrece tiendas y restaurante frente al mar.", cat_rest_header: "Restaurantes & Cafés", rest_1_desc: "20% de descuento en todo el menú de Asa7 Pizzaria para huéspedes.", rest_2_desc: "Gastronomía local refinada en la playa.", rest_3_desc: "Opciones deliciosas para desayuno, croissants y açaí.", ver_rota: "Ver Ruta →", reservar: "Reservar →",
-        log_title: "Servicios & Logística", log_sub: "Contactos oficiales de la guía de la casa.", contacts_header: "Contactos Directos", contact_1_name: "Traslados y Taxi (Deborah)", contact_2_name: "Alquiler Quad & Moto (Carlim)", contact_3_name: "Alquiler Fatbikes (Bike Mania Preá)", chamar: "Llamar", checkout_header: "Checklist de Salida (Check-out 11:00)", co_1: "Deje toda la vajilla limpia.", co_2: "Verifique no olvidar pertenencias personales.", co_3: "Cierre todas las ventanas y puertas.", co_4: "Apague aires acondicionados y luces.", co_5: "Avísenos si ocurrió algún pequeño daño.", co_6: "Llaves: Coordine la salida con el personal para la entrega.",
-        qa_btn: "¿Dudas? Pregunte a la IA", qa_header_sub: "Asistente IA 24/7", welcome_bubble_msg: "👋 ¡Hola! Soy el asistente IA de **Ariah Luxury Villas**. Pregúnteme sobre Wi-Fi, check-in, traslados o reglas de la casa.", chip_wifi: "📶 Contraseña Wi-Fi", chip_airport: "🚖 Traslado / Aeropuerto", chip_checkout: "⏰ Horario Check-out", chip_rules: "📜 Reglas de Casa", placeholder_txt: "Escriba su duda aquí...", pensandotxt: "Pensando...", conn_prob_txt: "Tuve un pequeño problema de conexión.", falar_wa_txt: "Hablar por WhatsApp", ai_wa_redirect_msg: "Hola Karime & André, estoy en la guía de la villa y quisiera consultar: ", nav_lbl_house: "La Villa", nav_lbl_explore: "Explorar", nav_lbl_services: "Servicios"
+        exp_title: "Guía Completa de Vila Preá", exp_sub: "Guía de aventuras, playas y alta gastronomía.", dist_header: "Distancias a pie desde la Villa:", dist_1: "• 5 min a pie de la playa", dist_2: "• 2 min a pie del supermercado", dist_3: "• 10 min a pie del Rancho do Kite", beach_card_tag: "Playa do Preá", beach_card_desc: "El paraíso mundial del Kitesurf y atardeceres únicos", cat_kite_header: "Kite & Excursiones", place_1_desc: "Escuela de Kitesurf en Preá con restaurante, música y piscina.", walk_rancho: "<i class=\"fa-solid fa-person-walking mr-1\"></i>10 min a pie", place_2_desc: "Rutas guiadas en UTV, moto o quad con soporte de lujo.", drive_sertoes: "<i class=\"fa-solid fa-car mr-1\"></i>Tour Guiado", lagoa_desc: "Aguas cristalinas con hamacas en el agua. Sandê Mall ofrece tiendas y restaurante frente al mar.", cat_rest_header: "Gastronomía & Restaurantes", rest_1_desc: "20% de descuento en todo el menú de Asa7 Pizzaria para huéspedes.", see_more_google: "Ver Ranking en Google →", top_google_rest: "Top Restaurantes de Preá (Google Reviews)", live_badge: "En Vivo", see_all_google_reviews: "Ver Todos los Restaurantes en Google Reviews", ver_rota: "Ver Ruta →", reservar: "Reservar →",
+        serv_title: "Servicios Exclusivos & Socios", serv_sub: "Contactos directos para hacer su estancia inolvidable.", serv_list_header: "Servicios Recomendados", contact_1_name: "Traslados y Taxi (Deborah)", contact_2_name: "Alquiler Quad & Moto (Carlim)", contact_3_name: "Alquiler Fatbikes (Bike Mania Preá)", serv_babysitter_title: "Servicio de Niñera (Babysitter)", serv_chef_title: "Chef Privado (Matias)", chamar: "Llamar",
+        hor_title: "Horarios & Procedimiento de Salida", hor_sub: "Información para garantizar un check-out perfecto.", checkout_header: "Checklist de Salida (Check-out 11:00)", co_1: "Deje toda la vajilla limpia.", co_2: "Verifique no olvidar pertenencias personales.", co_3: "Cierre todas las ventanas y puertas.", co_4: "Apague aires acondicionados y luces.", co_5: "Avísenos si ocurrió algún pequeño daño.", co_6: "Llaves: Coordine la salida con el personal para la entrega.", hor_deb_title: "¿Dudas sobre Horarios o Llaves?", hor_deb_sub: "Hable directamente con Deborah en WhatsApp para organizar su salida.", hor_deb_btn: "Hablar con Deborah por WhatsApp",
+        qa_btn: "¿Dudas? Pregunte a la IA", qa_header_sub: "Asistente IA 24/7", welcome_bubble_msg: "👋 ¡Hola! Soy el asistente IA de **Ariah Luxury Villas**. Pregúnteme sobre Wi-Fi, check-in, traslados o reglas de la casa.", chip_wifi: "📶 Contraseña Wi-Fi", chip_airport: "🚖 Traslado / Aeropuerto", chip_checkout: "⏰ Horario Check-out", chip_rules: "📜 Reglas de Casa", placeholder_txt: "Escriba su duda aquí...", pensandotxt: "Pensando...", conn_prob_txt: "Tuve un pequeño problema de conexión.", falar_wa_txt: "Hablar por WhatsApp", ai_wa_redirect_msg: "Hola Karime & André, estoy en la guía de la villa y quisiera consultar: ", nav_lbl_house: "La Villa", nav_lbl_explore: "Explorar", nav_lbl_services: "Servicios", nav_lbl_hours: "Horarios"
       },
       fr: {
         app_title: "Ariah Luxury Villas", app_location: "Vila Preá, CE", edit_btn: "Modifier",
@@ -515,14 +631,15 @@
         checkin_note: "<strong>Accueil en personne:</strong> Un membre de notre équipe sera présent pour vous accueillir et vous expliquer les équipements.",
         wifi_card_title: "Connexion Wi-Fi", wifi_badge: "Haut Débit", lbl_wifiname: "Réseaux disponibles", lbl_wifipass: "Mot de passe", wifi_instruction: "Pointez l'appareil photo pour vous connecter automatiquement.",
         host_card_title: "Vos Hôtes", welcome_msg: "\"Bonjour! Je suis Karime, avec mon compagnon André. C'est un plaisir de vous accueillir!\"",
-        gallery_title: "Découvrez la Villa", gallery_sub: "Glissez vers la droite →", img_cap_1: "Piscine Privée & Deck", img_cap_2: "Espace Gourmet & Balcon", img_cap_3: "Suite Climatisée", img_cap_4: "Cuisine Intégrée",
+        gallery_title: "Découvrez la Villa", gallery_sub: "Glissez vers la droite →", img_cap_1: "Piscina Privée & Deck", img_cap_2: "Espace Gourmet & Balcon", img_cap_3: "Suite Climatisée", img_cap_4: "Cuisine Intégrée",
         struct_header: "Capacité & Agencement", stat_1: "Jusqu'à 7 personnes", stat_2: "2 Chambres (3 lits)", stat_3: "3 Salles de bain", beds_config: "<strong>Lits:</strong> 1 lit King, 1 lit Double, 3 lits Simples.", baths_config: "<strong>Salles de bain:</strong> 2 Suites privées + 1 Salle de bain invitée.", outdoor_config: "<strong>Espace Extérieur:</strong> Piscine Privée & Barbecue.",
         amenities_header: "Équipements de la Villa", am_1: "Parking sur place", am_2: "Climatisation dans les chambres", am_3: "Linge de lit complet", am_4: "Serviettes de bain", am_5: "Papier toilette", am_6: "Café moulu & Sucre", am_7: "Sel et condiments", am_8: "Cafetière électrique", am_9: "Airfryer & Micro-ondes", am_10: "Torchons de cuisine", am_11: "Éponge & Produit vaisselle", am_12: "Rangement Kite", extra_services: "<strong>Services Réservables:</strong> Ménage quotidien, petit-déjeuner, location de quad et transferts.",
         info_header: "Informations Importantes", info_trash: "<strong>🗑️ Élimination des Déchets:</strong> Veuillez jeter la poubelle quotidiennement dans le bac suspendu extérieurs sur Rua Pedro Tomaz.", info_tv: "<strong>📺 Smart TV:</strong> Connectez-vous à vos comptes de streaming.", info_speaker: "<strong>🔊 Enceinte JBL:</strong> Disponible en respectant les heures de silence.", info_laundry: "<strong>🧹 Buanderie:</strong> Produits de nettoyage et lave-linge disponibles.",
         rules_header: "Règlement Intérieur", r1: "Pas de bruit après 22h00.", r2: "Fêtes interdites sans autorisation préalable.", r3: "Strictement interdit de fumer à l'intérieur.", r4: "Animaux non admis sans accord préalable.", r5: "Éteignez la climatisation et les lumières avant de sortir.", r6: "Ne pas déplacer les meubles.", r7: "Respectez les horaires de Check-in (16h00) et Check-out (11h00).", r8: "Interdiction de retirer des objets de la villa.", r9: "Nettoyer le barbecue après utilisation.",
-        exp_title: "Guide de Preá & Attractions", exp_sub: "Recommandations pour aventures, kitesurf et gastronomie.", dist_header: "Distances à pied de la Villa:", dist_1: "• 5 min à pied de la plage", dist_2: "• 2 min à pied du supermarché", dist_3: "• 10 min à pied du Rancho do Kite", beach_card_tag: "Plage do Preá", beach_card_desc: "Le paradis du Kitesurf et des couchers de soleil", cat_kite_header: "Kite & Excursions", place_1_desc: "École de Kitesurf à Preá avec restaurant, musique et piscine.", walk_rancho: "<i class=\"fa-solid fa-person-walking mr-1\"></i>10 min à pied", place_2_desc: "Circuits guidés en UTV, moto ou quad avec assistance haut de gamme.", drive_sertoes: "<i class=\"fa-solid fa-car mr-1\"></i>Circuit Guidé", lagoa_desc: "Eaux cristallines avec hammacs dans l'eau. Sandê Mall propose boutiques et restaurants face à la mer.", cat_rest_header: "Restaurants & Cafés", rest_1_desc: "Les clients bénéficient de 20% de réduction chez Asa7 Pizzaria.", rest_2_desc: "Cuisine locale raffinée sur la plage.", rest_3_desc: "Délicieuses options pour le petit-déjeuner, croissants et açaí.", ver_rota: "Itinéraire →", reservar: "Réserver →",
-        log_title: "Services & Logistique", log_sub: "Contacts officiels du guide.", contacts_header: "Contacts Directs", contact_1_name: "Transferts & Taxi (Deborah)", contact_2_name: "Location Quad & Moto (Carlim)", contact_3_name: "Location Fatbikes (Bike Mania Preá)", chamar: "Appeler", checkout_header: "Check-list de Départ (Check-out 11h00)", co_1: "Laisser toute la vaisselle propre.", co_2: "Vérifier de ne rien oublier de personnel.", co_3: "Fermer toutes les portes et fenêtres.", co_4: "Éteindre les climatiseurs et lumières.", co_5: "Nous informer en cas de petit dommage.", co_6: "Clés: Coordonner le départ avec le personnel.",
-        qa_btn: "Des questions? Posez à l'IA", qa_header_sub: "Assistant Virtuel IA 24/7", welcome_bubble_msg: "👋 Bonjour! Je suis l'assistant IA de **Ariah Luxury Villas**. Posez-moi vos questions sur le Wi-Fi, l'arrivée, les transferts ou le règlement!", chip_wifi: "📶 Mot de passe Wi-Fi", chip_airport: "🚖 Transfert Aéroport", chip_checkout: "⏰ Heure de Départ", chip_rules: "📜 Règlement Intérieur", placeholder_txt: "Écrivez votre question ici...", pensandotxt: "Réflexion...", conn_prob_txt: "J'ai rencontré un problème de connexion.", falar_wa_txt: "Contacter sur WhatsApp", ai_wa_redirect_msg: "Bonjour Karime & André, je suis sur le guide numérique et j'aimerais demander: ", nav_lbl_house: "La Villa", nav_lbl_explore: "Explorer", nav_lbl_services: "Services"
+        exp_title: "Guide Complet de Vila Preá", exp_sub: "Guide aventures, plages et haute gastronomie.", dist_header: "Distances à pied de la Villa:", dist_1: "• 5 min à pied de la plage", dist_2: "• 2 min à pied du supermarché", dist_3: "• 10 min à pied du Rancho do Kite", beach_card_tag: "Plage do Preá", beach_card_desc: "Le paradis mondial du Kitesurf et des couchers de soleil", cat_kite_header: "Kite & Excursions", place_1_desc: "École de Kitesurf à Preá avec restaurant, musique et piscine.", walk_rancho: "<i class=\"fa-solid fa-person-walking mr-1\"></i>10 min à pied", place_2_desc: "Circuits guidés en UTV, moto ou quad avec assistance haut de gamme.", drive_sertoes: "<i class=\"fa-solid fa-car mr-1\"></i>Circuit Guidé", lagoa_desc: "Eaux cristallines avec hammacs dans l'eau. Sandê Mall propose boutiques et restaurants face à la mer.", cat_rest_header: "Gastronomie & Restaurants", rest_1_desc: "Les clients bénéficient de 20% de réduction chez Asa7 Pizzaria.", see_more_google: "Voir Classement Google →", top_google_rest: "Meilleurs Restaurants (Google Reviews)", live_badge: "En Direct", see_all_google_reviews: "Voir Tous les Restaurants sur Google Reviews", ver_rota: "Itinéraire →", reservar: "Réserver →",
+        serv_title: "Services Exclusifs & Partenaires", serv_sub: "Contacts directs pour agrémenter votre séjour.", serv_list_header: "Services Recommandés", contact_1_name: "Transferts & Taxi (Deborah)", contact_2_name: "Location Quad & Moto (Carlim)", contact_3_name: "Location Fatbikes (Bike Mania Preá)", serv_babysitter_title: "Service de Baby-sitter", serv_chef_title: "Chef Cuisinier Privé (Matias)", chamar: "Appeler",
+        hor_title: "Horaires & Procédure de Départ", hor_sub: "Informations pour un départ parfait.", checkout_header: "Check-list de Départ (Check-out 11h00)", co_1: "Laisser toute la vaisselle propre.", co_2: "Vérifier de ne rien oublier de personnel.", co_3: "Fermer toutes les portes et fenêtres.", co_4: "Éteindre les climatiseurs et lumières.", co_5: "Nous informer en cas de petit dommage.", co_6: "Clés: Coordonner le départ avec le personnel.", hor_deb_title: "Des questions sur le départ ou les clés?", hor_deb_sub: "Contactez Deborah directement sur WhatsApp pour organiser votre départ.", hor_deb_btn: "Parler avec Deborah sur WhatsApp",
+        qa_btn: "Des questions? Posez à l'IA", qa_header_sub: "Assistant Virtuel IA 24/7", welcome_bubble_msg: "👋 Bonjour! Je suis l'assistant IA de **Ariah Luxury Villas**. Posez-moi vos questions sur le Wi-Fi, l'arrivée, les transferts ou le règlement!", chip_wifi: "📶 Mot de passe Wi-Fi", chip_airport: "🚖 Transfert Aéroport", chip_checkout: "⏰ Heure de Départ", chip_rules: "📜 Règlement Intérieur", placeholder_txt: "Écrivez votre question ici...", pensandotxt: "Réflexion...", conn_prob_txt: "J'ai rencontré un problème de connexion.", falar_wa_txt: "Contacter sur WhatsApp", ai_wa_redirect_msg: "Bonjour Karime & André, je suis sur le guide numérique et j'aimerais demander: ", nav_lbl_house: "La Villa", nav_lbl_explore: "Explorer", nav_lbl_services: "Services", nav_lbl_hours: "Horaires"
       },
       de: {
         app_title: "Ariah Luxury Villas", app_location: "Vila Preá, CE", edit_btn: "Bearbeiten",
@@ -538,9 +655,10 @@
         amenities_header: "Ausstattung der Villa", am_1: "Parkplatz auf dem Grundstück", am_2: "Klimaanlage in den Schlafzimmern", am_3: "Komplette Bettwäsche", am_4: "Handtücher", am_5: "Toilettenpapier", am_6: "Kaffeemehl & Zucker", am_7: "Salz & Gewürze", am_8: "Elektrische Kaffeemaschine", am_9: "Airfryer & Mikrowelle", am_10: "Geschirrtücher", am_11: "Schwamm & Spülmittel", am_12: "Kite-Lagerung", extra_services: "<strong>Zusatzservices:</strong> Tägliche Reinigung, Frühstück, Quad-Miete und Flughafentransfer.",
         info_header: "Wichtige Informationen", info_trash: "<strong>🗑️ Müllentsorgung:</strong> Bitte Müll täglich im Außenbehälter an der Rua Pedro Tomaz entsorgen.", info_tv: "<strong>📺 Smart TV:</strong> Mit Ihren Streaming-Konten verbinden.", info_speaker: "<strong>🔊 JBL Musikbox:</strong> Nutzung unter Einhaltung der Nachtruhe gestattet.", info_laundry: "<strong>🧹 Wäscherei:</strong> Reinigungsmittel und Waschmaschine vorhanden.",
         rules_header: "Hausordnung", r1: "Nachtruhe ab 22:00 Uhr strikt einzuhalten.", r2: "Keine Partys ohne vorherige Genehmigung.", r3: "Rauchen im Gebäude strengstens verboten.", r4: "Keine Haustiere ohne Absprache.", r5: "Klimaanlage und Lichter vor dem Verlassen ausschalten.", r6: "Möbel nicht umstellen.", r7: "Check-in (16:00) und Check-out (11:00) einhalten.", r8: "Gegenstände dürfen nicht entfernt werden.", r9: "Grill nach Gebrauch reinigen.",
-        exp_title: "Preá Guide & Attraktionen", exp_sub: "Empfehlungen für Abenteuer, Kitesurfen und Gastronomie.", dist_header: "Fußwege von der Villa:", dist_1: "• 5 Min. Fußweg zum Strand", dist_2: "• 2 Min. Fußweg zum Supermarkt", dist_3: "• 10 Min. Fußweg zum Rancho do Kite", beach_card_tag: "Strand von Preá", beach_card_desc: "Paradies für Kitesurfen und Sonnenuntergänge", cat_kite_header: "Kite & Touren", place_1_desc: "Kiteschule in Preá mit Restaurant, Musik und Pool.", walk_rancho: "<i class=\"fa-solid fa-person-walking mr-1\"></i>10 Min. Fußweg", place_2_desc: "Geführte Touren mit UTV, Motorrad oder Quad.", drive_sertoes: "<i class=\"fa-solid fa-car mr-1\"></i>Geführte Tour", lagoa_desc: "Kristallklare Lagune mit Wasserhängematten. Sandê Mall bietet Geschäfte direkt am Meer.", cat_rest_header: "Restaurants & Cafés", rest_1_desc: "Gäste erhalten 20% Rabatt bei Asa7 Pizzaria.", rest_2_desc: "Gehobene lokale Küche am Strand.", rest_3_desc: "Köstliche Optionen für Frühstück, Croissants und Açaí.", ver_rota: "Route →", reservar: "Buchen →",
-        log_title: "Services & Logistik", log_sub: "Offizielle Kontakte aus Ihrem Reiseführer.", contacts_header: "Direkte Kontakte", contact_1_name: "Transfers & Taxi (Deborah)", contact_2_name: "Quad & Motorrad Miete (Carlim)", contact_3_name: "Fatbike Vermietung (Bike Mania Preá)", chamar: "Anrufen", checkout_header: "Abreise-Checkliste (Check-out 11:00)", co_1: "Geschirr sauber hinterlassen.", co_2: "Prüfen, ob persönliche Gegenstände vergessen wurden.", co_3: "Alle Fenster und Türen schließen.", co_4: "Klimaanlagen und Lichter ausschalten.", co_5: "Kleine Schäden bitte umgehend melden.", co_6: "Schlüssel: Übergabe mit dem Personal abstimmen.",
-        qa_btn: "Fragen? KI fragen", qa_header_sub: "24/7 KI-Assistent", welcome_bubble_msg: "👋 Hallo! Ich bin der KI-Assistent von **Ariah Luxury Villas**. Fragen Sie mich zu WLAN, Check-in, Transfers oder der Hausordnung!", chip_wifi: "📶 WLAN Passwort", chip_airport: "🚖 Flughafen Transfer", chip_checkout: "⏰ Check-out Zeit", chip_rules: "📜 Hausordnung", placeholder_txt: "Frage hier eingeben...", pensandotxt: "Denken...", conn_prob_txt: "Es gab ein Verbindungsproblem.", falar_wa_txt: "Per WhatsApp kontaktieren", ai_wa_redirect_msg: "Hallo Karime & André, ich nutze den digitalen Guide und möchte fragen: ", nav_lbl_house: "Die Villa", nav_lbl_explore: "Entdecken", nav_lbl_services: "Services"
+        exp_title: "Vollständiger Preá Guide", exp_sub: "Empfehlungen für Abenteuer, Kitesurfen und Gastronomie.", dist_header: "Fußwege von der Villa:", dist_1: "• 5 Min. Fußweg zum Strand", dist_2: "• 2 Min. Fußweg zum Supermarkt", dist_3: "• 10 Min. Fußweg zum Rancho do Kite", beach_card_tag: "Strand von Preá", beach_card_desc: "Weltweites Paradies für Kitesurfen und Sonnenuntergänge", cat_kite_header: "Kite & Touren", place_1_desc: "Kiteschule in Preá mit Restaurant, Musik und Pool.", walk_rancho: "<i class=\"fa-solid fa-person-walking mr-1\"></i>10 Min. Fußweg", place_2_desc: "Geführte Touren mit UTV, Motorrad oder Quad.", drive_sertoes: "<i class=\"fa-solid fa-car mr-1\"></i>Geführte Tour", lagoa_desc: "Kristallklare Lagune mit Wasserhängematten. Sandê Mall bietet Geschäfte direkt am Meer.", cat_rest_header: "Gastronomie & Restaurants", rest_1_desc: "Gäste erhalten 20% Rabatt bei Asa7 Pizzaria.", see_more_google: "Google Ranking ansehen →", top_google_rest: "Top Restaurants (Google Reviews)", live_badge: "Live", see_all_google_reviews: "Alle Restaurants auf Google Reviews ansehen", ver_rota: "Route →", reservar: "Buchen →",
+        serv_title: "Exklusive Services & Partner", serv_sub: "Direkte Kontakte für einen perfekten Aufenthalt.", serv_list_header: "Empfohlene Services", contact_1_name: "Transfers & Taxi (Deborah)", contact_2_name: "Quad & Motorrad Miete (Carlim)", contact_3_name: "Fatbike Vermietung (Bike Mania Preá)", serv_babysitter_title: "Babysitter-Service", serv_chef_title: "Privatkoch (Matias)", chamar: "Anrufen",
+        hor_title: "Zeiten & Abreise-Ablauf", hor_sub: "Informationen für einen reibungslosen Check-out.", checkout_header: "Abreise-Checkliste (Check-out 11:00)", co_1: "Geschirr sauber hinterlassen.", co_2: "Prüfen, ob persönliche Gegenstände vergessen wurden.", co_3: "Alle Fenster und Türen schließen.", co_4: "Klimaanlagen und Lichter ausschalten.", co_5: "Kleine Schäden bitte umgehend melden.", co_6: "Schlüssel: Übergabe mit dem Personal abstimmen.", hor_deb_title: "Fragen zu Zeiten oder Schlüsseln?", hor_deb_sub: "Schreiben Sie Deborah direkt auf WhatsApp, um Ihre Abreise zu planen.", hor_deb_btn: "Deborah auf WhatsApp kontaktieren",
+        qa_btn: "Fragen? KI fragen", qa_header_sub: "24/7 KI-Assistent", welcome_bubble_msg: "👋 Hallo! Ich bin der KI-Assistent von **Ariah Luxury Villas**. Fragen Sie mich zu WLAN, Check-in, Transfers oder der Hausordnung!", chip_wifi: "📶 WLAN Passwort", chip_airport: "🚖 Flughafen Transfer", chip_checkout: "⏰ Check-out Zeit", chip_rules: "📜 Hausordnung", placeholder_txt: "Frage hier eingeben...", pensandotxt: "Denken...", conn_prob_txt: "Es gab ein Verbindungsproblem.", falar_wa_txt: "Per WhatsApp kontaktieren", ai_wa_redirect_msg: "Hallo Karime & André, ich nutze den digitalen Guide und möchte fragen: ", nav_lbl_house: "Die Villa", nav_lbl_explore: "Entdecken", nav_lbl_services: "Services", nav_lbl_hours: "Zeiten"
       }
     };
 
@@ -569,6 +687,16 @@
       loadQAContext();
     }
 
+    function scrollToWifi() {
+      switchTab('house');
+      setTimeout(() => {
+        const wifiEl = document.getElementById('wifi-section');
+        if (wifiEl) {
+          wifiEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+
     // --- DYNAMIC MULTI-LANGUAGE SYSTEM PROMPT BUILDER ---
     function generateSystemInstructions(lang) {
       const data = translations[lang] || translations['pt'];
@@ -594,12 +722,14 @@ COMPLETE PROPERTY & HOUSE RULES KNOWLEDGE BASE (${lang.toUpperCase()}):
   * Capacity: Fits up to 7 guests. 2 air-conditioned bedrooms (1 King, 1 Double, 3 Singles), 3 bathrooms (2 suites + 1 social).
   * Swimming Pool, Deck, BBQ Grill, JBL Speaker, Smart TV, Laundry machine, kitchen (Airfryer, microwave, coffee maker, dish soap, sponge, paper towels, salt, sugar, coffee).
   * Dedicated Kite Guarderia (storage for kite equipment).
-- Guest Discount: 20% OFF on all menu items at "Asa7 Pizzaria".
-- Distances from Villa: 5 min walk to Preá beach, 2 min walk to Atacadão market, 10 min walk to Rancho do Kite.
-- Direct Contacts:
+- Services & Partners:
+  * Babysitter: @baby_sitter_prea (Instagram).
+  * Private Chef: Matias (+55 88 9602-8932).
   * Transfers/Taxi/Airport: Deborah (+55 65 9673 1160).
   * ATV/UTV/Motorbike: Carlim (+55 88 9710 4187).
   * Fatbike Rental: Bike Mania Preá (+55 88 99949-8504).
+- Guest Discount: 20% OFF on all menu items at "Asa7 Pizzaria".
+- Distances from Villa: 5 min walk to Preá beach, 2 min walk to Atacadão market, 10 min walk to Rancho do Kite.
       `;
     }
 
@@ -690,9 +820,11 @@ COMPLETE PROPERTY & HOUSE RULES KNOWLEDGE BASE (${lang.toUpperCase()}):
     function switchTab(tabId) {
       document.querySelectorAll('.app-screen').forEach(el => el.classList.add('hidden'));
       document.getElementById('tab-' + tabId).classList.remove('hidden');
-      ['house', 'explore', 'logistics'].forEach(id => {
+      ['house', 'explore', 'servicos', 'horarios'].forEach(id => {
         const btn = document.getElementById('btn-' + id);
-        btn.className = (id === tabId) ? "flex flex-col items-center justify-center text-[#C5A880] font-bold" : "flex flex-col items-center justify-center text-slate-400 font-medium";
+        if (btn) {
+          btn.className = (id === tabId) ? "flex flex-col items-center justify-center text-[#C5A880] font-bold" : "flex flex-col items-center justify-center text-slate-400 font-medium";
+        }
       });
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
