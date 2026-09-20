@@ -3,641 +3,481 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Ariah Luxury Villas - Guia do Hóspede</title>
+  <title>Ariah Luxury Villas - Multilanguage</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
-    :root {
-      --brand-gold: #C5A880;
-      --brand-gold-dark: #A88B63;
-      --brand-dark: #1A1A1A;
-      --bg-canvas: #F4F5F7;
-    }
-    body {
-      background-color: var(--bg-canvas);
-      color: var(--brand-dark);
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-    }
-    .app-screen {
-      animation: fadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    :root { --brand-gold: #C5A880; --brand-dark: #1A1A1A; --bg-canvas: #F4F5F7; }
+    body { background-color: var(--bg-canvas); color: var(--brand-dark); font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; user-select: none; }
+    .app-screen { animation: fadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-    .edit-active [contenteditable="true"] {
-      outline: 2px dashed var(--brand-gold) !important;
-      background-color: rgba(197, 168, 128, 0.15) !important;
-      border-radius: 4px;
-      padding: 2px 4px;
-    }
+    .edit-active [contenteditable="true"] { outline: 2px dashed #C5A880 !important; background-color: rgba(197, 168, 128, 0.15) !important; border-radius: 4px; padding: 2px 4px; }
+    .lang-btn.active { background-color: var(--brand-gold); color: white; }
   </style>
 </head>
 <body class="max-w-md mx-auto relative min-h-screen pb-24 shadow-2xl bg-slate-50">
 
-  <!-- Mobile Header -->
-  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-4 py-2.5 flex justify-between items-center">
-    <div class="flex items-center space-x-2.5">
-      <div class="w-9 h-9 rounded-full ring-2 ring-[#C5A880] p-0.5 bg-white overflow-hidden shadow-sm shrink-0">
-        <img src="https://lh3.googleusercontent.com/d/1oKm6c43UlbPdTftB9pOVQMDmlqQwI6Gs" alt="Ariah Luxury Villas Logo" class="w-full h-full object-cover rounded-full" decoding="async">
+  <!-- Mobile Header with Language Selector -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-4 py-2 flex flex-col space-y-2">
+    <div class="flex justify-between items-center">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-9 h-9 rounded-full ring-2 ring-[#C5A880] p-0.5 bg-white overflow-hidden shadow-sm shrink-0">
+          <img src="https://lh3.googleusercontent.com/d/1oKm6c43UlbPdTftB9pOVQMDmlqQwI6Gs" alt="Ariah Luxury Villas Logo" class="w-full h-full object-cover rounded-full" decoding="async">
+        </div>
+        <div>
+          <h1 class="text-xs font-bold tracking-wider text-slate-800 uppercase" data-translate="app_title">Ariah Luxury Villas</h1>
+          <p class="text-[10px] text-slate-400 font-medium" data-translate="app_location">Vila Preá, CE</p>
+        </div>
       </div>
-      <div>
-        <h1 class="text-xs font-bold tracking-wider text-slate-800 uppercase" id="app-title" contenteditable="false">Ariah Luxury Villas</h1>
-        <p class="text-[10px] text-slate-400 font-medium" id="app-location" contenteditable="false">Vila Preá, CE</p>
+      
+      <div class="flex items-center space-x-1">
+        <button id="edit-toggle" onclick="toggleEditMode()" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-semibold rounded-full flex items-center space-x-1 transition-all">
+          <i class="fa-solid fa-pen-to-square text-[#C5A880]"></i>
+          <span id="edit-btn-text" data-translate="edit_btn">Modify</span>
+        </button>
       </div>
     </div>
     
-    <div class="flex items-center space-x-2">
-      <button id="export-btn" onclick="exportHTML()" class="hidden px-2.5 py-1.5 bg-emerald-600 text-white text-[10px] font-semibold rounded-full flex items-center space-x-1 shadow-sm">
-        <i class="fa-solid fa-download"></i>
-        <span>Exportar</span>
-      </button>
-      <button id="edit-toggle" onclick="toggleEditMode()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-full flex items-center space-x-1.5 transition-all">
-        <i class="fa-solid fa-pen-to-square text-[10px] text-[#C5A880]"></i>
-        <span id="edit-btn-text">⚙️ Modificar</span>
-      </button>
+    <!-- Language Bar -->
+    <div class="flex justify-center items-center space-x-1.5 border-t border-slate-100 pt-1.5 pb-0.5 text-[10px]">
+      <button onclick="changeLanguage('pt')" class="lang-btn active px-2.5 py-1 rounded-full bg-slate-100 font-semibold" id="lang-pt">🇧🇷 PT</button>
+      <button onclick="changeLanguage('en')" class="lang-btn px-2.5 py-1 rounded-full bg-slate-100 font-semibold" id="lang-en">🇺🇸 EN</button>
+      <button onclick="changeLanguage('es')" class="lang-btn px-2.5 py-1 rounded-full bg-slate-100 font-semibold" id="lang-es">🇪🇸 ES</button>
+      <button onclick="changeLanguage('fr')" class="lang-btn px-2.5 py-1 rounded-full bg-slate-100 font-semibold" id="lang-fr">🇫🇷 FR</button>
+      <button onclick="changeLanguage('de')" class="lang-btn px-2.5 py-1 rounded-full bg-slate-100 font-semibold" id="lang-de">🇩🇪 DE</button>
     </div>
   </header>
 
-  <!-- Hero Banner -->
-  <div class="relative h-52 w-full overflow-hidden">
-    <img src="https://lh3.googleusercontent.com/d/1ULZ209b4rCwfKUhkeI7rLAD8nKszuyzu" alt="Ariah Luxury Villas" class="w-full h-full object-cover" fetchpriority="high" decoding="async">
-    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-4 text-white">
+  <!-- Hero Banner (Pool Picture & Increased Padding) -->
+  <div class="relative h-56 w-full overflow-hidden">
+    <img src="https://lh3.googleusercontent.com/d/1Os8gdshwa32fb5bXafS8DO5yHl6KTd4A" alt="Ariah Luxury Villas Pool" class="w-full h-full object-cover" fetchpriority="high" decoding="async">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent flex flex-col justify-end p-4 pb-8 text-white">
       <div class="flex items-center space-x-2 mb-1">
         <div class="w-8 h-8 rounded-full ring-2 ring-white/80 p-0.5 bg-white overflow-hidden shadow-md shrink-0">
           <img src="https://lh3.googleusercontent.com/d/1oKm6c43UlbPdTftB9pOVQMDmlqQwI6Gs" alt="Ariah Luxury Villas Badge" class="w-full h-full object-cover rounded-full" decoding="async">
         </div>
-        <span class="text-[10px] uppercase font-bold tracking-widest text-[#C5A880]" id="hero-tag" contenteditable="false">Guia Digital do Hóspede</span>
+        <span class="text-[10px] uppercase font-bold tracking-widest text-[#C5A880]" data-translate="hero_tag">Guia Digital do Hóspede</span>
       </div>
-      <h2 class="text-xl font-bold" id="hero-subtitle" contenteditable="false">Sua Estadia dos Sonhos no Preá</h2>
+      <h2 class="text-xl font-bold" data-translate="hero_subtitle">Sua Estadia dos Sonhos no Preá</h2>
     </div>
   </div>
 
-  <!-- Quick Action Buttons -->
-  <div class="grid grid-cols-4 gap-2 px-4 -mt-5 relative z-10">
+  <!-- Quick Action Buttons (Increased Gap Above) -->
+  <div class="grid grid-cols-4 gap-2 px-4 -mt-3 relative z-10">
     <button onclick="switchTab('house')" class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center active:scale-95 transition-transform">
-      <div class="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center text-[#C5A880] mb-1">
-        <i class="fa-solid fa-wifi text-xs"></i>
-      </div>
-      <span class="text-[10px] font-semibold text-slate-700" id="btn-label-wifi" contenteditable="false">Wi-Fi</span>
+      <div class="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center text-[#C5A880] mb-1"><i class="fa-solid fa-wifi text-xs"></i></div>
+      <span class="text-[10px] font-semibold text-slate-700" data-translate="btn_label_wifi">Wi-Fi</span>
     </button>
     <a href="https://maps.google.com/?q=Rua+Pedro+Tomaz+169+Vila+Prea" target="_blank" class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center active:scale-95 transition-transform">
-      <div class="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center text-[#C5A880] mb-1">
-        <i class="fa-solid fa-location-dot text-xs"></i>
-      </div>
-      <span class="text-[10px] font-semibold text-slate-700" id="btn-label-map" contenteditable="false">Mapa</span>
+      <div class="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center text-[#C5A880] mb-1"><i class="fa-solid fa-location-dot text-xs"></i></div>
+      <span class="text-[10px] font-semibold text-slate-700" data-translate="btn_label_map">Mapa</span>
     </a>
     <a href="https://wa.me/556596731160" target="_blank" class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center active:scale-95 transition-transform">
-      <div class="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center text-[#C5A880] mb-1">
-        <i class="fa-brands fa-whatsapp text-xs"></i>
-      </div>
-      <span class="text-[10px] font-semibold text-slate-700" id="btn-label-host" contenteditable="false">Anfitrião</span>
+      <div class="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center text-[#C5A880] mb-1"><i class="fa-brands fa-whatsapp text-xs"></i></div>
+      <span class="text-[10px] font-semibold text-slate-700" data-translate="btn_label_host">Anfitrião</span>
     </a>
     <button onclick="switchTab('logistics')" class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center active:scale-95 transition-transform">
-      <div class="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center text-[#C5A880] mb-1">
-        <i class="fa-solid fa-clock-rotate-left text-xs"></i>
-      </div>
-      <span class="text-[10px] font-semibold text-slate-700" id="btn-label-hours" contenteditable="false">Horários</span>
+      <div class="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center text-[#C5A880] mb-1"><i class="fa-solid fa-clock-rotate-left text-xs"></i></div>
+      <span class="text-[10px] font-semibold text-slate-700" data-translate="btn_label_hours">Horários</span>
     </button>
   </div>
 
   <main class="p-4 mt-2">
-
     <!-- SCREEN 1: A CASA -->
     <section id="tab-house" class="app-screen space-y-4">
-
-      <!-- PROMINENT CHECK-IN / CHECK-OUT BANNER -->
       <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white p-4 rounded-2xl shadow-md border border-slate-700 space-y-3">
         <div class="flex items-center justify-between border-b border-slate-700/80 pb-2">
-          <span class="text-[10px] uppercase font-bold tracking-widest text-[#C5A880] flex items-center" id="card-checkin-header" contenteditable="false">
-            <i class="fa-solid fa-key mr-1.5"></i> Horários Importantes
-          </span>
-          <span class="bg-[#C5A880]/20 text-[#C5A880] text-[9px] font-bold px-2 py-0.5 rounded-full uppercase border border-[#C5A880]/30" id="card-checkin-badge" contenteditable="false">Acesso Importante</span>
+          <span class="text-[10px] uppercase font-bold tracking-widest text-[#C5A880] flex items-center"><i class="fa-solid fa-key mr-1.5"></i> <span data-translate="card_checkin_header">Horários Importantres</span></span>
+          <span class="bg-[#C5A880]/20 text-[#C5A880] text-[9px] font-bold px-2 py-0.5 rounded-full uppercase border border-[#C5A880]/30" data-translate="card_checkin_badge">Acesso Importantre</span>
         </div>
-
-        <div class="grid grid-cols-2 gap-3 text-center">
-          <div class="bg-white/10 p-3 rounded-xl backdrop-blur-sm border border-white/10">
-            <span class="text-[10px] uppercase text-slate-300 font-medium block" id="lbl-checkin" contenteditable="false">Check-in</span>
-            <span class="text-xl font-bold text-emerald-400 block my-0.5" id="checkin-time" contenteditable="false">16:00</span>
-            <span class="text-[9px] text-slate-300 block" id="sub-checkin" contenteditable="false">Entrada no Imóvel</span>
+        <div class="grid grid-cols-2 gap-3 text-center text-xs">
+          <div class="bg-white/10 p-3 rounded-xl border border-white/10">
+            <span class="uppercase text-slate-300 font-medium block" data-translate="lbl_checkin">Check-in</span>
+            <span class="text-xl font-bold text-emerald-400 block my-0.5">16:00</span>
+            <span class="text-[9px] text-slate-300 block" data-translate="sub_checkin">Entrada no Imóvel</span>
           </div>
-
-          <div class="bg-white/10 p-3 rounded-xl backdrop-blur-sm border border-white/10">
-            <span class="text-[10px] uppercase text-slate-300 font-medium block" id="lbl-checkout" contenteditable="false">Check-out</span>
-            <span class="text-xl font-bold text-amber-400 block my-0.5" id="checkout-time" contenteditable="false">11:00</span>
-            <span class="text-[9px] text-slate-300 block" id="sub-checkout" contenteditable="false">Saída do Imóvel</span>
+          <div class="bg-white/10 p-3 rounded-xl border border-white/10">
+            <span class="uppercase text-slate-300 font-medium block" data-translate="lbl_checkout">Check-out</span>
+            <span class="text-xl font-bold text-amber-400 block my-0.5">11:00</span>
+            <span class="text-[9px] text-slate-300 block" data-translate="sub_checkout">Saída do Imóvel</span>
           </div>
         </div>
-
         <div class="bg-slate-800/80 p-2.5 rounded-xl text-[10px] text-slate-300 flex items-start space-x-2 border border-slate-700">
           <i class="fa-solid fa-circle-info text-[#C5A880] mt-0.5 shrink-0 text-xs"></i>
-          <p id="checkin-note" contenteditable="false"><strong>Recepção presencial:</strong> Teremos uma pessoa da nossa equipe no local para te receber e tirar dúvidas sobre o funcionamento de equipamentos da casa.</p>
+          <p data-translate="checkin_note"><strong>Recepção presencial:</strong> Teremos uma pessoa da nossa equipe no local.</p>
         </div>
       </div>
 
-      <!-- WI-FI CARD -->
-      <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-3">
-        <div class="flex items-center justify-between border-b border-slate-100 pb-2">
-          <div class="flex items-center space-x-2">
-            <i class="fa-solid fa-wifi text-[#C5A880] text-sm"></i>
-            <h3 class="text-xs font-bold text-slate-800" id="wifi-card-title" contenteditable="false">Conexão Wi-Fi</h3>
-          </div>
-          <span class="text-[9px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full" id="wifi-badge" contenteditable="false">Alta Velocidade</span>
-        </div>
-
-        <div class="flex items-center space-x-4">
-          <div class="w-24 h-24 p-1.5 bg-slate-50 rounded-xl border border-slate-200 shrink-0 flex flex-col items-center justify-center">
-            <img src="https://lh3.googleusercontent.com/d/1eQ04BdgDa3xHTtAf2SbUKtqb7zk-nQfx" alt="Wi-Fi QR Code" class="w-full h-full object-contain" decoding="async">
-          </div>
-
-          <div class="space-y-1.5 text-xs">
-            <div>
-              <span class="text-[10px] text-slate-400 uppercase font-semibold block" id="lbl-wifiname" contenteditable="false">Redes disponíveis</span>
-              <p class="font-bold text-slate-800" id="wifi-name" contenteditable="false">Karime / Karime_5g</p>
-            </div>
-            <div>
-              <span class="text-[10px] text-slate-400 uppercase font-semibold block" id="lbl-wifipass" contenteditable="false">Senha de acesso</span>
-              <p class="font-mono bg-slate-100 px-2 py-0.5 rounded text-slate-800 inline-block font-bold" id="wifi-pass" contenteditable="false">12345678</p>
-            </div>
-            <p class="text-[9px] text-slate-400" id="wifi-instruction" contenteditable="false">Aponte a câmera do celular para conectar automaticamente.</p>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Welcome Hosts Card -->
       <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center space-x-3">
         <div class="w-10 h-10 rounded-full bg-[#C5A880] text-white flex items-center justify-center font-bold text-sm shrink-0">K&A</div>
         <div>
-          <h3 class="text-xs font-bold text-slate-800" id="host-card-title" contenteditable="false">Conheça Seus Anfitriões</h3>
-          <p class="text-[11px] text-slate-500 mt-0.5" id="welcome-msg" contenteditable="false">"Olá! Eu sou a Karime, junto com meu companheiro André. É um prazer recebê-lo em nosso destino!"</p>
+          <h3 class="text-xs font-bold text-slate-800" data-translate="host_card_title">Conheça Seus Anfitriões</h3>
+          <p class="text-[11px] text-slate-500 mt-0.5" data-translate="welcome_msg">"Olá! Eu sou a Karime, junto com meu companheiro André. É um prazer!"</p>
         </div>
       </div>
 
-      <!-- Photo Gallery Carousel -->
-      <div class="space-y-1.5">
-        <div class="flex justify-between items-center px-1">
-          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400" id="gallery-title" contenteditable="false">Conheça a Villa</span>
-          <span class="text-[10px] text-[#C5A880] font-medium" id="gallery-sub" contenteditable="false">Arraste para o lado →</span>
-        </div>
-        <div class="flex space-x-3 overflow-x-auto no-scrollbar pb-1">
-          <div class="w-60 shrink-0 rounded-2xl overflow-hidden shadow-sm border border-slate-100 bg-white">
-            <img src="https://lh3.googleusercontent.com/d/1Os8gdshwa32fb5bXafS8DO5yHl6KTd4A" class="h-32 w-full object-cover" alt="Piscina Privada" loading="lazy" decoding="async">
-            <div class="p-2 text-center text-[10px] font-semibold text-slate-700" id="img-cap-1" contenteditable="false">Piscina Privativa & Deck</div>
-          </div>
-          <div class="w-60 shrink-0 rounded-2xl overflow-hidden shadow-sm border border-slate-100 bg-white">
-            <img src="https://lh3.googleusercontent.com/d/1hs6fbcA4WHYerZvH2s4SKa1nzjx59SJX" class="h-32 w-full object-cover" alt="Área Externa & Gourmet" loading="lazy" decoding="async">
-            <div class="p-2 text-center text-[10px] font-semibold text-slate-700" id="img-cap-2" contenteditable="false">Área Gourmet & Varanda</div>
-          </div>
-          <div class="w-60 shrink-0 rounded-2xl overflow-hidden shadow-sm border border-slate-100 bg-white">
-            <img src="https://lh3.googleusercontent.com/d/1dBVnaNBUv9Y9W5mu_0pZP0qvjp3gSggj" class="h-32 w-full object-cover" alt="Suíte Principal" loading="lazy" decoding="async">
-            <div class="p-2 text-center text-[10px] font-semibold text-slate-700" id="img-cap-3" contenteditable="false">Suíte Climatizada</div>
-          </div>
-          <div class="w-60 shrink-0 rounded-2xl overflow-hidden shadow-sm border border-slate-100 bg-white">
-            <img src="https://lh3.googleusercontent.com/d/1hs6fbcA4WHYerZvH2s4SKa1nzjx59SJX" class="h-32 w-full object-cover" alt="Cozinha Integrada" loading="lazy" decoding="async">
-            <div class="p-2 text-center text-[10px] font-semibold text-slate-700" id="img-cap-4" contenteditable="false">Cozinha Integrada</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- House Capacity & Layout Stats -->
+      <!-- House Capacity & Structure -->
       <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-3">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400" id="struct-header" contenteditable="false">Capacidade & Estrutura</h3>
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400" data-translate="struct_header">Capacidade & Estrutura</h3>
         <div class="grid grid-cols-3 gap-2 text-center text-xs">
-          <div class="p-2.5 bg-slate-50 rounded-xl"><i class="fa-solid fa-users text-[#C5A880] mb-1 block text-sm"></i><span id="stat-1" contenteditable="false">Até 7 pessoas</span></div>
-          <div class="p-2.5 bg-slate-50 rounded-xl"><i class="fa-solid fa-bed text-[#C5A880] mb-1 block text-sm"></i><span id="stat-2" contenteditable="false">2 Quartos (3 beds)</span></div>
-          <div class="p-2.5 bg-slate-50 rounded-xl"><i class="fa-solid fa-bath text-[#C5A880] mb-1 block text-sm"></i><span id="stat-3" contenteditable="false">3 Banheiros</span></div>
+          <div class="p-2.5 bg-slate-50 rounded-xl"><i class="fa-solid fa-users text-[#C5A880] mb-1 block text-sm"></i><span data-translate="stat_1">Até 7 pessoas</span></div>
+          <div class="p-2.5 bg-slate-50 rounded-xl"><i class="fa-solid fa-bed text-[#C5A880] mb-1 block text-sm"></i><span data-translate="stat_2">2 Quartos (3 beds)</span></div>
+          <div class="p-2.5 bg-slate-50 rounded-xl"><i class="fa-solid fa-bath text-[#C5A880] mb-1 block text-sm"></i><span data-translate="stat_3">3 Banheiros</span></div>
         </div>
         <div class="bg-slate-50 p-2.5 rounded-xl text-[11px] text-slate-600 space-y-1">
-          <p id="beds-config" contenteditable="false"><strong>Configuração de Camas:</strong> 1 Cama King (casal), 1 Cama de casal, 3 Camas de solteiro.</p>
-          <p id="baths-config" contenteditable="false"><strong>Banheiros:</strong> 2 Suítes + 1 Banheiro social.</p>
-          <p id="outdoor-config" contenteditable="false"><strong>Área Externa:</strong> Piscina Privada & Churrasqueira.</p>
+          <p data-translate="beds_config"><strong>Camas:</strong> 1 King, 1 Casal, 3 Solteiro.</p>
+          <p data-translate="outdoor_config"><strong>Área Externa:</strong> Piscina & Churrasqueira.</p>
         </div>
       </div>
 
-      <!-- Amenities -->
-      <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-3">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center" id="amenities-header" contenteditable="false">
-          <i class="fa-solid fa-concierge-bell mr-1.5 text-[#C5A880]"></i> Amenidades do Imóvel
-        </h3>
-        <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-700">
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span id="am-1" contenteditable="false">Estacionamento</span></div>
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span id="am-2" contenteditable="false">Ar condicionado nos quartos</span></div>
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span id="am-3" contenteditable="false">Roupa de cama completa</span></div>
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span id="am-4" contenteditable="false">Toalhas de banho</span></div>
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span id="am-5" contenteditable="false">Papel higiênico</span></div>
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span id="am-6" contenteditable="false">Pó de café e Açúcar</span></div>
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span id="am-7" contenteditable="false">Sal e temperos</span></div>
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span id="am-8" contenteditable="false">Cafeteira elétrica</span></div>
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span id="am-9" contenteditable="false">Airfryer & Microondas</span></div>
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span id="am-10" contenteditable="false">Panos de prato</span></div>
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span id="am-11" contenteditable="false">Esponja e detergente</span></div>
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span id="am-12" contenteditable="false">Guarderia para kite</span></div>
-        </div>
-      </div>
-
-      <!-- House Rules -->
+      <!-- PDF HOUSE RULES -->
       <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-2.5">
-        <h3 class="text-xs font-bold text-red-600 flex items-center" id="rules-header" contenteditable="false">
-          <i class="fa-solid fa-triangle-exclamation mr-1.5"></i> Regras da Casa
-        </h3>
-        <ul class="text-[11px] text-slate-700 space-y-2 pl-1">
-          <li class="flex items-start"><i class="fa-solid fa-ban text-red-500 mr-2 mt-0.5"></i><span id="r1" contenteditable="false">Proibido fazer barulho após as 22h.</span></li>
-          <li class="flex items-start"><i class="fa-solid fa-ban text-red-500 mr-2 mt-0.5"></i><span id="r2" contenteditable="false">Proibido fazer festas, exceto com autorização prévia.</span></li>
-          <li class="flex items-start"><i class="fa-solid fa-ban text-red-500 mr-2 mt-0.5"></i><span id="r3" contenteditable="false">Proibido fumar dentro da casa.</span></li>
-          <li class="flex items-start"><i class="fa-solid fa-paw text-slate-400 mr-2 mt-0.5"></i><span id="r4" contenteditable="false">Proibido trazer animais, salvo com autorização prévia.</span></li>
-          <li class="flex items-start"><i class="fa-solid fa-power-off text-slate-400 mr-2 mt-0.5"></i><span id="r5" contenteditable="false">Desligue o ar condicionado e apague as luzes antes de sair.</span></li>
-          <li class="flex items-start"><i class="fa-solid fa-clock text-slate-400 mr-2 mt-0.5"></i><span id="r7" contenteditable="false">Respeite os horários de check-in (16:00) e check-out (11:00).</span></li>
+        <h3 class="text-xs font-bold text-red-600 flex items-center"><i class="fa-solid fa-triangle-exclamation mr-1.5"></i> <span data-translate="rules_header">Regras da Casa</span></h3>
+        <ul class="text-[11px] text-slate-700 space-y-2 pl-1 list-none">
+          <li class="flex items-start"><i class="fa-solid fa-ban text-red-500 mr-2 mt-0.5"></i><span data-translate="r1">Barulho após as 22h.</span></li>
+          <li class="flex items-start"><i class="fa-solid fa-ban text-red-500 mr-2 mt-0.5"></i><span data-translate="r3">Fumar dentro da casa.</span></li>
+          <li class="flex items-start"><i class="fa-solid fa-power-off text-slate-400 mr-2 mt-0.5"></i><span data-translate="r5">Desligue o ar condicionado antes de sair.</span></li>
+          <li class="flex items-start"><i class="fa-solid fa-fire-burner text-slate-400 mr-2 mt-0.5"></i><span data-translate="r9">Limpar a churrasqueira depois.</span></li>
         </ul>
       </div>
-
     </section>
 
     <!-- SCREEN 2: EXPLORAR -->
     <section id="tab-explore" class="app-screen space-y-4 hidden">
       <div>
-        <h2 class="text-base font-bold text-slate-800" id="exp-title" contenteditable="false">Guia do Preá & Atrações</h2>
-        <p class="text-[11px] text-slate-400" id="exp-sub" contenteditable="false">Sugestões curadas para aventuras, velejada e gastronomia.</p>
+        <h2 class="text-base font-bold text-slate-800" data-translate="exp_title">Guia do Preá & Atrações</h2>
+        <p class="text-[11px] text-slate-400" data-translate="exp_sub">Sugestões curadas para aventuras e gastronomia.</p>
+      </div>
+
+      <div class="relative h-32 rounded-2xl overflow-hidden shadow-sm">
+        <img src="https://lh3.googleusercontent.com/d/1L5c0BRRFA1wCdi7fjTJgRsdcRkWsEE4U" class="w-full h-full object-cover brightness-75" alt="Praia do Preá" loading="lazy" decoding="async">
+        <div class="absolute inset-0 p-3 flex flex-col justify-end text-white">
+          <span class="text-[9px] font-bold uppercase tracking-widest text-amber-300" data-translate="beach_card_tag">Praia do Preá</span>
+          <p class="text-xs font-semibold" data-translate="beach_card_desc">O paraíso do Kitesurfe e do pôr do sol</p>
+        </div>
       </div>
 
       <div class="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm text-[11px] text-slate-700 space-y-1">
-        <h3 class="font-bold text-slate-800 mb-1" id="dist-header" contenteditable="false"><i class="fa-solid fa-person-walking text-[#C5A880] mr-1"></i> Distâncias a pé da Villa:</h3>
-        <p id="dist-1" contenteditable="false">• 5 min até a praia</p>
-        <p id="dist-2" contenteditable="false">• 2 min até o mercado Atacadão do Vale</p>
-        <p id="dist-3" contenteditable="false">• 10 min até o Rancho do Kite</p>
-      </div>
-
-      <div class="space-y-3">
-        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block" id="cat-kite-header" contenteditable="false">Kite & Passeios</span>
-        
-        <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm p-3.5 space-y-2">
-          <div class="flex justify-between items-start">
-            <span class="bg-sky-100 text-sky-700 text-[9px] font-bold px-2 py-0.5 rounded-full" id="tag-rancho" contenteditable="false">KITE CLUB</span>
-            <span class="text-xs font-bold text-amber-500"><i class="fa-solid fa-star"></i> 4.8</span>
-          </div>
-          <h4 class="text-xs font-bold text-slate-800" id="place-1-title" contenteditable="false">Rancho do Kite</h4>
-          <p class="text-[11px] text-slate-500" id="place-1-desc" contenteditable="false">Escola de kitesurfe no Preá, com restaurante, música, piscina e atividades culturais.</p>
-          <div class="flex justify-between items-center text-[10px] pt-1">
-            <span class="text-slate-400" id="walk-rancho" contenteditable="false"><i class="fa-solid fa-person-walking mr-1"></i>10 min a pé</span>
-            <a href="https://maps.google.com/?q=Rancho+do+Kite+Prea" target="_blank" class="text-[#C5A880] font-bold">Ver Rota →</a>
-          </div>
-        </div>
-
-        <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm p-3.5 space-y-2">
-          <div class="flex justify-between items-start">
-            <span class="bg-amber-100 text-amber-700 text-[9px] font-bold px-2 py-0.5 rounded-full" id="tag-sertoes" contenteditable="false">RALLY & UTVS</span>
-            <span class="text-xs font-bold text-amber-500"><i class="fa-solid fa-star"></i> 4.9</span>
-          </div>
-          <h4 class="text-xs font-bold text-slate-800" id="place-2-title" contenteditable="false">Sertões Experience</h4>
-          <p class="text-[11px] text-slate-500" id="place-2-desc" contenteditable="false">Troque o buggy tradicional pela adrenalina de pilotar UTVs, motos ou quadriciclos com suporte de luxo.</p>
-          <div class="flex justify-between items-center text-[10px] pt-1">
-            <span class="text-slate-400" id="drive-sertoes" contenteditable="false"><i class="fa-solid fa-car mr-1"></i>Tour Guiado</span>
-            <a href="https://wa.me/558897104187" target="_blank" class="text-[#C5A880] font-bold">Reservar →</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="space-y-3">
-        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block" id="cat-rest-header" contenteditable="false">Restaurantes & Cafés</span>
-
-        <div class="bg-amber-50/60 border border-amber-200/60 rounded-2xl p-3.5 space-y-1.5">
-          <div class="flex justify-between items-start">
-            <span class="bg-amber-500 text-white text-[9px] font-bold px-2 py-0.5 rounded" id="tag-asa7" contenteditable="false">20% OFF HÓSPEDES</span>
-            <span class="text-xs font-bold text-amber-600"><i class="fa-solid fa-star"></i> 4.7</span>
-          </div>
-          <h4 class="text-xs font-bold text-slate-800" id="rest-1-title" contenteditable="false">Asa7 Pizzaria</h4>
-          <p class="text-[11px] text-slate-600" id="rest-1-desc" contenteditable="false">Todos os itens do cardápio com 20% de desconto para hóspedes da casa.</p>
-        </div>
+        <p data-translate="dist_1">• 5 min a pé até a praia</p>
+        <p data-translate="dist_2">• 2 min a pé até o mercado Atacadão do Vale</p>
       </div>
     </section>
 
     <!-- SCREEN 3: LOGÍSTICA & SERVIÇOS -->
     <section id="tab-logistics" class="app-screen space-y-4 hidden">
       <div>
-        <h2 class="text-base font-bold text-slate-800" id="log-title" contenteditable="false">Serviços & Logística</h2>
-        <p class="text-[11px] text-slate-400" id="log-sub" contenteditable="false">Contatos oficiais fornecidos pelo guia da casa.</p>
+        <h2 class="text-base font-bold text-slate-800" data-translate="log_title">Serviços & Logística</h2>
+        <p class="text-[11px] text-slate-400" data-translate="log_sub">Contatos oficiais fornecidos pelo guia da casa.</p>
       </div>
 
       <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-3">
-        <h3 class="text-xs font-bold text-slate-700 border-b border-slate-100 pb-2" id="contacts-header" contenteditable="false"><i class="fa-solid fa-phone mr-1.5 text-[#C5A880]"></i> Contatos Directos</h3>
+        <h3 class="text-xs font-bold text-slate-700 border-b border-slate-100 pb-2 flex items-center"><i class="fa-solid fa-phone mr-1.5 text-[#C5A880]"></i> <span data-translate="contacts_header">Contatos Diretos</span></h3>
         
         <div class="flex justify-between items-center text-xs">
           <div>
-            <p class="font-semibold text-slate-800" id="contact-1-name" contenteditable="false">Transfers e Táxi (Deborah)</p>
-            <p class="text-[10px] text-slate-400" id="contact-1-num" contenteditable="false">+55 65 9673 1160</p>
+            <p class="font-semibold text-slate-800" data-translate="contact_1_name">Transfers e Táxi (Deborah)</p>
+            <p class="text-[10px] text-slate-400">+55 65 9673 1160</p>
           </div>
           <a href="https://wa.me/556596731160" target="_blank" class="px-3 py-1 bg-emerald-500 text-white font-semibold rounded-full text-[10px]"><i class="fa-brands fa-whatsapp mr-1"></i>Chamar</a>
         </div>
-
-        <div class="flex justify-between items-center text-xs border-t border-slate-100 pt-2">
-          <div>
-            <p class="font-semibold text-slate-800" id="contact-2-name" contenteditable="false">Quadriciclo e Moto (Carlim)</p>
-            <p class="text-[10px] text-slate-400" id="contact-2-num" contenteditable="false">+55 88 9710 4187</p>
-          </div>
-          <a href="https://wa.me/558897104187" target="_blank" class="px-3 py-1 bg-emerald-500 text-white font-semibold rounded-full text-[10px]"><i class="fa-brands fa-whatsapp mr-1"></i>Chamar</a>
-        </div>
-
-        <div class="flex justify-between items-center text-xs border-t border-slate-100 pt-2">
-          <div>
-            <p class="font-semibold text-slate-800" id="contact-3-name" contenteditable="false">Aluguel Fatbikes (Bike Mania Preá)</p>
-            <p class="text-[10px] text-slate-400" id="contact-3-num" contenteditable="false">+55 88 99949-8504</p>
-          </div>
-          <a href="https://wa.me/5588999498504" target="_blank" class="px-3 py-1 bg-emerald-500 text-white font-semibold rounded-full text-[10px]"><i class="fa-brands fa-whatsapp mr-1"></i>Chamar</a>
-        </div>
       </div>
     </section>
-
   </main>
 
   <!-- FLOATING Q&A AI ASSISTANT BUTTON -->
   <div class="fixed bottom-20 right-4 z-50">
     <button onclick="toggleQAModal()" class="bg-[#C5A880] text-white px-4 py-3 rounded-full shadow-lg flex items-center space-x-2 font-bold text-xs hover:bg-[#b0926a] transition-all active:scale-95">
       <i class="fa-solid fa-wand-magic-sparkles text-sm"></i>
-      <span>Dúvidas? Pergunte aqui</span>
+      <span data-translate="qa_btn">Dúvidas? Pergunte aqui</span>
     </button>
   </div>
 
   <!-- Q&A MODAL DIALOG -->
   <div id="qa-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex flex-col justify-end max-w-md mx-auto">
-    <div class="bg-white rounded-t-3xl p-4 h-[80vh] flex flex-col justify-between shadow-2xl">
-      
-      <!-- Modal Header -->
+    <div class="bg-white rounded-t-3xl p-4 h-[80vh] flex flex-col justify-between shadow-2xl animate-in slide-in-from-bottom duration-300">
       <div class="flex justify-between items-center border-b border-slate-100 pb-3">
         <div class="flex items-center space-x-2">
-          <div class="w-7 h-7 rounded-full bg-[#C5A880] text-white flex items-center justify-center text-xs">
-            <i class="fa-solid fa-robot"></i>
-          </div>
+          <div class="w-7 h-7 rounded-full bg-[#C5A880] text-white flex items-center justify-center text-xs"><i class="fa-solid fa-robot"></i></div>
           <div>
-            <h3 class="text-xs font-bold text-slate-800">Assistente Ariah Villa</h3>
-            <p class="text-[9px] text-slate-400">Resposta Instantânea 24/7</p>
+            <h3 class="text-xs font-bold text-slate-800">Assistente Ariah AI</h3>
+            <p class="text-[9px] text-slate-400" data-translate="qa_header_sub">Inteligência Artificial 24/7</p>
           </div>
         </div>
-        <button onclick="toggleQAModal()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center text-xs">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
+        <button onclick="toggleQAModal()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center text-xs"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
-      <!-- Chat Messages Container -->
       <div id="chat-messages" class="flex-1 overflow-y-auto my-3 space-y-3 px-1 no-scrollbar text-xs">
-        <div class="bg-amber-50 p-3 rounded-2xl border border-amber-100 text-slate-700">
-          👋 Olá! Sou o assistente virtual da <strong>Ariah Luxury Villas</strong>. Pergunte qualquer dúvida sobre Wi-Fi, tempo até o aeroporto, check-in, regras ou passeios!
+        <div id="welcome-bubble" class="bg-amber-50 p-3 rounded-2xl border border-amber-100 text-slate-700">
+          <!-- Translatable welcome message loaded by JS -->
         </div>
       </div>
 
-      <!-- Quick Chips Suggestion -->
-      <div class="flex space-x-1.5 overflow-x-auto no-scrollbar py-1 text-[10px]">
-        <button onclick="askPreset('Quanto tempo é para chegar no aeroporto?')" class="bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full shrink-0">🚖 Tempo até o Aeroporto</button>
-        <button onclick="askPreset('Qual a senha do wifi?')" class="bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full shrink-0">📶 Senha Wi-Fi</button>
-        <button onclick="askPreset('Qual o horário de checkout?')" class="bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full shrink-0">⏰ Checkout</button>
-        <button onclick="askPreset('Quais são as regras?')" class="bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full shrink-0">📜 Regras</button>
+      <!-- Quick Chips Suggestions -->
+      <div id="quick-chips" class="flex space-x-1.5 overflow-x-auto no-scrollbar py-1 text-[10px]">
+        <!-- Translatable chips loaded by JS -->
       </div>
 
-      <!-- Input Bar -->
       <div class="flex items-center space-x-2 pt-2 border-t border-slate-100">
-        <input type="text" id="user-query" placeholder="Digite sua dúvida aqui..." class="flex-1 bg-slate-100 text-xs px-3.5 py-2.5 rounded-full outline-none focus:ring-1 focus:ring-[#C5A880]" onkeypress="if(event.key==='Enter') answerQuestion()">
-        <button onclick="answerQuestion()" class="w-9 h-9 rounded-full bg-[#C5A880] text-white flex items-center justify-center shrink-0">
-          <i class="fa-solid fa-paper-plane text-xs"></i>
-        </button>
+        <input type="text" id="user-query" placeholder="Digite sua dúvida..." class="flex-1 bg-slate-100 text-xs px-3.5 py-2.5 rounded-full outline-none focus:ring-1 focus:ring-[#C5A880]" onkeypress="if(event.key==='Enter') answerQuestion()" data-translate-attr="placeholder:placeholder_txt">
+        <button onclick="answerQuestion()" class="w-9 h-9 rounded-full bg-[#C5A880] text-white flex items-center justify-center shrink-0"><i class="fa-solid fa-paper-plane text-xs"></i></button>
       </div>
-
     </div>
   </div>
 
   <!-- Bottom Navigation Bar -->
   <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/90 backdrop-blur-md border-t border-slate-200/80 grid grid-cols-3 py-2 z-40">
     <button onclick="switchTab('house')" id="btn-house" class="flex flex-col items-center justify-center text-slate-400 active:text-[#C5A880]">
-      <i class="fa-solid fa-house text-base mb-0.5"></i>
-      <span class="text-[10px] font-medium" id="nav-lbl-house" contenteditable="false">A Casa</span>
+      <i class="fa-solid fa-house text-base mb-0.5"></i><span class="text-[10px] font-medium" data-translate="nav_lbl_house">A Casa</span>
     </button>
     <button onclick="switchTab('explore')" id="btn-explore" class="flex flex-col items-center justify-center text-slate-400">
-      <i class="fa-solid fa-compass text-base mb-0.5"></i>
-      <span class="text-[10px] font-medium" id="nav-lbl-explore" contenteditable="false">Explorar</span>
+      <i class="fa-solid fa-compass text-base mb-0.5"></i><span class="text-[10px] font-medium" data-translate="nav_lbl_explore">Explorar</span>
     </button>
     <button onclick="switchTab('logistics')" id="btn-logistics" class="flex flex-col items-center justify-center text-slate-400">
-      <i class="fa-solid fa-concierge-bell text-base mb-0.5"></i>
-      <span class="text-[10px] font-medium" id="nav-lbl-services" contenteditable="false">Serviços</span>
+      <i class="fa-solid fa-concierge-bell text-base mb-0.5"></i><span class="text-[10px] font-medium" data-translate="nav_lbl_services">Serviços</span>
     </button>
   </nav>
 
   <script>
     let isEditing = false;
+    let currentLanguage = 'pt';
+    const GEMINI_API_KEY = "AQ.Ab8RN6KugvyALh2TRSaR9AZ1qcNcAYznYyqfNWoKqcxaxylS4Q";
 
-    // LOCAL KNOWLEDGE BASE FOR GUARANTEED 100% RELIABLE MATCHING
-    const localKnowledge = [
-      {
-        keywords: ["aeroporto", "airport", "chegar", "tempo", "duracao", "duração", "distancia", "distância", "transfer", "taxi", "táxi", "deborah", "voo", "deslocamento"],
-        answer: `🚖 <strong>Aeroporto & Transfers:</strong><br>
-        • <strong>Aeroporto de Jericoacoara (JJD):</strong> ~35 a 45 minutos de 4x4/Transfer.<br>
-        • <strong>Aeroporto de Fortaleza (FOR):</strong> ~4h a 4h30min de viagem.<br><br>
-        Para agendar seu transfer com segurança e confirmar o tempo exato, fale com a <strong>Deborah</strong> (+55 65 9673 1160):<br><br>
-        <a href="https://wa.me/556596731160?text=Olá%20Deborah,%20gostaria%20de%20saber%20o%20tempo%20e%20valores%20de%20transfer%20para%20o%20aeroporto." target="_blank" class="inline-flex items-center space-x-1.5 bg-emerald-500 text-white font-bold px-3 py-1.5 rounded-full text-[10px]"><i class="fa-brands fa-whatsapp"></i><span>Chamar Deborah no WhatsApp</span></a>`
+    // --- TRANSLATIONS DICTIONARY ---
+    const translations = {
+      pt: {
+        app_title: "Ariah Luxury Villas", app_location: "Vila Preá, CE", edit_btn: "Modify",
+        hero_tag: "Guia Digital do Hóspede", hero_subtitle: "Sua Estadia dos Sonhos no Preá",
+        btn_label_wifi: "Wi-Fi", btn_label_map: "Mapa", btn_label_host: "Anfitrião", btn_label_hours: "Horários",
+        card_checkin_header: "Horários Importantres", card_checkin_badge: "Acesso Importantre",
+        lbl_checkin: "Check-in", sub_checkin: "Entrada no Imóvel", lbl_checkout: "Check-out", sub_checkout: "Saída do Imóvel",
+        checkin_note: "<strong>Recepção presencial:</strong> Teremos uma pessoa da nossa equipe no local.",
+        host_card_title: "Conheça Seus Anfitriões", welcome_msg: "\"Olá! Eu sou a Karime, junto com o André. É um prazer!\"",
+        struct_header: "Capacidade & Estrutura", stat_1: "Até 7 pessoas", stat_2: "2 Quartos (3 beds)", stat_3: "3 Banheiros", beds_config: "<strong>Camas:</strong> 1 King, 1 Casal, 3 Solteiro.", outdoor_config: "<strong>Área Externa:</strong> Piscina & Churrasqueira.",
+        rules_header: "Regras da Casa", r1: "Barulho após as 22h.", r3: "Fumar dentro da casa.", r5: "Desligue o ar condicionado antes de sair.", r9: "Limpar a churrasqueira depois.",
+        exp_title: "Guia do Preá & Atrações", exp_sub: "Sugestões curadas para aventuras.", beach_card_tag: "Praia do Preá", beach_card_desc: "O paraíso do Kitesurfe e do pôr do sol", dist_1: "• 5 min a pé até a praia", dist_2: "• 2 min a pé até o mercado",
+        log_title: "Serviços & Logística", log_sub: "Contatos oficiais.", contacts_header: "Contatos Diretos", contact_1_name: "Transfers e Táxi (Deborah)",
+        qa_btn: "Dúvidas? Pergunte aqui", qa_header_sub: "Inteligência Artificial 24/7", welcome_bubble_msg: "👋 Olá! Sou o assistente com IA da **Ariah Luxury Villas**. Wi-Fi, check-in, transfers ou passeios!",
+        chip_wifi: "📶 Senha Wi-Fi", chip_airport: "🚖 Transfer/Aeroporto", chip_checkout: "⏰ Horário Checkout", chip_rules: "📜 Regras da Casa",
+        placeholder_txt: "Digite sua dúvida...", pensandotxt: "Pensando...", conn_prob_txt: "Tive um pequeno problema de conexão.", falar_wa_txt: "Falar no WhatsApp", ai_wa_redirect_msg: "Olá Karime & André, estou no guia da casa e gostaria de saber: "
       },
-      {
-        keywords: ["wifi", "wi-fi", "internet", "senha", "password", "rede", "conexao", "conexão"],
-        answer: `📶 <strong>Conexão Wi-Fi Ariah Villas:</strong><br>
-        • Redes: <strong>Karime</strong> ou <strong>Karime_5g</strong><br>
-        • Senha: <span class="font-mono font-bold bg-slate-200 px-1 rounded">12345678</span><br><br>
-        Você também pode escanear o QR Code no card da página principal do guia!`
+      en: {
+        app_title: "Ariah Luxury Villas", app_location: "Vila Preá, CE", edit_btn: "Modify",
+        hero_tag: "Guest Digital Guide", hero_subtitle: "Your Dream Stay in Preá",
+        btn_label_wifi: "Wi-Fi", btn_label_map: "Map", btn_label_host: "Host", btn_label_hours: "Hours",
+        card_checkin_header: "Important Hours", card_checkin_badge: "Important Access",
+        lbl_checkin: "Check-in", sub_checkin: "Property Entry", lbl_checkout: "Check-out", sub_checkout: "Property Exit",
+        checkin_note: "<strong>In-person greeting:</strong> A team member will be on-site to welcome you.",
+        host_card_title: "Meet Your Hosts", welcome_msg: "\"Hello! I am Karime, along with André. It's a pleasure!\"",
+        struct_header: "Capacity & Structure", stat_1: "Up to 7 people", stat_2: "2 Bedrooms (3 beds)", stat_3: "3 Bathrooms", beds_config: "<strong>Beds:</strong> 1 King, 1 Double, 3 Singles.", outdoor_config: "<strong>Outdoor:</strong> Private Pool & BBQ.",
+        rules_header: "House Rules", r1: "No noise after 10 PM.", r3: "No smoking indoors.", r5: "Turn off A/C before leaving.", r9: "Clean BBQ grill after use.",
+        exp_title: "Preá Guide & Attractions", exp_sub: "Curated suggestions for adventures.", beach_card_tag: "Preá Beach", beach_card_desc: "Paradise of Kitesurfing and sunsets", dist_1: "• 5 min walk to the beach", dist_2: "• 2 min walk to the market",
+        log_title: "Services & Logistics", log_sub: "Official contacts.", contacts_header: "Direct Contacts", contact_1_name: "Transfers & Taxi (Deborah)",
+        qa_btn: "Questions? Ask here", qa_header_sub: "Artificial Intelligence 24/7", welcome_bubble_msg: "👋 Hello! I am the AI assistant for **Ariah Luxury Villas**. WiFi, check-in, transfers, or tours!",
+        chip_wifi: "📶 WiFi Password", chip_airport: "🚖 Transfer/Airport", chip_checkout: "⏰ Checkout Time", chip_rules: "📜 House Rules",
+        placeholder_txt: "Type your question...", pensandotxt: "Thinking...", conn_prob_txt: "I had a small connection problem.", falar_wa_txt: "Speak on WhatsApp", ai_wa_redirect_msg: "Hello Karime & André, I am on the house guide and would like to know: "
       },
-      {
-        keywords: ["checkin", "check-in", "entrada", "horario de entrada", "horário de entrada", "recepcao", "recepção", "chave", "chaves"],
-        answer: `🔑 <strong>Check-in:</strong> 16:00.<br>
-        Teremos uma pessoa da nossa equipe no local para te receber, entregar as chaves e mostrar o imóvel.`
+      es: {
+        app_title: "Ariah Luxury Villas", app_location: "Vila Preá, CE", edit_btn: "Modify",
+        hero_tag: "Guía Digital del Huésped", hero_subtitle: "Su Estancia Soñada en Preá",
+        btn_label_wifi: "Wi-Fi", btn_label_map: "Mapa", btn_label_host: "Anfitrión", btn_label_hours: "Horarios",
+        card_checkin_header: "Horarios Importantes", card_checkin_badge: "Acceso Importante",
+        lbl_checkin: "Check-in", sub_checkin: "Entrada al Inmueble", lbl_checkout: "Check-out", sub_checkout: "Salida del Inmueble",
+        checkin_note: "<strong>Recepción presencial:</strong> Un miembro de nuestro equipo estará allí.",
+        host_card_title: "Conozca a sus Anfitriones", welcome_msg: "\"¡Hola! Soy Karime, junto con André. ¡Es un placer!\"",
+        struct_header: "Capacidad y Estructura", stat_1: "Hasta 7 personas", stat_2: "2 Cuartos (3 beds)", stat_3: "3 Baños", beds_config: "<strong>Camas:</strong> 1 King, 1 Doble, 3 Individuales.", outdoor_config: "<strong>Exterior:</strong> Piscina & Barbacoa.",
+        rules_header: "Reglas de Casa", r1: "Sin ruido después 22h.", r3: "Prohibido fumar dentro.", r5: "Apague el aire antes de salir.", r9: "Limpiar la barbacoa después.",
+        exp_title: "Guía de Preá & Atracciones", exp_sub: "Sugerencias para aventuras.", beach_card_tag: "Playa do Preá", beach_card_desc: "El paraíso del Kitesurf y el atardecer", dist_1: "• 5 min a pie de playa", dist_2: "• 2 min a pie del mercado",
+        log_title: "Servicios y Logística", log_sub: "Contactos oficiales.", contacts_header: "Contactos Directos", contact_1_name: "Transfers y Taxi (Deborah)",
+        qa_btn: "¿Dudas? Pregunte aquí", qa_header_sub: "Inteligencia Artificial 24/7", welcome_bubble_msg: "👋 ¡Hola! Soy el asistente IA de **Ariah Luxury Villas**. ¡WiFi, check-in, transfers o tours!",
+        chip_wifi: "📶 Contraseña WiFi", chip_airport: "🚖 Transfer/Aeropuerto", chip_checkout: "⏰ Hora Checkout", chip_rules: "📜 Regras da Casa",
+        placeholder_txt: "Escribe tu duda...", pensandotxt: "Pensando...", conn_prob_txt: "Tuve un pequeño problema de conexión.", falar_wa_txt: "Hablar por WhatsApp", ai_wa_redirect_msg: "Hola Karime & André, estoy en la guía de casa y quisiera saber: "
       },
-      {
-        keywords: ["checkout", "check-out", "saida", "saída", "sair", "devolucao", "devolução"],
-        answer: `⏰ <strong>Check-out:</strong> até às 11:00.<br>
-        Por favor, certifique-se de deixar louças limpas, apagar luzes/ar-condicionado e avisar a equipe para a entrega das chaves.`
+      fr: {
+        app_title: "Ariah Luxury Villas", app_location: "Vila Preá, CE", edit_btn: "Modify",
+        hero_tag: "Guide Numérique Invité", hero_subtitle: "Votre Séjour de Rêve à Preá",
+        btn_label_wifi: "Wi-Fi", btn_label_map: "Carte", btn_label_host: "Hôte", btn_label_hours: "Horaires",
+        card_checkin_header: "Horaires Importants", card_checkin_badge: "Accès Important",
+        lbl_checkin: "Check-in", sub_checkin: "Entrée dans Lieux", lbl_checkout: "Check-out", sub_checkout: "Sortie des Lieux",
+        checkin_note: "<strong>Accueil en personne:</strong> Un membre de l'équipe sera présent.",
+        host_card_title: "Rencontrez vos Hôtes", welcome_msg: "\"Bonjour! Je suis Karime, avec André. C'est un plaisir!\"",
+        struct_header: "Capacité & Structure", stat_1: "Jusqu'à 7 personnes", stat_2: "2 Chambres (3 beds)", stat_3: "3 Salles de bain", beds_config: "<strong>Lits:</strong> 1 King, 1 Double, 3 Simples.", outdoor_config: "<strong>Extérieur:</strong> Piscine & Barbecue.",
+        rules_header: "Règlement Intérieur", r1: "Pas de bruit après 22h.", r3: "Interdit fumer à l'intérieur.", r5: "Éteignez la clim avant partir.", r9: "Nettoyer barbecue après.",
+        exp_title: "Guide de Preá & Attractions", exp_sub: "Suggestions pour aventures.", beach_card_tag: "Plage do Preá", beach_card_desc: "Paradis du Kitesurf et du coucher de soleil", dist_1: "• 5 min à pied plage", dist_2: "• 2 min à pied marché",
+        log_title: "Services & Logistique", log_sub: "Contacts officiels.", contacts_header: "Contacts Directs", contact_1_name: "Transfers & Taxi (Deborah)",
+        qa_btn: "Questions? Demandez", qa_header_sub: "Intelligence Artificielle 24/7", welcome_bubble_msg: "👋 Bonjour! Je suis l'assistant IA de **Ariah Luxury Villas**. WiFi, check-in, transferts ou tours!",
+        chip_wifi: "📶 Mot de passe WiFi", chip_airport: "🚖 Transfert/Aéroport", chip_checkout: "⏰ Heure Checkout", chip_rules: "📜 Règlement Intérieur",
+        placeholder_txt: "Tapez votre question...", pensandotxt: "Réflexion...", conn_prob_txt: "J'ai eu un petit problème de connexion.", falar_wa_txt: "Parler sur WhatsApp", ai_wa_redirect_msg: "Bonjour Karime & André, je suis sur le guide de maison et je voudrais savoir: "
       },
-      {
-        keywords: ["ar", "ar-condicionado", "ar condicionado", "climatizado", "temperatura", "controle"],
-        answer: `❄️ <strong>Ar Condicionado:</strong><br>
-        Todas as suítes possuem ar-condicionado. Pedimos a gentileza de desligar os aparelhos ao sair da vila para economizar energia.`
-      },
-      {
-        keywords: ["lixo", "lixeira", "sujeira", "descarte"],
-        answer: `🗑️ <strong>Retirada de Lixo:</strong><br>
-        O lixo deve ser retirado diariamente e depositado na lixeira suspensa no lado externo do portão da Rua Pedro Tomaz.`
-      },
-      {
-        keywords: ["som", "barulho", "musica", "música", "silencio", "silêncio", "22h", "festa", "festas", "jbl"],
-        answer: `🔊 <strong>Som & Horário de Silêncio:</strong><br>
-        Proibido barulho após as 22h. Não são permitidas festas sem autorização prévia. A caixa JBL está disponível respeitando as regras.`
-      },
-      {
-        keywords: ["quadriciclo", "quad", "utv", "carlim", "moto", "passeio", "dunas"],
-        answer: `🏎️ <strong>Quadriciclos & UTVs:</strong><br>
-        Fale diretamente com o <strong>Carlim</strong> (+55 88 9710 4187) para aluguel e passeios pelas dunas e lagoas do Preá.`
-      },
-      {
-        keywords: ["pizzaria", "pizza", "asa7", "desconto", "restaurante", "comer"],
-        answer: `🍕 <strong>Desconto Exclusivo Asa7:</strong><br>
-        Hóspedes Ariah Luxury Villas possuem <strong>20% OFF</strong> em todo o cardápio da Asa7 Pizzaria!`
-      },
-      {
-        keywords: ["kite", "kitesurf", "guarderia", "vela", "equipamento", "rancho"],
-        answer: `🪁 <strong>Kitesurf & Guarderia:</strong><br>
-        A casa possui Guarderia dedicada para guardar e secar seus equipamentos. O Rancho do Kite fica a apenas 10 minutos a pé.`
+      de: {
+        app_title: "Ariah Luxury Villas", app_location: "Vila Preá, CE", edit_btn: "Modify",
+        hero_tag: "Digitaler Gäste-Guide", hero_subtitle: "Ihr Traumaufenthalt in Preá",
+        btn_label_wifi: "Wi-Fi", btn_label_map: "Karte", btn_label_host: "Host", btn_label_hours: "Zeiten",
+        card_checkin_header: "Wichtige Zeiten", card_checkin_badge: "Wichtiger Zugang",
+        lbl_checkin: "Check-in", sub_checkin: "Ankunft", lbl_checkout: "Check-out", sub_checkout: "Abreise",
+        checkin_note: "<strong>Persönlicher Empfang:</strong> Ein Teammitglied wird vor Ort sein.",
+        host_card_title: "Treffen Sie Ihre Gastgeber", welcome_msg: "\"Hallo! Ich bin Karime, zusammen mit André. Es ist mir ein Vergnügen!\"",
+        struct_header: "Kapazität & Struktur", stat_1: "Bis zu 7 Personen", stat_2: "2 Zimmer (3 beds)", stat_3: "3 Badezimmer", beds_config: "<strong>Betten:</strong> 1 King, 1 Doppel, 3 Einzel.", outdoor_config: "<strong>Außen:</strong> Pool & Grill.",
+        rules_header: "Hausordnung", r1: "Ruhe nach 22 Uhr.", r3: "Rauchverbot drinnen.", r5: "Klimaanlage ausschalten.", r9: "Grill nach Gebrauch reinigen.",
+        exp_title: "Preá Guide & Attraktionen", exp_sub: "Vorschläge für Abenteuer.", beach_card_tag: "Praia do Preá", beach_card_desc: "Paradies für Kitesurfen und Sonnenuntergänge", dist_1: "• 5 Min. Fußweg Strand", dist_2: "• 2 Min. Fußweg Markt",
+        log_title: "Services & Logistik", log_sub: "Offizielle Kontakte.", contacts_header: "Direkte Kontakte", contact_1_name: "Transfers & Taxi (Deborah)",
+        qa_btn: "Fragen? Hier fragen", qa_header_sub: "Künstliche Intelligenz 24/7", welcome_bubble_msg: "👋 Hallo! Ich bin der KI-Assistent von **Ariah Luxury Villas**. WiFi, Check-in, Transfers oder Touren!",
+        chip_wifi: "📶 WiFi Passwort", chip_airport: "🚖 Transfer/Flughafen", chip_checkout: "⏰ Checkout-Zeit", chip_rules: "📜 Hausordnung",
+        placeholder_txt: "Frage tippen...", pensandotxt: "Denken...", conn_prob_txt: "Ich hatte ein kleines Verbindungsproblem.", falar_wa_txt: "Über WhatsApp sprechen", ai_wa_redirect_msg: "Hallo Karime & André, ich bin im Hausführer und möchte wissen: "
       }
-    ];
+    };
+
+    function changeLanguage(lang) {
+      currentLanguage = lang;
+      
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById('lang-' + lang).classList.add('active');
+      
+      document.querySelectorAll('[data-translate]').forEach(el => {
+        const key = el.getAttribute('data-translate');
+        if (translations[lang][key]) {
+          el.innerHTML = translations[lang][key];
+        }
+      });
+      
+      document.querySelectorAll('[data-translate-attr]').forEach(el => {
+        const attr_data = el.getAttribute('data-translate-attr').split(':');
+        const key = attr_data[1];
+        if (translations[lang][key]) {
+          el.setAttribute(attr_data[0], translations[lang][key]);
+        }
+      });
+
+      loadQAContext();
+    }
+
+    // --- GEMINI API CONCIERGE INTEGRATION ---
+    function generateSystemInstructions(lang) {
+      const data = translations[lang];
+      return `
+You are the AI Concierge for Ariah Luxury Villas in Vila Preá, Ceará, Brazil.
+You represent hosts Karime and André. Answer warmly, helpfully, and concisely IN THE SAME LANGUAGE THE USER IS ASKING.
+
+PROPERTY & HOUSE RULES DATA (${lang.toUpperCase()}):
+- Wi-Fi Networks: "Karime" or "Karime_5g" | Password: "12345678" (QR code on main page).
+- Check-in: 16:00 (In-person greeting).
+- Check-out: 11:00 (Staff collects keys).
+- Trash Removal: Guests must remove trash daily to the elevated hanging bin outside the gate on Rua Pedro Tomaz.
+- House Rules: ${data.r1} ${data.r3} No unapproved parties or pets. Leave kitchen dishes clean. ${data.r5} Do not move furniture or remove objects. ${data.r9}.
+- Villa Structure: ${data.stat_1}, ${data.stat_2}, ${data.stat_3}. Private swimming pool, deck, BBQ, JBL speaker, Smart TV, kitchen (Airfryer, microwave). Dedicated Kite Guarderia.
+- Nearby: ${data.dist_1}, ${data.dist_2}, 10 min walk to "Rancho do Kite".
+- Official Contacts:
+  * ${data.contact_1_name}: Deborah (+55 65 9673 1160).
+  * ATV, UTV Rentals: Carlim (+55 88 9710 4187).
+      `;
+    }
 
     function toggleQAModal() {
       document.getElementById('qa-modal').classList.toggle('hidden');
     }
 
-    function askPreset(text) {
-      document.getElementById('user-query').value = text;
+    function askPreset(queryKey) {
+      const query = translations[currentLanguage][queryKey].replace(/^.*? /, '');
+      document.getElementById('user-query').value = query;
       answerQuestion();
     }
 
-    // SMART HYBRID ANSWER ENGINE
     async function answerQuestion() {
       const input = document.getElementById('user-query');
       const query = input.value.trim();
       if(!query) return;
 
       const messagesContainer = document.getElementById('chat-messages');
+      const txt_pensando = translations[currentLanguage].pensandotxt;
 
-      // User Bubble
       const userBubble = document.createElement('div');
       userBubble.className = "bg-[#C5A880] text-white p-3 rounded-2xl ml-8 text-right font-medium";
       userBubble.innerText = query;
       messagesContainer.appendChild(userBubble);
-
       input.value = '';
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-      // Check Local Knowledge Base First
-      const cleanQuery = query.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      let localMatch = null;
-
-      for (const item of localKnowledge) {
-        if (item.keywords.some(kw => {
-          const cleanKw = kw.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-          const regex = new RegExp(`\\b${cleanKw}\\b`, 'i');
-          return regex.test(cleanQuery) || cleanQuery.includes(cleanKw);
-        })) {
-          localMatch = item;
-          break;
-        }
-      }
-
-      // If exact local match exists, present instantly with zero network errors!
-      if (localMatch) {
-        setTimeout(() => {
-          const botBubble = document.createElement('div');
-          botBubble.className = "bg-slate-100 p-3 rounded-2xl mr-8 text-slate-800 border border-slate-200";
-          botBubble.innerHTML = localMatch.answer;
-          messagesContainer.appendChild(botBubble);
-          messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }, 150);
-        return;
-      }
-
-      // If no direct local keyword hit, call Gemini API securely or offer full contact support
       const botBubble = document.createElement('div');
       botBubble.className = "bg-slate-100 p-3 rounded-2xl mr-8 text-slate-800 border border-slate-200 animate-pulse";
-      botBubble.innerHTML = "<em>Buscando resposta...</em>";
+      botBubble.innerHTML = `<em>${txt_pensando}</em>`;
       messagesContainer.appendChild(botBubble);
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-      const GEMINI_API_KEY = "AQ.Ab8RN6KugvyALh2TRSaR9AZ1qcNcAYznYyqfNWoKqcxaxylS4Q";
-      const systemPrompt = "Você é o assistente virtual da Ariah Luxury Villas no Preá, CE. Responda em tom acolhedor e direto sobre Wi-Fi, check-in 16h, check-out 11h, transfers com Deborah (+55 65 9673 1160), quadriciclos com Carlim (+55 88 9710 4187), e desconto na Asa7 Pizzaria.";
-
       try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${GEMINI_API_KEY}`, {
+        const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent", {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'x-goog-api-key': GEMINI_API_KEY 
+          },
           body: JSON.stringify({
-            contents: [{ parts: [{ text: query }] }],
-            systemInstruction: { parts: [{ text: systemPrompt }] }
+            contents: [{
+              parts: [
+                { text: generateSystemInstructions(currentLanguage) },
+                { text: `Guest Question: "${query}"` }
+              ]
+            }]
           })
         });
 
         const data = await response.json();
         botBubble.classList.remove('animate-pulse');
 
-        if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
-          let text = data.candidates[0].content.parts[0].text;
-          text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
-          botBubble.innerHTML = text;
+        if (data.candidates && data.candidates[0].content.parts[0].text) {
+          let rawText = data.candidates[0].content.parts[0].text;
+          botBubble.innerHTML = rawText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
         } else {
-          throw new Error("API Fallback Needed");
+          throw new Error("Invalid response");
         }
       } catch (err) {
-        console.warn("API request handled gracefully:", err);
+        console.error(err);
         botBubble.classList.remove('animate-pulse');
-        const encodedMsg = encodeURIComponent("Olá Karime & André, estou no guia da casa e gostaria de saber: " + query);
-        botBubble.innerHTML = `
-          Não encontrei um detalhe específico para essa pergunta no guia rápido.<br><br>
-          Deseja enviar sua dúvida diretamente para nosso atendimento no WhatsApp?<br><br>
-          <a href="https://wa.me/556596731160?text=${encodedMsg}" target="_blank" class="inline-flex items-center space-x-1.5 bg-emerald-500 text-white font-bold px-3 py-1.5 rounded-full text-[10px]">
-            <i class="fa-brands fa-whatsapp text-sm"></i>
-            <span>Enviar no WhatsApp (+55 65 9673 1160)</span>
-          </a>
-        `;
+        const encodedMsg = encodeURIComponent(translations[currentLanguage].ai_wa_redirect_msg + query);
+        botBubble.innerHTML = `${translations[currentLanguage].conn_prob_txt}<br><br><a href="https://wa.me/556596731160?text=${encodedMsg}" target="_blank" class="inline-flex items-center space-x-1.5 bg-emerald-500 text-white font-bold px-3.5 py-1.5 rounded-full text-[10px]"><i class="fa-brands fa-whatsapp"></i><span>${translations[currentLanguage].falar_wa_txt}</span></a>`;
       }
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
+    function loadQAContext() {
+      const welcomeBubble = document.getElementById('welcome-bubble');
+      let msg = translations[currentLanguage].welcome_bubble_msg;
+      welcomeBubble.innerHTML = msg.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+      const chipsContainer = document.getElementById('quick-chips');
+      chipsContainer.innerHTML = '';
+      const chips = ['chip_wifi', 'chip_airport', 'chip_checkout', 'chip_rules'];
+      chips.forEach(key => {
+        const text = translations[currentLanguage][key];
+        const btn = document.createElement('button');
+        btn.onclick = () => askPreset(key);
+        btn.className = "bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full shrink-0";
+        btn.innerText = text;
+        chipsContainer.appendChild(btn);
+      });
+    }
+
+    // --- GENERAL APP FUNCTIONS ---
     function switchTab(tabId) {
       document.querySelectorAll('.app-screen').forEach(el => el.classList.add('hidden'));
       document.getElementById('tab-' + tabId).classList.remove('hidden');
-
       ['house', 'explore', 'logistics'].forEach(id => {
         const btn = document.getElementById('btn-' + id);
-        if(id === tabId) {
-          btn.className = "flex flex-col items-center justify-center text-[#C5A880] font-bold";
-        } else {
-          btn.className = "flex flex-col items-center justify-center text-slate-400 font-medium";
-        }
+        btn.className = (id === tabId) ? "flex flex-col items-center justify-center text-[#C5A880] font-bold" : "flex flex-col items-center justify-center text-slate-400 font-medium";
       });
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function toggleEditMode() {
       isEditing = !isEditing;
-      const editables = document.querySelectorAll('[contenteditable]');
-      const btnText = document.getElementById('edit-btn-text');
-      const exportBtn = document.getElementById('export-btn');
-      
-      if(isEditing) {
-        document.body.classList.add('edit-active');
-        btnText.innerText = "💾 Salvar";
-        exportBtn.classList.remove('hidden');
-        editables.forEach(el => el.setAttribute('contenteditable', 'true'));
-      } else {
-        document.body.classList.remove('edit-active');
-        btnText.innerText = "⚙️ Modificar";
-        exportBtn.classList.add('hidden');
-        editables.forEach(el => {
-          el.setAttribute('contenteditable', 'false');
-          if(el.id) localStorage.setItem('ariah_app_' + el.id, el.innerHTML);
-        });
-        alert('Alterações salvas localmente!');
-      }
-    }
-
-    function exportHTML() {
-      document.querySelectorAll('[contenteditable]').forEach(el => el.setAttribute('contenteditable', 'false'));
-      const fullHTML = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-      const blob = new Blob([fullHTML], { type: 'text/html' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'index.html';
-      a.click();
+      document.body.classList.toggle('edit-active', isEditing);
+      const editTextKey = isEditing ? "Pt (💾 Salvar)" : "edit_btn";
+      document.getElementById('edit-btn-text').innerHTML = (isEditing && currentLanguage === 'pt') ? editTextKey : translations[currentLanguage].edit_btn;
+      document.querySelectorAll('[contenteditable]').forEach(el => el.setAttribute('contenteditable', isEditing));
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('[contenteditable]').forEach(el => {
-        if(el.id && localStorage.getItem('ariah_app_' + el.id)) {
-          el.innerHTML = localStorage.getItem('ariah_app_' + el.id);
-        }
-      });
+      changeLanguage('pt');
       switchTab('house');
     });
   </script>
