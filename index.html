@@ -18,7 +18,7 @@
 </head>
 <body class="max-w-md mx-auto relative min-h-screen pb-24 shadow-2xl bg-slate-50">
 
-  <!-- Header with Multilanguage Selector Bar (Edit button permanently removed) -->
+  <!-- Header with Multilanguage Selector Bar & Save App Button -->
   <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-4 py-2 flex flex-col space-y-2">
     <div class="flex justify-between items-center">
       <div class="flex items-center space-x-2.5">
@@ -30,6 +30,10 @@
           <p class="text-[10px] text-slate-400 font-medium" data-translate="app_location">Vila Preá, CE</p>
         </div>
       </div>
+      <button onclick="installApp()" class="flex items-center space-x-1 bg-amber-50 text-[#C5A880] border border-[#C5A880]/30 px-2.5 py-1.5 rounded-full text-[10px] font-bold active:scale-95 transition-transform shadow-sm">
+        <i class="fa-solid fa-download text-xs"></i>
+        <span data-translate="install_btn">Salvar App</span>
+      </button>
     </div>
     
     <!-- Language Selector Bar -->
@@ -625,6 +629,31 @@
     </div>
   </div>
 
+  <!-- INSTALL APP INSTRUCTION MODAL -->
+  <div id="install-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex flex-col items-center justify-center p-4">
+    <div class="bg-white rounded-3xl p-5 max-w-xs w-full space-y-3 shadow-2xl text-center text-xs animate-in zoom-in-95 duration-200">
+      <div class="w-12 h-12 bg-amber-50 text-[#C5A880] rounded-full flex items-center justify-center mx-auto text-lg">
+        <i class="fa-solid fa-mobile-screen-button"></i>
+      </div>
+      <h3 class="font-bold text-slate-800 text-sm" data-translate="inst_modal_title">Salvar Guia no Celular</h3>
+      <p class="text-[11px] text-slate-600 leading-relaxed" data-translate="inst_modal_desc">Para acessar este guia rapidamente e usá-lo offline:</p>
+      
+      <div id="ios-instructions" class="hidden text-left bg-slate-50 p-3 rounded-xl space-y-2 text-[11px] text-slate-700 border border-slate-100">
+        <p class="font-semibold text-slate-800">📱 No iPhone / iPad (Safari):</p>
+        <p>1. Toque no ícone de <strong>Compartilhar</strong> <i class="fa-solid fa-arrow-up-from-bracket text-[#C5A880]"></i> na barra inferior do navegador.</p>
+        <p>2. Role o menu para baixo e selecione <strong>"Adicionar à Tela de Início"</strong> <i class="fa-solid fa-square-plus text-[#C5A880]"></i>.</p>
+      </div>
+
+      <div id="android-instructions" class="hidden text-left bg-slate-50 p-3 rounded-xl space-y-2 text-[11px] text-slate-700 border border-slate-100">
+        <p class="font-semibold text-slate-800">🤖 No Android (Chrome):</p>
+        <p>Toque no botão abaixo para instalar o app diretamente no seu dispositivo:</p>
+        <button onclick="triggerChromeInstall()" class="w-full mt-1 py-2 bg-[#C5A880] text-white font-bold rounded-xl text-xs shadow-sm">Instalar Aplicativo</button>
+      </div>
+
+      <button onclick="closeInstallModal()" class="w-full py-2 bg-slate-100 text-slate-700 font-bold rounded-xl text-xs mt-2" data-translate="close_btn">Fechar</button>
+    </div>
+  </div>
+
   <!-- Bottom Navigation Bar -->
   <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/90 backdrop-blur-md border-t border-slate-200/80 grid grid-cols-4 py-2 z-40">
     <button onclick="switchTab('house')" id="btn-house" class="flex flex-col items-center justify-center text-slate-400 active:text-[#C5A880]">
@@ -644,11 +673,56 @@
   <script>
     let currentLanguage = 'pt';
     const GEMINI_API_KEY = "AQ.Ab8RN6LPSYGICaYoDgO283_ZS2DKJlTeEjYIMlCW86QVlkKE-Q";
+    let deferredPrompt = null;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+    });
+
+    function installApp() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the install prompt');
+          }
+          deferredPrompt = null;
+        });
+      } else {
+        const modal = document.getElementById('install-modal');
+        modal.classList.remove('hidden');
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        
+        if (isIOS) {
+          document.getElementById('ios-instructions').classList.remove('hidden');
+          document.getElementById('android-instructions').classList.add('hidden');
+        } else {
+          document.getElementById('ios-instructions').classList.add('hidden');
+          document.getElementById('android-instructions').classList.remove('hidden');
+        }
+      }
+    }
+
+    function triggerChromeInstall() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          deferredPrompt = null;
+          closeInstallModal();
+        });
+      }
+    }
+
+    function closeInstallModal() {
+      document.getElementById('install-modal').classList.add('hidden');
+    }
 
     // --- TRANSLATIONS DICTIONARY ---
     const translations = {
       pt: {
         app_title: "Ariah Luxury Villas", app_location: "Vila Preá, CE",
+        install_btn: "Salvar App", inst_modal_title: "Salvar Guia no Celular", inst_modal_desc: "Para acessar este guia rapidamente e usá-lo offline:", close_btn: "Fechar",
         hero_tag: "Guia Digital do Hóspede", hero_subtitle: "Sua Estadia dos Sonhos no Preá",
         btn_label_wifi: "Wi-Fi", btn_label_map: "Mapa", btn_label_chat: "Chat", btn_label_hours: "Horários",
         card_checkin_header: "Horários Importantes", card_checkin_badge: "Acesso Importante",
@@ -669,6 +743,7 @@
       },
       en: {
         app_title: "Ariah Luxury Villas", app_location: "Vila Preá, CE",
+        install_btn: "Save App", inst_modal_title: "Save Guide to Phone", inst_modal_desc: "To access this guide quickly and use it offline:", close_btn: "Close",
         hero_tag: "Guest Digital Guide", hero_subtitle: "Your Dream Stay in Preá",
         btn_label_wifi: "Wi-Fi", btn_label_map: "Map", btn_label_chat: "Chat", btn_label_hours: "Hours",
         card_checkin_header: "Important Hours", card_checkin_badge: "Important Access",
@@ -689,6 +764,7 @@
       },
       it: {
         app_title: "Ariah Luxury Villas", app_location: "Vila Preá, CE",
+        install_btn: "Salva App", inst_modal_title: "Salva Guida sul Cellulare", inst_modal_desc: "Per accedere rapidamente a questa guida e usarla offline:", close_btn: "Chiudi",
         hero_tag: "Guida Digitale per gli Ospiti", hero_subtitle: "La Tua Vacanza da Sogno a Preá",
         btn_label_wifi: "Wi-Fi", btn_label_map: "Mappa", btn_label_chat: "Chat", btn_label_hours: "Orari",
         card_checkin_header: "Orari Importanti", card_checkin_badge: "Accesso Importante",
@@ -703,12 +779,13 @@
         rules_header: "Regole della Casa", r1: "Divieto assoluto di rumori dopo le 22:00.", r2: "Vietato organizzare feste senza previa autorizzazione.", r3: "Severamente vietato fumare all'interno.", r4: "Animali non ammessi se non concordati prima.", r5: "Spegnere l'aria condizionata e le luci prima di uscire.", r6: "Non spostare la disposizione dei mobili.", r7: "Rispettare gli orari di Check-in (16:00) e Check-out (11:00).", r8: "Vietato rimuovere oggetti dalla villa, pena sanzione.", r9: "Pulire il barbecue subito dopo l'uso.", r10: "Il deck in legno è molto delicato; per evitare di graffiarlo accidentalmente, è severamente vietato posizionare sul deck qualsiasi oggetto che non si trovi già in quell'area (es. lettini da piscina, sedie da spiaggia, tavole, biciclette).",
         exp_title: "Guida Completa di Vila Preá", exp_sub: "Guida ad avventure, spiagge e alta gastronomia.", dist_header: "Distanze a piedi dalla Villa:", dist_1: "• 5 min a piedi dalla spiaggia", dist_2: "• 2 min a piedi dal supermercato Atacadão", dist_3: "• 10 min a piedi dal Rancho do Kite", beach_card_tag: "Spiaggia del Preá", beach_card_desc: "Il paradiso mondiale del Kitesurf e dei tramonti", cat_kite_header: "Kite & Escursioni", place_1_desc: "Scuola di Kitesurf al Preá con ristorante, musica, piscina ed eventi culturali.", walk_rancho: "<i class=\"fa-solid fa-person-walking mr-1\"></i>10 min a piedi", place_2_desc: "Prova l'emozione di guidare UTV, quad o moto con supporto di lusso.", drive_sertoes: "<i class=\"fa-solid fa-car mr-1\"></i>Tour Guidato", lagoa_desc: "Acque cristalline con amache nell'acqua. Il Sandê Mall offre negozi e ristoranti fronte mare.", cat_rest_header: "Ristoranti & Bar", our_favourite_badge: "Our favourite", rest_dalu_desc: "Autentica cucina locale con pesce fresco e piatti tradizionali accoglienti a Preá.", ta_review_link: "Vedi su TripAdvisor →", see_more_ta: "TripAdvisor Preá Ranking →", top_ta_rest: "Top Ristoranti Preá (TripAdvisor)", ta_badge: "Classifica Ufficiale", see_all_ta: "Vedi Tutti i Ristoranti su TripAdvisor", ver_detalhes: "Vedi Recensione →", ver_rota: "Indicazioni →", reservar: "Prenota →",
         night_section_header: "🌙 Preá by Night & Vita Notturna", night_cabare: "Musica dal vivo e DJ famosi per godersi un tramonto magico in riva al mare con drink esclusivi e un'atmosfera vibrante.", night_raro: "Il punto d'incontro perfetto per imperdibili serate di samba il sabato in una raffinata boutique pousada.", night_kitebrisa: "Segui la programmazione speciale di feste e raduni di kite su Instagram @kitebrisaprea.", night_chale: "Autentica esperienza locale con musica fino tardi, stuzzichini e karaoke vivace. Scopri il programma su @chaleconvenienciaprea.",
-        serv_title: "Servizi Esclusivi & Partner", serv_sub: "Contatti diretti per arricchire il tuo soggiorno.", serv_list_header: "Servizi Raccomandati", contact_1_name: "Transfer, Taxi e Quad (Deborah)", contact_2_name: "Noleggio Quad & Moto (Carlim)", contact_3_name: "Noleggio Fatbike (Bike Mania Preá)", chamar: "Chiama",
+        serv_title: "Servizi Esclusivi & Partner", serv_sub: "Contatti diretti per arricchire il tuo soggiorno.", serv_list_header: "Servizi Raccomandati", contact_1_name: "Transfers, Taxi e Quad (Deborah)", contact_2_name: "Noleggio Quad & Moto (Carlim)", contact_3_name: "Noleggio Fatbike (Bike Mania Preá)", chamar: "Chiama",
         hor_title: "Orari & Procedura di Uscita", hor_sub: "Informazioni per un check-out perfetto.", checkout_header: "Checklist di Uscita (Check-out 11:00)", co_1: "Lasciare tutte le stoviglie pulite.", co_2: "Verificare di non dimenticare oggetti personali.", co_3: "Chiudere tutte le finestre e le porte.", co_4: "Spegnere tutti i condizionatori e le luci.", co_5: "Avvisarci in caso di piccoli danni verificatisi.", co_6: "Chiavi: Concordare l'orario di uscita con lo staff per la consegna.", hor_deb_title: "Domande su Orari o Chiavi?", hor_deb_sub: "Contatta Deborah direttamente su WhatsApp per coordinare il check-out.", hor_deb_btn: "Contatta Deborah su WhatsApp",
         qa_btn: "Domande? Chiedi all'IA", qa_header_sub: "Assistente IA 24/7", welcome_bubble_msg: "👋 Ciao! Sono l'assistente IA di **Ariah Luxury Villas**. Chiedimi qualsiasi cosa su Wi-Fi, check-in, transfer, escursioni o servizi della casa!", chip_wifi: "📶 Password Wi-Fi", chip_airport: "🚖 Transfer Aeroporto", chip_checkout: "⏰ Orario Check-out", chip_rules: "📜 Regole della Casa", placeholder_txt: "Scrivi qui la tua domanda...", pensandotxt: "Elaborazione...", conn_prob_txt: "Ho riscontrato un problema di connessione.", falar_wa_txt: "Scrivi su WhatsApp", ai_wa_redirect_msg: "Ciao Karime & André, sono sulla guida della villa e vorrei chiedere: ", nav_lbl_house: "La Villa", nav_lbl_explore: "Esplora", nav_lbl_services: "Servizi", nav_lbl_hours: "Orari"
       },
       es: {
         app_title: "Ariah Luxury Villas", app_location: "Vila Preá, CE",
+        install_btn: "Guardar App", inst_modal_title: "Guardar Guía en el Móvil", inst_modal_desc: "Para acceder rápidamente a esta guía y usarla sin conexión:", close_btn: "Cerrar",
         hero_tag: "Guía Digital del Huésped", hero_subtitle: "Su Estancia Soñada en Preá",
         btn_label_wifi: "Wi-Fi", btn_label_map: "Mapa", btn_label_chat: "Chat", btn_label_hours: "Horarios",
         card_checkin_header: "Horarios Importantes", card_checkin_badge: "Acceso Importante",
@@ -723,12 +800,13 @@
         rules_header: "Reglas de la Casa", r1: "Prohibido hacer ruido después de las 22:00.", r2: "No se permiten fiestas sin autorización previa.", r3: "Estrictamente prohibido fumar en el interior.", r4: "No se admiten mascotas sin acuerdo previo.", r5: "Apague el aire acondicionado y luces antes de salir.", r6: "No cambie la disposición de los muebles.", r7: "Respete los horarios de check-in (16:00) y check-out (11:00).", r8: "Prohibido retirar objetos de la casa bajo sanción.", r9: "Limpie la barbacoa después de usarla.", r10: "La madera de la terraza es muy delicada; para evitar rayarla accidentalmente, está prohibido colocar en la terraza cualquier objeto que no esté ya en esta zona (ej. tumbonas de piscina, sillas de playa, tablas, bicicletas).",
         exp_title: "Guía Completa de Vila Preá", exp_sub: "Guía de aventuras, playas y alta gastronomía.", dist_header: "Distancias a pie desde la Villa:", dist_1: "• 5 min a pie de la playa", dist_2: "• 2 min a pie del supermercado", dist_3: "• 10 min a pie del Rancho do Kite", beach_card_tag: "Playa do Preá", beach_card_desc: "El paraíso mundial del Kitesurf y atardeceres únicos", cat_kite_header: "Kite & Excursiones", place_1_desc: "Escuela de Kitesurf en Preá con restaurante, música y piscina.", walk_rancho: "<i class=\"fa-solid fa-person-walking mr-1\"></i>10 min a pie", place_2_desc: "Rutas guiadas en UTV, moto o quad con soporte de lujo.", drive_sertoes: "<i class=\"fa-solid fa-car mr-1\"></i>Tour Guiado", lagoa_desc: "Aguas cristalinas con hamacas en el agua. Sandê Mall ofrece tiendas y restaurante frente al mar.", cat_rest_header: "Gastronomía & Restaurantes", our_favourite_badge: "Our favourite", rest_dalu_desc: "Auténtica cocina local con mariscos frescos y platos regionales acogedores en Preá.", ta_review_link: "Ver en TripAdvisor →", see_more_ta: "TripAdvisor Preá Ranking →", top_ta_rest: "Top Restaurantes de Preá (TripAdvisor)", ta_badge: "Ranking Oficial", see_all_ta: "Ver Todos los Restaurantes en TripAdvisor", ver_detalhes: "Ver Opinión →", ver_rota: "Ver Ruta →", reservar: "Reservar →",
         night_section_header: "🌙 Preá by Night & Vida Nocturna", night_cabare: "Música en vivo y DJs reconocidos para disfrutar de un atardecer mágico junto al mar con tragos exclusivos y ambiente vibrante.", night_raro: "El punto de encuentro perfecto para disfrutar de imperdibles sesiones de samba los sábados por la noche en una boutique pousada.", night_kitebrisa: "Sigue la programación especial de fiestas y encuentros de kite en Instagram @kitebrisaprea.", night_chale: "Auténtica experiencia local de música hasta tarde, aperitivos y karaoke animado. Consulta su programa en @chaleconvenienciaprea.",
-        serv_title: "Servicios Exclusivos & Socios", serv_sub: "Contactos directos para hacer su estancia inolvidable.", serv_list_header: "Servicios Recomendados", contact_1_name: "Traslados, Taxi y Quad (Deborah)", contact_2_name: "Alquiler Quad & Moto (Carlim)", contact_3_name: "Alquiler Fatbikes (Bike Mania Preá)", chamar: "Llamar",
+        serv_title: "Servicios Exclusivos & Socios", serv_sub: "Contactos directos para hacer su estancia inolvidable.", serv_list_header: "Servicios Recomendados", contact_1_name: "Transfers, Taxi y Quad (Deborah)", contact_2_name: "Alquiler Quad & Moto (Carlim)", contact_3_name: "Alquiler Fatbikes (Bike Mania Preá)", chamar: "Llamar",
         hor_title: "Horarios & Procedimiento de Salida", hor_sub: "Información para garantizar un check-out perfecto.", checkout_header: "Checklist de Salida (Check-out 11:00)", co_1: "Deje toda la vajilla limpia.", co_2: "Verifique no olvidar pertenencias personales.", co_3: "Cierre todas las ventanas y puertas.", co_4: "Apague aires acondicionados y luces.", co_5: "Avísenos si ocurrió algún pequeño daño.", co_6: "Llaves: Coordine la salida con el personal para la entrega.", hor_deb_title: "¿Dudas sobre Horarios o Llaves?", hor_deb_sub: "Hable directamente con Deborah en WhatsApp para organizar su salida.", hor_deb_btn: "Hablar con Deborah por WhatsApp",
         qa_btn: "¿Dudas? Pregunte a la IA", qa_header_sub: "Asistente IA 24/7", welcome_bubble_msg: "👋 ¡Hola! Soy el asistente IA de **Ariah Luxury Villas**. Pregúnteme sobre Wi-Fi, check-in, traslados o reglas de la casa.", chip_wifi: "📶 Contraseña Wi-Fi", chip_airport: "🚖 Traslado / Aeropuerto", chip_checkout: "⏰ Horario Check-out", chip_rules: "📜 Reglas de Casa", placeholder_txt: "Escriba su duda aquí...", pensandotxt: "Pensando...", conn_prob_txt: "Tuve un pequeño problema de conexión.", falar_wa_txt: "Hablar por WhatsApp", ai_wa_redirect_msg: "Hola Karime & André, estoy en la guía de la villa y quisiera consultar: ", nav_lbl_house: "La Villa", nav_lbl_explore: "Explorar", nav_lbl_services: "Servicios", nav_lbl_hours: "Horarios"
       },
       fr: {
         app_title: "Ariah Luxury Villas", app_location: "Vila Preá, CE",
+        install_btn: "Enregistrer", inst_modal_title: "Enregistrer le Guide", inst_modal_desc: "Pour accéder rapidement à ce guide et l'utiliser hors ligne :", close_btn: "Fermer",
         hero_tag: "Guide Numérique Invité", hero_subtitle: "Votre Séjour de Rêve à Preá",
         btn_label_wifi: "Wi-Fi", btn_label_map: "Carte", btn_label_chat: "Chat", btn_label_hours: "Horaires",
         card_checkin_header: "Horaires Importants", card_checkin_badge: "Accès Important",
@@ -743,23 +821,24 @@
         rules_header: "Règlement Intérieur", r1: "Pas de bruit après 22h00.", r2: "Fêtes interdites sans autorisation préalable.", r3: "Strictement interdit de fumer à l'intérieur.", r4: "Animaux non admis sans accord préalable.", r5: "Éteignez la climatisation et les lumières avant de sortir.", r6: "Ne pas déplacer les meubles.", r7: "Respectez les horaires de Check-in (16h00) et Check-out (11h00).", r8: "Interdiction de retirer des objets de la villa.", r9: "Nettoyer le barbecue après utilisation.", r10: "Le pont en bois est très délicat; pour éviter de le rayer accidentellement, il est interdit d'y placer tout objet qui ne s'y trouve pas déjà (ex. transats, chaises de plage, planches, vélos).",
         exp_title: "Guide Complet de Vila Preá", exp_sub: "Guide aventures, plages et haute gastronomie.", dist_header: "Distances à pied de la Villa:", dist_1: "• 5 min à pied de la plage", dist_2: "• 2 min à pied du supermarché", dist_3: "• 10 min à pied du Rancho do Kite", beach_card_tag: "Plage do Preá", beach_card_desc: "Le paradis mondial du Kitesurf et des couchers de soleil", cat_kite_header: "Kite & Excursions", place_1_desc: "École de Kitesurf à Preá avec restaurant, music, et piscine.", walk_rancho: "<i class=\"fa-solid fa-person-walking mr-1\"></i>10 min à pied", place_2_desc: "Circuits guidés en UTV, moto ou quad avec assistance haut de gamme.", drive_sertoes: "<i class=\"fa-solid fa-car mr-1\"></i>Circuit Guidé", lagoa_desc: "Eaux cristallines avec hammacs dans l'eau. Sandê Mall propose boutiques et restaurants face à la mer.", cat_rest_header: "Gastronomie & Restaurants", our_favourite_badge: "Our favourite", rest_dalu_desc: "Cuisine locale authentique avec fruits de mer frais et plats régionaux chaleureux à Preá.", ta_review_link: "Voir sur TripAdvisor →", see_more_ta: "TripAdvisor Preá Ranking →", top_ta_rest: "Meilleurs Restaurants (Google Reviews)", ta_badge: "Classement Officiel", see_all_ta: "Voir Tous les Restaurants sur TripAdvisor", ver_detalhes: "Voir l'Avis →", ver_rota: "Itinéraire →", reservar: "Réserver →",
         night_section_header: "🌙 Preá by Night & Vie Nocturne", night_cabare: "Musique live et DJ de renom pour profiter d'un coucher de soleil magique au bord de l'eau avec des boissons exclusives.", night_raro: "Le point de rendez-vous idéal pour des sessions de samba incontournables les samedis soirs dans une boutique pousada.", night_kitebrisa: "Suivez la programmation spéciale des soirées et rassemblements de kite sur Instagram @kitebrisaprea.", night_chale: "Expérience locale authentique de musique tardive, apéritifs et karaoké animé. Consultez leur programme sur @chaleconvenienciaprea.",
-        serv_title: "Services Exclusifs & Partenaires", serv_sub: "Contacts directs pour agrémenter votre séjour.", serv_list_header: "Services Recommandés", contact_1_name: "Transferts, Taxi et Quad (Deborah)", contact_2_name: "Location Quad & Moto (Carlim)", contact_3_name: "Location Fatbikes (Bike Mania Preá)", chamar: "Appeler",
+        serv_title: "Services Exclusifs & Partenaires", serv_sub: "Contacts directs pour agrémenter votre séjour.", serv_list_header: "Services Recommandés", contact_1_name: "Transfers, Taxi et Quad (Deborah)", contact_2_name: "Location Quad & Moto (Carlim)", contact_3_name: "Location Fatbikes (Bike Mania Preá)", chamar: "Appeler",
         hor_title: "Horaires & Procédure de Départ", hor_sub: "Informations pour un départ parfait.", checkout_header: "Check-list de Départ (Check-out 11h00)", co_1: "Laisser toute la vaisselle propre.", co_2: "Vérifier de ne rien oublier de personnel.", co_3: "Fermer toutes les portes et fenêtres.", co_4: "Éteindre les climatiseurs et lumières.", co_5: "Nous informer en cas de petit dommage.", co_6: "Clés: Coordonner le départ avec le personnel.", hor_deb_title: "Des questions sur le départ ou les clés?", hor_deb_sub: "Contactez Deborah directement sur WhatsApp pour organiser votre départ.", hor_deb_btn: "Parler avec Deborah sur WhatsApp",
         qa_btn: "Des questions? Posez à l'IA", qa_header_sub: "Assistant Virtuel IA 24/7", welcome_bubble_msg: "👋 Bonjour! Je suis l'assistant IA de **Ariah Luxury Villas**. Posez-moi vos questions sur le Wi-Fi, l'arrivée, les transferts ou le règlement!", chip_wifi: "📶 Mot de passe Wi-Fi", chip_airport: "🚖 Transfert Aéroport", chip_checkout: "⏰ Heure de Départ", chip_rules: "📜 Règlement Intérieur", placeholder_txt: "Écrivez votre question ici...", pensandotxt: "Réflexion...", conn_prob_txt: "J'ai rencontré un problème de connexion.", falar_wa_txt: "Contacter sur WhatsApp", ai_wa_redirect_msg: "Bonjour Karime & André, je suis sur le guide numérique et j'aimerais demander: ", nav_lbl_house: "La Villa", nav_lbl_explore: "Explorer", nav_lbl_services: "Services", nav_lbl_hours: "Horaires"
       },
       de: {
         app_title: "Ariah Luxury Villas", app_location: "Vila Preá, CE",
+        install_btn: "App speichern", inst_modal_title: "Guide auf Handy speichern", inst_modal_desc: "Um schnell auf diesen Guide zuzugreifen und ihn offline zu nutzen:", close_btn: "Schließen",
         hero_tag: "Digitaler Gäste-Guide", hero_subtitle: "Ihr Traumaufenthalt in Preá",
         btn_label_wifi: "Wi-Fi", btn_label_map: "Karte", btn_label_chat: "Chat", btn_label_hours: "Zeiten",
         card_checkin_header: "Wichtige Zeiten", card_checkin_badge: "Zugang",
         lbl_checkin: "Check-in", sub_checkin: "Ankunft in der Villa", lbl_checkout: "Check-out", sub_checkout: "Abreise aus der Villa",
         checkin_note: "<strong>Persönlicher Empfang:</strong> Ein Teammitglied begrüßt Sie vor Ort und erklärt Ihnen das Haus.",
         wifi_card_title: "WLAN-Verbindung", wifi_badge: "Highspeed", lbl_wifiname: "Verfügbare Netzwerke", lbl_wifipass: "Passwort", wifi_instruction: "Kamera auf den QR-Code richten, um automatisch zu verbinden.",
-        host_card_title: "Ihre Gastgeber", welcome_msg: "Hallo! Ich bin Karime, zusammen mit André. Es ist uns eine Freude, Sie zu begrüßen! Unsere Mitarbeiter stehen Ihnen gerne zur Verfügung. Wenn Sie Fragen haben, wenden Sie sich bitte an unseren virtuellen Assistenten unten rechts. Sollte dieser keine Antwort haben, werden Sie an einen unserer Mitarbeiter weitergeleitet. Wir wünschen Ihnen einen wunderbaren Aufenthalt in den Ariah Luxury Villas.",
+        host_card_title: "Ihre Gastgeber", welcome_msg: "Hallo! Ich bin Karime, zusammen mit André. Es ist uns eine Freude, Sie zu begrüßen! Unsere Mitarbeiter stehen Ihnen gerne zur Verfügung. Wenn Sie Fragen haben, wenden Sie sich bitte an unseren virtuellen Assistenten unten rechts. Sollte dieser keine Antwort haben, werden Sie an einen unseren Mitarbeiter weitergeleitet. Wir wünschen Ihnen einen wunderbaren Aufenthalt in den Ariah Luxury Villas.",
         gallery_title: "Villa entdecken", gallery_sub: "Nach rechts wischen →", img_cap_1: "Privater Pool & Deck", img_cap_2: "Gourmet-Bereich & Balkon", img_cap_3: "Klimatisierte Suite", img_cap_4: "Integrierte Küche", img_cap_5: "Queen-Zimmer", img_cap_6: "Stilvolles WC",
         struct_header: "Kapazität & Aufteilung", stat_1: "Bis zu 7 Personen", stat_2: "2 Zimmer (3 Betten)", stat_3: "3 Badezimmer", beds_config: "<strong>Bettenaufteilung:</strong> 1 King-Bett, 1 Doppelbett, 3 Einzelbetten.", baths_config: "<strong>Bäder:</strong> 2 En-Suite Bäder + 1 Gäste-WC.", outdoor_config: "<strong>Außenbereich:</strong> Privater Pool & Grill.",
         amenities_header: "Ausstattung der Villa", am_1: "Parkplatz auf dem Grundstück", am_2: "Klimaanlage in den Schlafzimmern", am_3: "Komplette Bettwäsche", am_4: "Handtücher", am_5: "Toilettenpapier", am_6: "Kaffeemehl & Zucker", am_7: "Salz & Gewürze", am_8: "Elektrische Kaffeemaschine", am_9: "Airfryer & Mikrowelle", am_10: "Geschirrtücher", am_11: "Schwamm & Spülmittel", am_12: "Kite-Lagerung", extra_services: "<strong>Zusatzservices:</strong> Tägliche Reinigung, Frühstück, Quad-Miete und Flughafentransfer.",
-        info_header: "Wichtige Informationen", info_trash: "<strong>🗑️️ Müllentsorgung:</strong> Bitte Müll täglich im Außenbehälter an der Rua Pedro Tomaz entsorgen.", info_tv: "<strong>📺 Smart TV:</strong> Mit Ihren Streaming-Konten verbinden.", info_speaker: "<strong>🔊 JBL Musikbox:</strong> Nutzung unter Einhaltung der Nachtruhe gestattet.", info_laundry: "<strong>🧹 Wäscherei:</strong> Reinigungsmittel und Waschmaschine vorhanden.",
+        info_header: "Wichtige Informationen", info_trash: "<strong>🗑 Müllentsorgung:</strong> Bitte Müll täglich im Außenbehälter an der Rua Pedro Tomaz entsorgen.", info_tv: "<strong>📺 Smart TV:</strong> Mit Ihren Streaming-Konten verbinden.", info_speaker: "<strong>🔊 JBL Musikbox:</strong> Nutzung unter Einhaltung der Nachtruhe gestattet.", info_laundry: "<strong>🧹 Wäscherei:</strong> Reinigungsmittel und Waschmaschine vorhanden.",
         rules_header: "Hausordnung", r1: "Nachtruhe ab 22:00 Uhr strikt einzuhalten.", r2: "Keine Partys ohne vorherige Genehmigung.", r3: "Rauchen im Gebäude strengstens verboten.", r4: "Keine Haustiere ohne Absprache.", r5: "Klimaanlage und Lichter vor dem Verlassen ausschalten.", r6: "Möbel nicht umstellen.", r7: "Check-in (16:00) und Check-out (11:00) einhalten.", r8: "Gegenstände dürfen nicht entfernt werden.", r9: "Grill nach Gebrauch reinigen.", r10: "Das Holzdeck ist sehr empfindlich. Um versehentliche Kratzer zu vermeiden, ist es strengstens verboten, Gegenstände auf dem Deck abzustellen, die sich nicht bereits in diesem Bereich befinden (z. B. Poolliegen, Strandstühle, Boards, Fahrräder).",
         exp_title: "Vollständiger Preá Guide", exp_sub: "Empfehlungen für Abenteuer, Kitesurfen und Gastronomie.", dist_header: "Fußwege von der Villa:", dist_1: "• 5 Min. Fußweg zum Strand", dist_2: "• 2 Min. Fußweg zum Supermarkt", dist_3: "• 10 Min. Fußweg zum Rancho do Kite", beach_card_tag: "Strand von Preá", beach_card_desc: "Weltweites Paradies für Kitesurfen und Sonnenuntergänge", cat_kite_header: "Kite & Touren", place_1_desc: "Kiteschule in Preá mit Restaurant, Musik und Pool.", walk_rancho: "<i class=\"fa-solid fa-person-walking mr-1\"></i>10 Min. Fußweg", place_2_desc: "Geführte Touren mit UTV, Motorrad oder Quad.", drive_sertoes: "<i class=\"fa-solid fa-car mr-1\"></i>Geführte Tour", lagoa_desc: "Kristallklare Lagune mit Wasserhängematten. Sandê Mall bietet Geschäfte direkt am Meer.", cat_rest_header: "Gastronomie & Restaurants", our_favourite_badge: "Our favourite", rest_dalu_desc: "Authentische lokale Küche mit frischem Fisch und gemütlichen regionalen Gerichten in Preá.", ta_review_link: "Auf TripAdvisor ansehen →", see_more_ta: "TripAdvisor Preá Ranking →", top_ta_rest: "Top Restaurants (Google Reviews)", ta_badge: "Offizielles Ranking", see_all_ta: "Alle Restaurants auf TripAdvisor ansehen", ver_detalhes: "Bewertung ansehen →", ver_rota: "Route →", reservar: "Buchen →",
         night_section_header: "🌙 Preá by Night & Nachtleben", night_cabare: "Live-Musik und bekannte DJs für einen magischen Sonnenuntergang am Meer mit exklusiven Drinks und lebendiger Atmosphäre.", night_raro: "Der perfekte Treffpunkt für unvergessliche Samba-Abende am Samstag in einer stilvollen Boutique-Pousada.", night_kitebrisa: "Verfolgen Sie spezielle Party-Programme und Kite-Treffen auf Instagram @kitebrisaprea.", night_chale: "Authentisches lokales Erlebnis mit später Musik, Snacks und lebhaftem Karaoke. Programm unter @chaleconvenienciaprea.",
