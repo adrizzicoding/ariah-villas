@@ -2,14 +2,14 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ariah Luxury Villas - Guest Guide</title>
   <link rel="manifest" href="./manifest.json">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
     :root { --brand-gold: #C5A880; --brand-dark: #1A1A1A; --bg-canvas: #F4F5F7; }
-    body { background-color: var(--bg-canvas); color: var(--brand-dark); font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; user-select: none; }
+    body { background-color: var(--bg-canvas); color: var(--brand-dark); font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
     .app-screen { animation: fadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
     .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -17,586 +17,644 @@
     .lang-btn.active { background-color: var(--brand-gold); color: white; }
   </style>
 </head>
-<body class="max-w-md mx-auto relative min-h-screen pb-24 shadow-2xl bg-slate-50">
+<body class="relative min-h-screen pb-24 md:pb-12 bg-slate-50 antialiased">
 
-  <!-- Header with Multilanguage Selector Bar & Download PDF Button -->
-  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-4 py-2 flex flex-col space-y-2">
-    <div class="flex justify-between items-center">
-      <div class="flex items-center space-x-2.5">
-        <div class="w-9 h-9 rounded-full ring-2 ring-[#C5A880] p-0.5 bg-white overflow-hidden shadow-sm shrink-0">
-          <img src="https://lh3.googleusercontent.com/d/1oKm6c43UlbPdTftB9pOVQMDmlqQwI6Gs" alt="Ariah Logo" class="w-full h-full object-cover rounded-full" decoding="async">
+  <!-- Responsive Header -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-4 py-3 shadow-sm">
+    <div class="max-w-md md:max-w-5xl lg:max-w-6xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
+      
+      <!-- Brand & Top Right Mobile Action -->
+      <div class="flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-full ring-2 ring-[#C5A880] p-0.5 bg-white overflow-hidden shadow-sm shrink-0">
+            <img src="https://lh3.googleusercontent.com/d/1oKm6c43UlbPdTftB9pOVQMDmlqQwI6Gs" alt="Ariah Logo" class="w-full h-full object-cover rounded-full" decoding="async">
+          </div>
+          <div>
+            <h1 class="text-xs md:text-sm font-bold tracking-wider text-slate-800 uppercase" data-translate="app_title">Ariah Luxury Villas</h1>
+            <p class="text-[10px] md:text-xs text-slate-400 font-medium" data-translate="app_location">Praia do Preá, CE</p>
+          </div>
         </div>
-        <div>
-          <h1 class="text-xs font-bold tracking-wider text-slate-800 uppercase" data-translate="app_title">Ariah Luxury Villas</h1>
-          <p class="text-[10px] text-slate-400 font-medium" data-translate="app_location">Vila Preá, CE</p>
-        </div>
+        
+        <!-- PDF Button on Mobile -->
+        <button onclick="openPdfModal()" class="md:hidden flex items-center space-x-1 bg-amber-50 text-[#C5A880] border border-[#C5A880]/30 px-2.5 py-1.5 rounded-full text-[10px] font-bold active:scale-95 transition-transform shadow-sm">
+          <i class="fa-solid fa-file-arrow-down text-xs"></i>
+          <span data-translate="install_btn">Download PDF</span>
+        </button>
       </div>
-      <button onclick="openPdfModal()" class="flex items-center space-x-1 bg-amber-50 text-[#C5A880] border border-[#C5A880]/30 px-2.5 py-1.5 rounded-full text-[10px] font-bold active:scale-95 transition-transform shadow-sm">
-        <i class="fa-solid fa-file-arrow-down text-xs"></i>
-        <span data-translate="install_btn">Download PDF</span>
-      </button>
-    </div>
-    
-    <!-- Language Selector Bar -->
-    <div class="flex justify-center items-center space-x-1 border-t border-slate-100 pt-1.5 pb-0.5 text-[9px]">
-      <button onclick="changeLanguage('pt')" class="lang-btn active px-2 py-0.5 rounded-full bg-slate-100 font-semibold" id="lang-pt">🇧🇷 PT</button>
-      <button onclick="changeLanguage('en')" class="lang-btn px-2 py-0.5 rounded-full bg-slate-100 font-semibold" id="lang-en">🇺🇸 EN</button>
-      <button onclick="changeLanguage('it')" class="lang-btn px-2 py-0.5 rounded-full bg-slate-100 font-semibold" id="lang-it">🇮🇹 IT</button>
-      <button onclick="changeLanguage('es')" class="lang-btn px-2 py-0.5 rounded-full bg-slate-100 font-semibold" id="lang-es">🇪🇸 ES</button>
-      <button onclick="changeLanguage('fr')" class="lang-btn px-2 py-0.5 rounded-full bg-slate-100 font-semibold" id="lang-fr">🇫🇷 FR</button>
-      <button onclick="changeLanguage('de')" class="lang-btn px-2 py-0.5 rounded-full bg-slate-100 font-semibold" id="lang-de">🇩🇪 DE</button>
+
+      <!-- Desktop Top Navigation Menu -->
+      <nav class="hidden md:flex items-center space-x-6 text-xs font-semibold text-slate-600">
+        <button onclick="switchTab('house')" id="top-btn-house" class="hover:text-[#C5A880] transition-colors py-1">
+          <span data-translate="nav_lbl_house">A Casa</span>
+        </button>
+        <button onclick="switchTab('explore')" id="top-btn-explore" class="hover:text-[#C5A880] transition-colors py-1">
+          <span data-translate="nav_lbl_explore">Explorar</span>
+        </button>
+        <button onclick="switchTab('servicos')" id="top-btn-servicos" class="hover:text-[#C5A880] transition-colors py-1">
+          <span data-translate="nav_lbl_services">Serviços</span>
+        </button>
+        <button onclick="switchTab('horarios')" id="top-btn-horarios" class="hover:text-[#C5A880] transition-colors py-1">
+          <span data-translate="nav_lbl_hours">Horários</span>
+        </button>
+      </nav>
+
+      <!-- Language & Desktop PDF Download Controls -->
+      <div class="flex items-center justify-between md:justify-end space-x-3 pt-1 md:pt-0 border-t md:border-t-0 border-slate-100">
+        <div class="flex items-center space-x-1 text-[9px] md:text-[10px]">
+          <button onclick="changeLanguage('pt')" class="lang-btn active px-2 py-0.5 md:px-2.5 md:py-1 rounded-full bg-slate-100 font-semibold transition-colors" id="lang-pt">🇧🇷 PT</button>
+          <button onclick="changeLanguage('en')" class="lang-btn px-2 py-0.5 md:px-2.5 md:py-1 rounded-full bg-slate-100 font-semibold transition-colors" id="lang-en">🇺🇸 EN</button>
+          <button onclick="changeLanguage('it')" class="lang-btn px-2 py-0.5 md:px-2.5 md:py-1 rounded-full bg-slate-100 font-semibold transition-colors" id="lang-it">🇮🇹 IT</button>
+          <button onclick="changeLanguage('es')" class="lang-btn px-2 py-0.5 md:px-2.5 md:py-1 rounded-full bg-slate-100 font-semibold transition-colors" id="lang-es">🇪🇸 ES</button>
+          <button onclick="changeLanguage('fr')" class="lang-btn px-2 py-0.5 md:px-2.5 md:py-1 rounded-full bg-slate-100 font-semibold transition-colors" id="lang-fr">🇫🇷 FR</button>
+          <button onclick="changeLanguage('de')" class="lang-btn px-2 py-0.5 md:px-2.5 md:py-1 rounded-full bg-slate-100 font-semibold transition-colors" id="lang-de">🇩🇪 DE</button>
+        </div>
+
+        <button onclick="openPdfModal()" class="hidden md:flex items-center space-x-1.5 bg-amber-50 hover:bg-amber-100 text-[#C5A880] border border-[#C5A880]/30 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-sm">
+          <i class="fa-solid fa-file-arrow-down text-xs"></i>
+          <span data-translate="install_btn">Download PDF</span>
+        </button>
+      </div>
+
     </div>
   </header>
 
-  <!-- Hero Banner (Pool Image) -->
-  <div class="relative h-56 w-full overflow-hidden">
-    <img src="https://lh3.googleusercontent.com/d/1Os8gdshwa32fb5bXafS8DO5yHl6KTd4A" alt="Ariah Villa Pool" class="w-full h-full object-cover" fetchpriority="high" decoding="async">
-    <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent flex flex-col justify-end p-4 pb-8 text-white">
-      <div class="flex items-center space-x-2 mb-1">
-        <div class="w-8 h-8 rounded-full ring-2 ring-white/80 p-0.5 bg-white overflow-hidden shadow-md shrink-0">
-          <img src="https://lh3.googleusercontent.com/d/1oKm6c43UlbPdTftB9pOVQMDmlqQwI6Gs" alt="Ariah Badge" class="w-full h-full object-cover rounded-full" decoding="async">
+  <!-- Container Wrapper for Layout Alignment -->
+  <div class="max-w-md md:max-w-5xl lg:max-w-6xl mx-auto px-4">
+
+    <!-- Hero Banner -->
+    <div class="relative h-56 md:h-72 lg:h-80 w-full mt-4 rounded-3xl overflow-hidden shadow-md">
+      <img src="https://lh3.googleusercontent.com/d/1Os8gdshwa32fb5bXafS8DO5yHl6KTd4A" alt="Ariah Villa Pool" class="w-full h-full object-cover" fetchpriority="high" decoding="async">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent flex flex-col justify-end p-5 md:p-8 text-white">
+        <div class="flex items-center space-x-2.5 mb-1.5">
+          <div class="w-8 h-8 rounded-full ring-2 ring-white/80 p-0.5 bg-white overflow-hidden shadow-md shrink-0">
+            <img src="https://lh3.googleusercontent.com/d/1oKm6c43UlbPdTftB9pOVQMDmlqQwI6Gs" alt="Ariah Badge" class="w-full h-full object-cover rounded-full" decoding="async">
+          </div>
+          <span class="text-[10px] md:text-xs uppercase font-bold tracking-widest text-[#C5A880]" data-translate="hero_tag">Guia Digital do Hóspede</span>
         </div>
-        <span class="text-[10px] uppercase font-bold tracking-widest text-[#C5A880]" data-translate="hero_tag">Guia Digital do Hóspede</span>
+        <h2 class="text-xl md:text-3xl font-bold" data-translate="hero_subtitle">Sua Estadia dos Sonhos no Preá</h2>
       </div>
-      <h2 class="text-xl font-bold" data-translate="hero_subtitle">Sua Estadia dos Sonhos no Preá</h2>
     </div>
-  </div>
 
-  <!-- Quick Action Buttons -->
-  <div class="grid grid-cols-4 gap-2 px-4 -mt-3 relative z-10">
-    <button onclick="scrollToWifi()" class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center active:scale-95 transition-transform">
-      <div class="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center text-[#C5A880] mb-1"><i class="fa-solid fa-wifi text-xs"></i></div>
-      <span class="text-[10px] font-semibold text-slate-700" data-translate="btn_label_wifi">Wi-Fi</span>
-    </button>
-    <a href="https://maps.app.goo.gl/CxfgTGfZJa4rxeC79" target="_blank" class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center active:scale-95 transition-transform">
-      <div class="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center text-[#C5A880] mb-1"><i class="fa-solid fa-location-dot text-xs"></i></div>
-      <span class="text-[10px] font-semibold text-slate-700" data-translate="btn_label_map">Mapa</span>
-    </a>
-    <button onclick="toggleQAModal()" class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center active:scale-95 transition-transform">
-      <div class="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center text-[#C5A880] mb-1"><i class="fa-solid fa-comments text-xs"></i></div>
-      <span class="text-[10px] font-semibold text-slate-700" data-translate="btn_label_chat">Chat</span>
-    </button>
-    <button onclick="switchTab('horarios')" class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center active:scale-95 transition-transform">
-      <div class="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center text-[#C5A880] mb-1"><i class="fa-solid fa-clock-rotate-left text-xs"></i></div>
-      <span class="text-[10px] font-semibold text-slate-700" data-translate="btn_label_hours">Horários</span>
-    </button>
-  </div>
+    <!-- Quick Action Bar -->
+    <div class="grid grid-cols-4 gap-3 -mt-5 relative z-10 max-w-lg mx-auto md:max-w-2xl">
+      <button onclick="scrollToWifi()" class="bg-white p-3.5 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center hover:shadow-md active:scale-95 transition-all">
+        <div class="w-9 h-9 rounded-full bg-amber-50 flex items-center justify-center text-[#C5A880] mb-1"><i class="fa-solid fa-wifi text-xs md:text-sm"></i></div>
+        <span class="text-[10px] md:text-xs font-semibold text-slate-700" data-translate="btn_label_wifi">Wi-Fi</span>
+      </button>
+      <a href="https://maps.app.goo.gl/CxfgTGfZJa4rxeC79" target="_blank" class="bg-white p-3.5 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center hover:shadow-md active:scale-95 transition-all">
+        <div class="w-9 h-9 rounded-full bg-amber-50 flex items-center justify-center text-[#C5A880] mb-1"><i class="fa-solid fa-location-dot text-xs md:text-sm"></i></div>
+        <span class="text-[10px] md:text-xs font-semibold text-slate-700" data-translate="btn_label_map">Mapa</span>
+      </a>
+      <button onclick="toggleQAModal()" class="bg-white p-3.5 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center hover:shadow-md active:scale-95 transition-all">
+        <div class="w-9 h-9 rounded-full bg-amber-50 flex items-center justify-center text-[#C5A880] mb-1"><i class="fa-solid fa-comments text-xs md:text-sm"></i></div>
+        <span class="text-[10px] md:text-xs font-semibold text-slate-700" data-translate="btn_label_chat">Chat</span>
+      </button>
+      <button onclick="switchTab('horarios')" class="bg-white p-3.5 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center hover:shadow-md active:scale-95 transition-all">
+        <div class="w-9 h-9 rounded-full bg-amber-50 flex items-center justify-center text-[#C5A880] mb-1"><i class="fa-solid fa-clock-rotate-left text-xs md:text-sm"></i></div>
+        <span class="text-[10px] md:text-xs font-semibold text-slate-700" data-translate="btn_label_hours">Horários</span>
+      </button>
+    </div>
 
-  <main class="p-4 mt-2">
-    <!-- SCREEN 1: A CASA -->
-    <section id="tab-house" class="app-screen space-y-4">
-      
-      <!-- Check-in / Check-out Banner -->
-      <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white p-4 rounded-2xl shadow-md border border-slate-700 space-y-3">
-        <div class="flex items-center justify-between border-b border-slate-700/80 pb-2">
-          <span class="text-[10px] uppercase font-bold tracking-widest text-[#C5A880] flex items-center"><i class="fa-solid fa-key mr-1.5"></i> <span data-translate="card_checkin_header">Horários Importantes</span></span>
-          <span class="bg-[#C5A880]/20 text-[#C5A880] text-[9px] font-bold px-2 py-0.5 rounded-full uppercase border border-[#C5A880]/30" data-translate="card_checkin_badge">Acesso Importante</span>
-        </div>
-        <div class="grid grid-cols-2 gap-3 text-center text-xs">
-          <div class="bg-white/10 p-3 rounded-xl border border-white/10">
-            <span class="uppercase text-slate-300 font-medium block" data-translate="lbl_checkin">Check-in</span>
-            <span class="text-xl font-bold text-emerald-400 block my-0.5">16:00</span>
-            <span class="text-[9px] text-slate-300 block" data-translate="sub_checkin">Entrada no Imóvel</span>
-          </div>
-          <div class="bg-white/10 p-3 rounded-xl border border-white/10">
-            <span class="uppercase text-slate-300 font-medium block" data-translate="lbl_checkout">Check-out</span>
-            <span class="text-xl font-bold text-amber-400 block my-0.5">11:00</span>
-            <span class="text-[9px] text-slate-300 block" data-translate="sub_checkout">Saída do Imóvel</span>
-          </div>
-        </div>
-        <div class="bg-slate-800/80 p-2.5 rounded-xl text-[10px] text-slate-300 flex items-start space-x-2 border border-slate-700">
-          <i class="fa-solid fa-circle-info text-[#C5A880] mt-0.5 shrink-0 text-xs"></i>
-          <p data-translate="checkin_note"><strong>Recepção presencial:</strong> Teremos uma pessoa da nossa equipe no local para te receber e tirar dúvidas sobre o funcionamento de equipamentos da casa.</p>
-        </div>
-      </div>
+    <!-- MAIN CONTENT AREA -->
+    <main class="py-6">
 
-      <!-- Wi-Fi Card with Scroll Anchor -->
-      <div id="wifi-section" class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-3 scroll-mt-24">
-        <div class="flex items-center justify-between border-b border-slate-100 pb-2">
-          <div class="flex items-center space-x-2">
-            <i class="fa-solid fa-wifi text-[#C5A880] text-sm"></i>
-            <h3 class="text-xs font-bold text-slate-800" data-translate="wifi_card_title">Conexão Wi-Fi</h3>
-          </div>
-          <span class="text-[9px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full" data-translate="wifi_badge">Alta Velocidade</span>
-        </div>
-        <div class="flex items-center space-x-4">
-          <div class="w-24 h-24 p-1.5 bg-slate-50 rounded-xl border border-slate-200 shrink-0 flex flex-col items-center justify-center">
-            <img src="https://lh3.googleusercontent.com/d/1eQ04BdgDa3xHTtAf2SbUKtqb7zk-nQfx" alt="Wi-Fi QR Code" class="w-full h-full object-contain" decoding="async">
-          </div>
-          <div class="space-y-1.5 text-xs">
-            <div>
-              <span class="text-[10px] text-slate-400 uppercase font-semibold block" data-translate="lbl_wifiname">Redes disponíveis</span>
-              <p class="font-bold text-slate-800">Karime / Karime_5g</p>
-            </div>
-            <div>
-              <span class="text-[10px] text-slate-400 uppercase font-semibold block" data-translate="lbl_wifipass">Senha de acesso</span>
-              <p class="font-mono bg-slate-100 px-2 py-0.5 rounded text-slate-800 inline-block font-bold">12345678</p>
-            </div>
-            <p class="text-[9px] text-slate-400" data-translate="wifi_instruction">Aponte a câmera do celular para conectar automaticamente.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Welcome Hosts Card -->
-      <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-start space-x-3">
-        <div class="w-10 h-10 rounded-full bg-[#C5A880] text-white flex items-center justify-center font-bold text-sm shrink-0 mt-0.5">K&A</div>
-        <div class="space-y-2">
-          <h3 class="text-xs font-bold text-slate-800" data-translate="host_card_title">Conheça Seus Anfitriões</h3>
-          <p class="text-[11px] text-slate-600 leading-relaxed" data-translate="welcome_msg">Olá! Eu sou a Karime, junto com meu companheiro André. É um prazer recebê-lo! Nossos colaboradores estão à disposição para ajudar. Caso tenha alguma dúvida, pergunte ao nosso assistente virtual no canto inferior direito e, se ele não tiver a resposta, será redirecionado a um dos nossos colaboradores. Desejamos a você uma ótima estadia na Ariah Luxury Villas.</p>
-        </div>
-      </div>
-
-      <!-- Photo Gallery Carousel -->
-      <div class="space-y-1.5">
-        <div class="flex justify-between items-center px-1">
-          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400" data-translate="gallery_title">Conheça a Villa</span>
-          <span class="text-[10px] text-[#C5A880] font-medium" data-translate="gallery_sub">Arraste para o lado →</span>
-        </div>
-        <div class="flex space-x-3 overflow-x-auto no-scrollbar pb-1">
-          <div class="w-60 shrink-0 rounded-2xl overflow-hidden shadow-sm border border-slate-100 bg-white">
-            <img src="https://lh3.googleusercontent.com/d/1YEcktArKUZAcNwGkRi1UQ6ttpVh4iLe6" class="h-32 w-full object-cover" alt="Piscina" loading="lazy" decoding="async">
-            <div class="p-2 text-center text-[10px] font-semibold text-slate-700" data-translate="img_cap_1">Piscina Privativa & Deck</div>
-          </div>
-          <div class="w-60 shrink-0 rounded-2xl overflow-hidden shadow-sm border border-slate-100 bg-white">
-            <img src="https://lh3.googleusercontent.com/d/1SRhMK089ffajRnZUFABGXmpEnQk1tBQx" class="h-32 w-full object-cover" alt="Quarto Queen" loading="lazy" decoding="async">
-            <div class="p-2 text-center text-[10px] font-semibold text-slate-700" data-translate="img_cap_5">Quarto Queen</div>
-          </div>
-          <div class="w-60 shrink-0 rounded-2xl overflow-hidden shadow-sm border border-slate-100 bg-white">
-            <img src="https://lh3.googleusercontent.com/d/1dBVnaNBUv9Y9W5mu_0pZP0qvjp3gSggj" class="h-32 w-full object-cover" alt="Suíte" loading="lazy" decoding="async">
-            <div class="p-2 text-center text-[10px] font-semibold text-slate-700" data-translate="img_cap_3">Suíte Climatizada</div>
-          </div>
-          <div class="w-60 shrink-0 rounded-2xl overflow-hidden shadow-sm border border-slate-100 bg-white">
-            <img src="https://lh3.googleusercontent.com/d/1DPiBAYp6cBslsp-mcmwjCLqti1OCZMkx" class="h-32 w-full object-cover" alt="Cozinha Integrada" loading="lazy" decoding="async">
-            <div class="p-2 text-center text-[10px] font-semibold text-slate-700" data-translate="img_cap_4">Cozinha Integrada</div>
-          </div>
-          <div class="w-60 shrink-0 rounded-2xl overflow-hidden shadow-sm border border-slate-100 bg-white">
-            <img src="https://lh3.googleusercontent.com/d/17z36EZhPjC_oGIsfEnng9s_wp9QF4PDQ" class="h-32 w-full object-cover" alt="Toilette Elegante" loading="lazy" decoding="async">
-            <div class="p-2 text-center text-[10px] font-semibold text-slate-700" data-translate="img_cap_6">Toilette Elegante</div>
-          </div>
-          <div class="w-60 shrink-0 rounded-2xl overflow-hidden shadow-sm border border-slate-100 bg-white">
-            <img src="https://lh3.googleusercontent.com/d/1hs6fbcA4WHYerZvH2s4SKa1nzjx59SJX" class="h-32 w-full object-cover" alt="Varanda" loading="lazy" decoding="async">
-            <div class="p-2 text-center text-[10px] font-semibold text-slate-700" data-translate="img_cap_2">Área Gourmet & Varanda</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- House Capacity & Structure -->
-      <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-3">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400" data-translate="struct_header">Capacidade & Estrutura</h3>
-        <div class="grid grid-cols-3 gap-2 text-center text-xs">
-          <div class="p-2.5 bg-slate-50 rounded-xl"><i class="fa-solid fa-users text-[#C5A880] mb-1 block text-sm"></i><span data-translate="stat_1">Até 7 pessoas</span></div>
-          <div class="p-2.5 bg-slate-50 rounded-xl"><i class="fa-solid fa-bed text-[#C5A880] mb-1 block text-sm"></i><span data-translate="stat_2">2 Quartos (3 beds)</span></div>
-          <div class="p-2.5 bg-slate-50 rounded-xl"><i class="fa-solid fa-bath text-[#C5A880] mb-1 block text-sm"></i><span data-translate="stat_3">3 Banheiros</span></div>
-        </div>
-        <div class="bg-slate-50 p-2.5 rounded-xl text-[11px] text-slate-600 space-y-1">
-          <p data-translate="beds_config"><strong>Configuração de Camas:</strong> 1 Cama King (casal), 1 Cama de casal, 3 Camas de solteiro.</p>
-          <p data-translate="baths_config"><strong>Banheiros:</strong> 2 Suítes + 1 Banheiro social.</p>
-          <p data-translate="outdoor_config"><strong>Área Externa:</strong> Piscina Privada & Churrasqueira.</p>
-        </div>
-      </div>
-
-      <!-- AMENITIES SECTION -->
-      <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-3">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center">
-          <i class="fa-solid fa-concierge-bell mr-1.5 text-[#C5A880]"></i> <span data-translate="amenities_header">Amenidades do Imóvel</span>
-        </h3>
-        <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-700">
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_1">Estacionamento</span></div>
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_2">Ar condicionado nos quartos</span></div>
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_3">Roupa de cama completa</span></div>
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_4">Toalhas de banho</span></div>
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_5">Papel higiênico</span></div>
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_6">Pó de café e Açúcar</span></div>
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_7">Sal e temperos</span></div>
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_8">Cafeteira elétrica</span></div>
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_9">Airfryer & Microondas</span></div>
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_10">Panos de prato</span></div>
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_11">Esponja e detergente</span></div>
-          <div class="flex items-center space-x-1.5"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_12">Guarderia para kite</span></div>
-        </div>
-        <div class="border-t pt-2 text-[11px] text-slate-500 space-y-1">
-          <p data-translate="extra_services"><strong>Serviços Contratados Previamente:</strong> Limpeza diária, café da manhã, aluguel de quadriciclo e transfers.</p>
-        </div>
-      </div>
-
-      <!-- Important Information -->
-      <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-2.5">
-        <h3 class="text-xs font-bold text-slate-800 flex items-center">
-          <i class="fa-solid fa-circle-info mr-1.5 text-[#C5A880]"></i> <span data-translate="info_header">Informações Importantes</span>
-        </h3>
-        <div class="text-[11px] text-slate-600 space-y-2">
-          <p data-translate="info_trash"><strong>🗑️ Retirada de Lixo:</strong> O lixo deve ser retirado diariamente e colocado na lixeira suspensa no lado externo do portão da Rua Pedro Tomaz.</p>
-          <p data-translate="info_tv"><strong>📺 TV Smart:</strong> Conecte-se facilmente aos seus serviços de streaming preferidos.</p>
-          <p data-translate="info_speaker"><strong>🔊 Caixa de Som:</strong> Disponível para uso, respeitando as regras de silêncio.</p>
-          <p data-translate="info_laundry"><strong>🧹 Lavanderia & Produtos:</strong> Vassouras, rodos e produtos de limpeza estão na lavanderia. Máquina de lavar disponível na unidade.</p>
-        </div>
-      </div>
-
-      <!-- HOUSE RULES -->
-      <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-2.5">
-        <h3 class="text-xs font-bold text-red-600 flex items-center"><i class="fa-solid fa-triangle-exclamation mr-1.5"></i> <span data-translate="rules_header">Regras da Casa</span></h3>
-        <ul class="text-[11px] text-slate-700 space-y-2 pl-1 list-none">
-          <li class="flex items-start"><i class="fa-solid fa-ban text-red-500 mr-2 mt-0.5"></i><span data-translate="r1">Proibido fazer barulho após as 22h.</span></li>
-          <li class="flex items-start"><i class="fa-solid fa-ban text-red-500 mr-2 mt-0.5"></i><span data-translate="r2">Proibido fazer festas, exceto com autorização prévia.</span></li>
-          <li class="flex items-start"><i class="fa-solid fa-ban text-red-500 mr-2 mt-0.5"></i><span data-translate="r3">Proibido fumar dentro da casa.</span></li>
-          <li class="flex items-start"><i class="fa-solid fa-paw text-slate-400 mr-2 mt-0.5"></i><span data-translate="r4">Proibido trazer animais, salvo com autorização prévia.</span></li>
-          <li class="flex items-start"><i class="fa-solid fa-power-off text-slate-400 mr-2 mt-0.5"></i><span data-translate="r5">Desligue o ar condicionado e apague as luzes antes de sair.</span></li>
-          <li class="flex items-start"><i class="fa-solid fa-couch text-slate-400 mr-2 mt-0.5"></i><span data-translate="r6">Proibido mudar a disposição dos móveis.</span></li>
-          <li class="flex items-start"><i class="fa-solid fa-clock text-slate-400 mr-2 mt-0.5"></i><span data-translate="r7">Respeite os horários de check-in (16:00) e check-out (11:00).</span></li>
-          <li class="flex items-start"><i class="fa-solid fa-hand-holding-hand text-red-500 mr-2 mt-0.5"></i><span data-translate="r8">Proibido tirar objetos da casa, mesmo que por pouco tempo, sob pena de multa estipulada em contrato.</span></li>
-          <li class="flex items-start"><i class="fa-solid fa-fire-burner text-slate-400 mr-2 mt-0.5"></i><span data-translate="r9">Limpar a churrasqueira depois do uso.</span></li>
-          <li class="flex items-start"><i class="fa-solid fa-triangle-exclamation text-amber-500 mr-2 mt-0.5"></i><span data-translate="r10">A madeira do deck é muito delicada; para evitar arranhá-la acidentalmente, é proibido posicionar no deck qualquer item que já não esteja nessa área (ex: cadeiras de piscina, cadeiras de praia, pranchas, bicicletas).</span></li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- SCREEN 2: EXPLORAR -->
-    <section id="tab-explore" class="app-screen space-y-4 hidden">
-      <div>
-        <h2 class="text-base font-bold text-slate-800" data-translate="exp_title">Guia Completo de Vila Preá</h2>
-        <p class="text-[11px] text-slate-400" data-translate="exp_sub">Guia de aventuras, praias e alta gastronomia.</p>
-      </div>
-
-      <div class="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm text-[11px] text-slate-700 space-y-1">
-        <h3 class="font-bold text-slate-800 mb-1"><i class="fa-solid fa-person-walking text-[#C5A880] mr-1"></i> <span data-translate="dist_header">Distâncias a pé da Villa:</span></h3>
-        <p data-translate="dist_1">• 5 min até a praia</p>
-        <p data-translate="dist_2">• 2 min até o mercado Atacadão do Vale</p>
-        <p data-translate="dist_3">• 10 min até o Rancho do Kite</p>
-      </div>
-
-      <div class="relative h-32 rounded-2xl overflow-hidden shadow-sm">
-        <img src="https://lh3.googleusercontent.com/d/1L5c0BRRFA1wCdi7fjTJgRsdcRkWsEE4U" class="w-full h-full object-cover brightness-75" alt="Praia do Preá" loading="lazy" decoding="async">
-        <div class="absolute inset-0 p-3 flex flex-col justify-end text-white">
-          <span class="text-[9px] font-bold uppercase tracking-widest text-amber-300" data-translate="beach_card_tag">Praia do Preá</span>
-          <p class="text-xs font-semibold" data-translate="beach_card_desc">O paraíso mundial do Kitesurfe e do pôr do sol</p>
-        </div>
-      </div>
-
-      <!-- KITE & EXCURSIONS -->
-      <div class="space-y-3">
-        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block" data-translate="cat_kite_header">Kite & Passeios</span>
+      <!-- SCREEN 1: A CASA -->
+      <section id="tab-house" class="app-screen space-y-6">
         
-        <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm p-3.5 space-y-2">
-          <div class="flex justify-between items-start">
-            <span class="bg-sky-100 text-sky-700 text-[9px] font-bold px-2 py-0.5 rounded-full">KITE CLUB</span>
-            <span class="text-xs font-bold text-amber-500"><i class="fa-solid fa-star"></i> 4.8</span>
-          </div>
-          <h4 class="text-xs font-bold text-slate-800">Rancho do Kite</h4>
-          <p class="text-[11px] text-slate-500" data-translate="place_1_desc">Escola de kitesurfe no Preá, com restaurante, música, piscina e atividades culturais em datas especiais.</p>
-          <div class="flex justify-between items-center text-[10px] pt-1">
-            <span class="text-slate-400" data-translate="walk_rancho"><i class="fa-solid fa-person-walking mr-1"></i>10 min a pé</span>
-            <a href="https://maps.google.com/?q=Rancho+do+Kite+Prea" target="_blank" class="text-[#C5A880] font-bold" data-translate="ver_rota">Ver Rota →</a>
-          </div>
-        </div>
-
-        <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm p-3.5 space-y-2">
-          <div class="flex justify-between items-start">
-            <span class="bg-amber-100 text-amber-700 text-[9px] font-bold px-2 py-0.5 rounded-full">RALLY & UTVS</span>
-            <span class="text-xs font-bold text-amber-500"><i class="fa-solid fa-star"></i> 4.9</span>
-          </div>
-          <h4 class="text-xs font-bold text-slate-800">Sertões Experience</h4>
-          <p class="text-[11px] text-slate-500" data-translate="place_2_desc">Troque o buggy tradicional pela adrenalina de pilotar UTVs, motos ou quadriciclos com suporte de luxo.</p>
-          <div class="flex justify-between items-center text-[10px] pt-1">
-            <span class="text-slate-400" data-translate="drive_sertoes"><i class="fa-solid fa-car mr-1"></i>Tour Guiado</span>
-            <a href="https://wa.me/558897104187" target="_blank" class="text-[#C5A880] font-bold" data-translate="reservar">Reservar →</a>
-          </div>
-        </div>
-
-        <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm p-3.5 space-y-2">
-          <h4 class="text-xs font-bold text-slate-800">Lagoa do Paraíso & Sandê Open Mall</h4>
-          <p class="text-[11px] text-slate-500" data-translate="lagoa_desc">Águas cristalinas em tons azul e verde com redes na água. O Sandê Mall oferece lojas, almoço em família e drinks frente ao mar.</p>
-        </div>
-      </div>
-
-      <!-- RESTAURANTS SECTION -->
-      <div class="space-y-3">
-        <div class="flex justify-between items-center">
-          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400" data-translate="cat_rest_header">Gastronomia & Restaurantes</span>
-          <a href="https://www.tripadvisor.it/Restaurants-g2527937-Prea_Cruz_State_of_Ceara.html" target="_blank" class="text-[10px] text-[#C5A880] font-bold underline" data-translate="see_more_ta">TripAdvisor Preá Ranking →</a>
-        </div>
-
-        <!-- Our Favourite Highlight -->
-        <div class="bg-amber-50/70 border border-amber-200/80 rounded-2xl p-3.5 space-y-1.5 shadow-sm">
-          <div class="flex justify-between items-start">
-            <span class="bg-amber-500 text-white text-[9px] font-bold px-2 py-0.5 rounded" data-translate="our_favourite_badge">Our favourite</span>
-            <span class="text-xs font-bold text-amber-600"><i class="fa-solid fa-star"></i> TripAdvisor</span>
-          </div>
-          <h4 class="text-xs font-bold text-slate-800">Restaurante da Lu</h4>
-          <p class="text-[11px] text-slate-600" data-translate="rest_dalu_desc">Autêntica culinária local com frutos do mar frescos e pratos regionais acolhedores no Preá.</p>
-          <div class="pt-1">
-            <a href="https://www.tripadvisor.it/Restaurant_Review-g2527937-d11841691-Reviews-Restaurante_da_Lu-Prea_Cruz_State_of_Ceara.html" target="_blank" class="text-[10px] text-[#C5A880] font-bold underline" data-translate="ta_review_link">Ver no TripAdvisor →</a>
-          </div>
-        </div>
-
-        <!-- Restaurant List Widget -->
-        <div class="bg-white rounded-2xl border border-slate-200 p-3 shadow-sm space-y-2">
-          <div class="flex justify-between items-center border-b border-slate-100 pb-2">
-            <div class="flex items-center space-x-1.5">
-              <i class="fa-solid fa-award text-emerald-600 text-xs"></i>
-              <span class="text-[11px] font-bold text-slate-800" data-translate="top_ta_rest">Top Restaurantes Preá (TripAdvisor)</span>
+        <!-- Top Cards Row (Checkin + Wi-Fi) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Check-in / Check-out Banner -->
+          <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white p-5 rounded-3xl shadow-md border border-slate-700 space-y-4 flex flex-col justify-between">
+            <div class="flex items-center justify-between border-b border-slate-700/80 pb-3">
+              <span class="text-xs uppercase font-bold tracking-widest text-[#C5A880] flex items-center"><i class="fa-solid fa-key mr-2"></i> <span data-translate="card_checkin_header">Horários Importantes</span></span>
+              <span class="bg-[#C5A880]/20 text-[#C5A880] text-[10px] font-bold px-2.5 py-1 rounded-full uppercase border border-[#C5A880]/30" data-translate="card_checkin_badge">Acesso Importante</span>
             </div>
-            <span class="text-[9px] bg-emerald-100 text-emerald-700 font-bold px-2 py-0.5 rounded-full" data-translate="ta_badge">Ranking Oficial</span>
+            <div class="grid grid-cols-2 gap-3 text-center text-xs">
+              <div class="bg-white/10 p-3.5 rounded-2xl border border-white/10">
+                <span class="uppercase text-slate-300 font-medium block text-[10px]" data-translate="lbl_checkin">Check-in</span>
+                <span class="text-2xl font-bold text-emerald-400 block my-1">16:00</span>
+                <span class="text-[10px] text-slate-300 block" data-translate="sub_checkin">Entrada no Imóvel</span>
+              </div>
+              <div class="bg-white/10 p-3.5 rounded-2xl border border-white/10">
+                <span class="uppercase text-slate-300 font-medium block text-[10px]" data-translate="lbl_checkout">Check-out</span>
+                <span class="text-2xl font-bold text-amber-400 block my-1">11:00</span>
+                <span class="text-[10px] text-slate-300 block" data-translate="sub_checkout">Saída do Imóvel</span>
+              </div>
+            </div>
+            <div class="bg-slate-800/80 p-3 rounded-2xl text-[11px] text-slate-300 flex items-start space-x-2.5 border border-slate-700">
+              <i class="fa-solid fa-circle-info text-[#C5A880] mt-0.5 shrink-0 text-sm"></i>
+              <p data-translate="checkin_note"><strong>Recepção presencial:</strong> Teremos uma pessoa da nossa equipe no local para te receber e tirar dúvidas sobre o funcionamento de equipamentos da casa.</p>
+            </div>
+          </div>
+
+          <!-- Wi-Fi Card -->
+          <div id="wifi-section" class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm space-y-4 scroll-mt-24 flex flex-col justify-between">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-wifi text-[#C5A880] text-base"></i>
+                <h3 class="text-sm font-bold text-slate-800" data-translate="wifi_card_title">Conexão Wi-Fi</h3>
+              </div>
+              <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full" data-translate="wifi_badge">Alta Velocidade</span>
+            </div>
+            <div class="flex items-center space-x-5">
+              <div class="w-28 h-28 p-2 bg-slate-50 rounded-2xl border border-slate-200 shrink-0 flex flex-col items-center justify-center">
+                <img src="https://lh3.googleusercontent.com/d/1eQ04BdgDa3xHTtAf2SbUKtqb7zk-nQfx" alt="Wi-Fi QR Code" class="w-full h-full object-contain" decoding="async">
+              </div>
+              <div class="space-y-2 text-xs">
+                <div>
+                  <span class="text-[10px] text-slate-400 uppercase font-semibold block" data-translate="lbl_wifiname">Redes disponíveis</span>
+                  <p class="font-bold text-slate-800 text-sm">Karime / Karime_5g</p>
+                </div>
+                <div>
+                  <span class="text-[10px] text-slate-400 uppercase font-semibold block" data-translate="lbl_wifipass">Senha de acesso</span>
+                  <p class="font-mono bg-slate-100 px-2.5 py-1 rounded-lg text-slate-800 inline-block font-bold text-sm">12345678</p>
+                </div>
+                <p class="text-[10px] text-slate-400" data-translate="wifi_instruction">Aponte a câmera do celular para conectar automaticamente.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Welcome Hosts Card -->
+        <div class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm flex items-start space-x-4">
+          <div class="w-12 h-12 rounded-full bg-[#C5A880] text-white flex items-center justify-center font-bold text-base shrink-0 mt-0.5">K&A</div>
+          <div class="space-y-1.5">
+            <h3 class="text-sm font-bold text-slate-800" data-translate="host_card_title">Conheça Seus Anfitriões</h3>
+            <p class="text-xs text-slate-600 leading-relaxed" data-translate="welcome_msg">Olá! Eu sou a Karime, junto com meu companheiro André. É um prazer recebê-lo! Nossos colaboradores estão à disposição para ajudar. Caso tenha alguma dúvida, pergunte ao nosso assistente virtual no canto inferior direito e, se ele não tiver a resposta, será redirecionado a um dos nossos colaboradores. Desejamos a você uma ótima estadia na Ariah Luxury Villas.</p>
+          </div>
+        </div>
+
+        <!-- Photo Gallery (Grid on Desktop / Carousel on Mobile) -->
+        <div class="space-y-3">
+          <div class="flex justify-between items-center px-1">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-400" data-translate="gallery_title">Conheça a Villa</span>
+            <span class="text-xs text-[#C5A880] font-medium md:hidden" data-translate="gallery_sub">Arraste para o lado →</span>
           </div>
           
-          <div class="space-y-2 text-[11px]">
-            <div class="p-2 bg-slate-50 rounded-xl flex justify-between items-center">
-              <div>
-                <p class="font-bold text-slate-800">1. Gato Na Brasa Steakhouse</p>
-                <p class="text-[9px] text-slate-400">Steakhouse, Brasiliana • €€-€€€</p>
-              </div>
-              <div class="text-right">
-                <span class="font-bold text-amber-500"><i class="fa-solid fa-star text-[10px]"></i> 4,8</span>
-                <span class="text-[9px] text-slate-400 block">(58 recensioni)</span>
-              </div>
+          <div class="flex space-x-4 overflow-x-auto no-scrollbar pb-2 md:grid md:grid-cols-3 md:gap-4 md:space-x-0 md:pb-0">
+            <div class="w-64 md:w-auto shrink-0 rounded-2xl overflow-hidden shadow-sm border border-slate-100 bg-white hover:shadow-md transition-shadow">
+              <img src="https://lh3.googleusercontent.com/d/1YEcktArKUZAcNwGkRi1UQ6ttpVh4iLe6" class="h-40 w-full object-cover" alt="Piscina" loading="lazy" decoding="async">
+              <div class="p-2.5 text-center text-xs font-semibold text-slate-700" data-translate="img_cap_1">Piscina Privativa & Deck</div>
             </div>
-
-            <div class="p-2 bg-slate-50 rounded-xl flex justify-between items-center">
-              <div>
-                <p class="font-bold text-slate-800">2. Quintalzin Restaurante</p>
-                <p class="text-[9px] text-slate-400">Brasiliana, Pesce • €€-€€€</p>
-              </div>
-              <div class="text-right">
-                <span class="font-bold text-amber-500"><i class="fa-solid fa-star text-[10px]"></i> 4,9</span>
-                <span class="text-[9px] text-slate-400 block">(143 recensioni)</span>
-              </div>
+            <div class="w-64 md:w-auto shrink-0 rounded-2xl overflow-hidden shadow-sm border border-slate-100 bg-white hover:shadow-md transition-shadow">
+              <img src="https://lh3.googleusercontent.com/d/1SRhMK089ffajRnZUFABGXmpEnQk1tBQx" class="h-40 w-full object-cover" alt="Quarto Queen" loading="lazy" decoding="async">
+              <div class="p-2.5 text-center text-xs font-semibold text-slate-700" data-translate="img_cap_5">Quarto Queen</div>
             </div>
-
-            <div class="p-2 bg-slate-50 rounded-xl flex justify-between items-center">
-              <div>
-                <p class="font-bold text-slate-800">3. La Cantina Restaurante</p>
-                <p class="text-[9px] text-slate-400">Italiana, Mediterranea • €€-€€€</p>
-              </div>
-              <div class="text-right">
-                <span class="font-bold text-amber-500"><i class="fa-solid fa-star text-[10px]"></i> 5,0</span>
-                <span class="text-[9px] text-slate-400 block">(188 recensioni)</span>
-              </div>
+            <div class="w-64 md:w-auto shrink-0 rounded-2xl overflow-hidden shadow-sm border border-slate-100 bg-white hover:shadow-md transition-shadow">
+              <img src="https://lh3.googleusercontent.com/d/1dBVnaNBUv9Y9W5mu_0pZP0qvjp3gSggj" class="h-40 w-full object-cover" alt="Suíte" loading="lazy" decoding="async">
+              <div class="p-2.5 text-center text-xs font-semibold text-slate-700" data-translate="img_cap_3">Suíte Climatizada</div>
             </div>
-
-            <div class="p-2 bg-slate-50 rounded-xl flex justify-between items-center">
-              <div>
-                <p class="font-bold text-slate-800">4. Restaurante da Lu</p>
-                <p class="text-[9px] text-slate-400">Brasiliana, Pesce • €€-€€€</p>
-              </div>
-              <div class="text-right">
-                <span class="font-bold text-amber-500"><i class="fa-solid fa-star text-[10px]"></i> 4,8</span>
-                <span class="text-[9px] text-slate-400 block">(303 recensioni)</span>
-              </div>
+            <div class="w-64 md:w-auto shrink-0 rounded-2xl overflow-hidden shadow-sm border border-slate-100 bg-white hover:shadow-md transition-shadow">
+              <img src="https://lh3.googleusercontent.com/d/1DPiBAYp6cBslsp-mcmwjCLqti1OCZMkx" class="h-40 w-full object-cover" alt="Cozinha Integrada" loading="lazy" decoding="async">
+              <div class="p-2.5 text-center text-xs font-semibold text-slate-700" data-translate="img_cap_4">Cozinha Integrada</div>
             </div>
-
-            <div class="p-2 bg-slate-50 rounded-xl flex justify-between items-center">
-              <div>
-                <p class="font-bold text-slate-800">5. Quintal do Denis</p>
-                <p class="text-[9px] text-slate-400">Brasiliana, Pesce • €€-€€€</p>
-              </div>
-              <div class="text-right">
-                <span class="font-bold text-amber-500"><i class="fa-solid fa-star text-[10px]"></i> 4,6</span>
-                <span class="text-[9px] text-slate-400 block">(81 recensioni)</span>
-              </div>
+            <div class="w-64 md:w-auto shrink-0 rounded-2xl overflow-hidden shadow-sm border border-slate-100 bg-white hover:shadow-md transition-shadow">
+              <img src="https://lh3.googleusercontent.com/d/17z36EZhPjC_oGIsfEnng9s_wp9QF4PDQ" class="h-40 w-full object-cover" alt="Toilette Elegante" loading="lazy" decoding="async">
+              <div class="p-2.5 text-center text-xs font-semibold text-slate-700" data-translate="img_cap_6">Toilette Elegante</div>
             </div>
-
-            <div class="p-2 bg-slate-50 rounded-xl flex justify-between items-center">
-              <div>
-                <p class="font-bold text-slate-800">6. Le Rooftop</p>
-                <p class="text-[9px] text-slate-400">Messicana, Brasiliana • €€-€€€</p>
-              </div>
-              <div class="text-right">
-                <span class="font-bold text-amber-500"><i class="fa-solid fa-star text-[10px]"></i> 5,0</span>
-                <span class="text-[9px] text-slate-400 block">(20 recensioni)</span>
-              </div>
+            <div class="w-64 md:w-auto shrink-0 rounded-2xl overflow-hidden shadow-sm border border-slate-100 bg-white hover:shadow-md transition-shadow">
+              <img src="https://lh3.googleusercontent.com/d/1hs6fbcA4WHYerZvH2s4SKa1nzjx59SJX" class="h-40 w-full object-cover" alt="Varanda" loading="lazy" decoding="async">
+              <div class="p-2.5 text-center text-xs font-semibold text-slate-700" data-translate="img_cap_2">Área Gourmet & Varanda</div>
             </div>
+          </div>
+        </div>
 
-            <div class="p-2 bg-slate-50 rounded-xl flex justify-between items-center">
-              <div>
-                <p class="font-bold text-slate-800">7. Balcón Restaurante</p>
-                <p class="text-[9px] text-slate-400">Pesce, Hawaiana • €€-€€€</p>
-              </div>
-              <div class="text-right">
-                <span class="font-bold text-amber-500"><i class="fa-solid fa-star text-[10px]"></i> 4,9</span>
-                <span class="text-[9px] text-slate-400 block">(13 recensioni)</span>
-              </div>
+        <!-- House Capacity & Amenities (Side-by-side on desktop) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Capacity -->
+          <div class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm space-y-4">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400" data-translate="struct_header">Capacidade & Estrutura</h3>
+            <div class="grid grid-cols-3 gap-2 text-center text-xs">
+              <div class="p-3 bg-slate-50 rounded-2xl"><i class="fa-solid fa-users text-[#C5A880] mb-1 block text-base"></i><span data-translate="stat_1">Até 7 pessoas</span></div>
+              <div class="p-3 bg-slate-50 rounded-2xl"><i class="fa-solid fa-bed text-[#C5A880] mb-1 block text-base"></i><span data-translate="stat_2">2 Quartos (3 beds)</span></div>
+              <div class="p-3 bg-slate-50 rounded-2xl"><i class="fa-solid fa-bath text-[#C5A880] mb-1 block text-base"></i><span data-translate="stat_3">3 Banheiros</span></div>
+            </div>
+            <div class="bg-slate-50 p-3.5 rounded-2xl text-xs text-slate-600 space-y-1.5">
+              <p data-translate="beds_config"><strong>Configuração de Camas:</strong> 1 Cama King (casal), 1 Cama de casal, 3 Camas de solteiro.</p>
+              <p data-translate="baths_config"><strong>Banheiros:</strong> 2 Suítes + 1 Banheiro social.</p>
+              <p data-translate="outdoor_config"><strong>Área Externa:</strong> Piscina Privada & Churrasqueira.</p>
             </div>
           </div>
 
-          <a href="https://www.tripadvisor.it/Restaurants-g2527937-Prea_Cruz_State_of_Ceara.html" target="_blank" class="block w-full text-center py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-[10px] transition-colors" data-translate="see_all_ta">
-            <i class="fa-solid fa-arrow-up-right-from-square mr-1 text-[9px]"></i> Ver Lista Completa no TripAdvisor
-          </a>
-        </div>
-      </div>
-
-      <!-- PREÁ BY NIGHT SECTION -->
-      <div class="space-y-3 pt-2">
-        <span class="text-[10px] font-bold uppercase tracking-wider text-[#C5A880] block" data-translate="night_section_header">🌙 Preá by Night & Vida Noturna</span>
-        
-        <div class="bg-white rounded-2xl border border-slate-100 p-3.5 space-y-1.5 shadow-sm">
-          <div class="flex justify-between items-center">
-            <h4 class="text-xs font-bold text-slate-800">Cabaré Du Vento</h4>
-            <span class="text-[9px] bg-purple-100 text-purple-700 font-bold px-2 py-0.5 rounded-full">Live Music & Djs</span>
+          <!-- Amenities -->
+          <div class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm space-y-4">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center">
+              <i class="fa-solid fa-concierge-bell mr-2 text-[#C5A880]"></i> <span data-translate="amenities_header">Amenidades do Imóvel</span>
+            </h3>
+            <div class="grid grid-cols-2 gap-2 text-xs text-slate-700">
+              <div class="flex items-center space-x-2"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_1">Estacionamento</span></div>
+              <div class="flex items-center space-x-2"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_2">Ar condicionado</span></div>
+              <div class="flex items-center space-x-2"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_3">Roupa de cama</span></div>
+              <div class="flex items-center space-x-2"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_4">Toalhas de banho</span></div>
+              <div class="flex items-center space-x-2"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_5">Papel higiênico</span></div>
+              <div class="flex items-center space-x-2"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_6">Café e Açúcar</span></div>
+              <div class="flex items-center space-x-2"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_7">Sal e temperos</span></div>
+              <div class="flex items-center space-x-2"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_8">Cafeteira</span></div>
+              <div class="flex items-center space-x-2"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_9">Airfryer & Microonda</span></div>
+              <div class="flex items-center space-x-2"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_10">Panos de prato</span></div>
+              <div class="flex items-center space-x-2"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_11">Detergente</span></div>
+              <div class="flex items-center space-x-2"><i class="fa-solid fa-check text-emerald-500"></i><span data-translate="am_12">Guarderia kite</span></div>
+            </div>
+            <div class="border-t pt-2.5 text-xs text-slate-500">
+              <p data-translate="extra_services"><strong>Serviços Contratados Previamente:</strong> Limpeza diária, café da manhã, aluguel de quadriciclo e transfers.</p>
+            </div>
           </div>
-          <p class="text-[11px] text-slate-600" data-translate="night_cabare">Música ao vivo e DJs consagrados para curtir um pôr do sol mágico à beira-mar com drinks exclusivos e atmosfera vibrante.</p>
+
         </div>
 
-        <div class="bg-white rounded-2xl border border-slate-100 p-3.5 space-y-1.5 shadow-sm">
-          <div class="flex justify-between items-center">
-            <h4 class="text-xs font-bold text-slate-800">RARO Life</h4>
-            <span class="text-[9px] bg-rose-100 text-rose-700 font-bold px-2 py-0.5 rounded-full">Samba aos Sábados</span>
+        <!-- Info & Rules (Side-by-side on desktop) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Important Info -->
+          <div class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm space-y-3">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center">
+              <i class="fa-solid fa-circle-info mr-2 text-[#C5A880]"></i> <span data-translate="info_header">Informações Importantes</span>
+            </h3>
+            <div class="text-xs text-slate-600 space-y-2.5 leading-relaxed">
+              <p data-translate="info_trash"><strong>🗑️ Retirada de Lixo:</strong> O lixo deve ser retirado diariamente e colocado na lixeira suspensa no lado externo do portão da Rua Pedro Tomaz.</p>
+              <p data-translate="info_tv"><strong>📺 TV Smart:</strong> Conecte-se facilmente aos seus serviços de streaming preferidos.</p>
+              <p data-translate="info_speaker"><strong>🔊 Caixa de Som:</strong> Disponível para uso, respeitando as regras de silêncio.</p>
+              <p data-translate="info_laundry"><strong>🧹 Lavanderia & Produtos:</strong> Vassouras, rodos e produtos de limpeza estão na lavanderia. Máquina de lavar disponível na unidade.</p>
+            </div>
           </div>
-          <p class="text-[11px] text-slate-600" data-translate="night_raro">O ponto de encontro perfeito para curtir rodas de samba imperdíveis aos sábados à noite em uma pousada boutique sofisticada.</p>
-        </div>
 
-        <div class="bg-white rounded-2xl border border-slate-100 p-3.5 space-y-1.5 shadow-sm">
-          <div class="flex justify-between items-center">
-            <h4 class="text-xs font-bold text-slate-800">Kite Brisa Preá</h4>
-            <span class="text-[9px] bg-sky-100 text-sky-700 font-bold px-2 py-0.5 rounded-full">Eventos & Social</span>
+          <!-- House Rules -->
+          <div class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm space-y-3">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-red-600 flex items-center">
+              <i class="fa-solid fa-triangle-exclamation mr-2"></i> <span data-translate="rules_header">Regras da Casa</span>
+            </h3>
+            <ul class="text-xs text-slate-700 space-y-2 pl-1 list-none leading-relaxed">
+              <li class="flex items-start"><i class="fa-solid fa-ban text-red-500 mr-2 mt-0.5"></i><span data-translate="r1">Proibido fazer barulho após as 22h.</span></li>
+              <li class="flex items-start"><i class="fa-solid fa-ban text-red-500 mr-2 mt-0.5"></i><span data-translate="r2">Proibido fazer festas, exceto com autorização prévia.</span></li>
+              <li class="flex items-start"><i class="fa-solid fa-ban text-red-500 mr-2 mt-0.5"></i><span data-translate="r3">Proibido fumar dentro da casa.</span></li>
+              <li class="flex items-start"><i class="fa-solid fa-paw text-slate-400 mr-2 mt-0.5"></i><span data-translate="r4">Proibido trazer animais, salvo autorização prévia.</span></li>
+              <li class="flex items-start"><i class="fa-solid fa-power-off text-slate-400 mr-2 mt-0.5"></i><span data-translate="r5">Desligue ar condicionado e luzes ao sair.</span></li>
+              <li class="flex items-start"><i class="fa-solid fa-couch text-slate-400 mr-2 mt-0.5"></i><span data-translate="r6">Proibido mudar móveis de lugar.</span></li>
+              <li class="flex items-start"><i class="fa-solid fa-clock text-slate-400 mr-2 mt-0.5"></i><span data-translate="r7">Respeite check-in (16:00) e check-out (11:00).</span></li>
+              <li class="flex items-start"><i class="fa-solid fa-hand-holding-hand text-red-500 mr-2 mt-0.5"></i><span data-translate="r8">Proibido tirar objetos da casa.</span></li>
+              <li class="flex items-start"><i class="fa-solid fa-fire-burner text-slate-400 mr-2 mt-0.5"></i><span data-translate="r9">Limpar a churrasqueira depois do uso.</span></li>
+              <li class="flex items-start"><i class="fa-solid fa-triangle-exclamation text-amber-500 mr-2 mt-0.5"></i><span data-translate="r10">A madeira do deck é muito delicada; para evitar arranhá-la acidentalmente, é proibido posicionar no deck qualquer item que já não esteja nessa área (ex: cadeiras de piscina, cadeiras de praia, pranchas, bicicletas).</span></li>
+            </ul>
           </div>
-          <p class="text-[11px] text-slate-600" data-translate="night_kitebrisa">Acompanhe a programação especial de festas e encontros de kite na página do Instagram <a href="https://instagram.com/kitebrisaprea" target="_blank" class="text-[#C5A880] font-bold underline">@kitebrisaprea</a>.</p>
+
         </div>
 
-        <div class="bg-white rounded-2xl border border-slate-100 p-3.5 space-y-1.5 shadow-sm">
-          <div class="flex justify-between items-center">
-            <h4 class="text-xs font-bold text-slate-800">Chalé Conveniência</h4>
-            <span class="text-[9px] bg-amber-100 text-amber-700 font-bold px-2 py-0.5 rounded-full">Karaokê & Noite Tardia</span>
-          </div>
-          <p class="text-[11px] text-slate-600" data-translate="night_chale">Experiência local autêntica de música até tarde, petiscos e karaokê animado. Confira a programação semanal em <a href="https://instagram.com/chaleconvenienciaprea" target="_blank" class="text-[#C5A880] font-bold underline">@chaleconvenienciaprea</a>.</p>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- SCREEN 3: SERVIÇOS -->
-    <section id="tab-servicos" class="app-screen space-y-4 hidden">
-      <div>
-        <h2 class="text-base font-bold text-slate-800" data-translate="serv_title">Serviços Exclusivos & Parceiros</h2>
-        <p class="text-[11px] text-slate-400" data-translate="serv_sub">Contatos diretos para tornar sua estadia inesquecível.</p>
-      </div>
-
-      <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-3">
-        <h3 class="text-xs font-bold text-slate-700 border-b border-slate-100 pb-2 flex items-center">
-          <i class="fa-solid fa-concierge-bell mr-1.5 text-[#C5A880]"></i> <span data-translate="serv_list_header">Lista de Serviços Recomendados</span>
-        </h3>
-        
-        <div class="flex justify-between items-center text-xs pb-2 border-b border-slate-100">
-          <div>
-            <p class="font-semibold text-slate-800" data-translate="contact_1_name">Transfers, Táxi e Quadriciclo (Deborah)</p>
-            <p class="text-[10px] text-slate-400">+55 65 99673 1160</p>
-          </div>
-          <a href="https://wa.me/5565996731160" target="_blank" class="px-3 py-1 bg-emerald-500 text-white font-semibold rounded-full text-[10px]"><i class="fa-brands fa-whatsapp mr-1"></i><span data-translate="chamar">Chamar</span></a>
-        </div>
-
-        <div class="flex justify-between items-center text-xs pb-2 border-b border-slate-100">
-          <div>
-            <p class="font-semibold text-slate-800" data-translate="contact_2_name">Quadriciclo e Moto (Carlim)</p>
-            <p class="text-[10px] text-slate-400">+55 88 99710 4187</p>
-          </div>
-          <a href="https://wa.me/5588997104187" target="_blank" class="px-3 py-1 bg-emerald-500 text-white font-semibold rounded-full text-[10px]"><i class="fa-brands fa-whatsapp mr-1"></i><span data-translate="chamar">Chamar</span></a>
-        </div>
-
-        <div class="flex justify-between items-center text-xs pb-2 border-b border-slate-100">
-          <div>
-            <p class="font-semibold text-slate-800" data-translate="contact_3_name">Aluguel Fatbikes (Bike Mania Preá)</p>
-            <p class="text-[10px] text-slate-400">+55 88 99949 8504</p>
-          </div>
-          <a href="https://wa.me/5588999498504" target="_blank" class="px-3 py-1 bg-emerald-500 text-white font-semibold rounded-full text-[10px]"><i class="fa-brands fa-whatsapp mr-1"></i><span data-translate="chamar">Chamar</span></a>
-        </div>
-
-        <div class="flex justify-between items-center text-xs pb-2 border-b border-slate-100">
-          <div>
-            <p class="font-semibold text-slate-800">Chef de Cozinha Privado (Matias)</p>
-            <p class="text-[10px] text-slate-400">+55 88 99602 8932</p>
-          </div>
-          <a href="https://wa.me/5588996028932" target="_blank" class="px-3 py-1 bg-emerald-500 text-white font-semibold rounded-full text-[10px]"><i class="fa-brands fa-whatsapp mr-1"></i><span data-translate="chamar">Chamar</span></a>
-        </div>
-
-        <div class="flex justify-between items-center text-xs pb-2 border-b border-slate-100">
-          <div>
-            <p class="font-semibold text-slate-800">Chef de Cozinha Privado (Erica)</p>
-            <p class="text-[10px] text-slate-400">+55 81 99282 2051</p>
-          </div>
-          <a href="https://wa.me/5581992822051" target="_blank" class="px-3 py-1 bg-emerald-500 text-white font-semibold rounded-full text-[10px]"><i class="fa-brands fa-whatsapp mr-1"></i><span data-translate="chamar">Chamar</span></a>
-        </div>
-
-        <div class="flex justify-between items-center text-xs pb-2 border-b border-slate-100">
-          <div>
-            <p class="font-semibold text-slate-800">Chef de Cozinha Privado (Clara)</p>
-            <p class="text-[10px] text-slate-400">+55 88 98816 9835</p>
-          </div>
-          <a href="https://wa.me/5588988169835" target="_blank" class="px-3 py-1 bg-emerald-500 text-white font-semibold rounded-full text-[10px]"><i class="fa-brands fa-whatsapp mr-1"></i><span data-translate="chamar">Chamar</span></a>
-        </div>
-
-        <div class="flex justify-between items-center text-xs pb-2 border-b border-slate-100">
-          <div>
-            <p class="font-semibold text-slate-800" data-translate="serv_babysitter_title">Serviço de Babysitter</p>
-            <p class="text-[10px] text-slate-400">@baby_sitter_prea</p>
-          </div>
-          <a href="https://instagram.com/baby_sitter_prea" target="_blank" class="px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-full text-[10px] flex items-center space-x-1">
-            <i class="fa-brands fa-instagram"></i>
-            <span>Instagram</span>
-          </a>
-        </div>
-
-        <div class="flex justify-between items-center text-xs">
-          <div>
-            <p class="font-semibold text-slate-800">Salão de Beleza</p>
-            <p class="text-[10px] text-slate-400">+55 92 98167 0037</p>
-          </div>
-          <a href="https://wa.me/5592981670037" target="_blank" class="px-3 py-1 bg-emerald-500 text-white font-semibold rounded-full text-[10px]"><i class="fa-brands fa-whatsapp mr-1"></i><span data-translate="chamar">Chamar</span></a>
-        </div>
-      </div>
-    </section>
-
-    <!-- SCREEN 4: HORÁRIOS & CHECK-OUT -->
-    <section id="tab-horarios" class="app-screen space-y-4 hidden">
-      <div>
-        <h2 class="text-base font-bold text-slate-800" data-translate="hor_title">Horários & Procedimentos de Saída</h2>
-        <p class="text-[11px] text-slate-400" data-translate="hor_sub">Informações para garantir um check-out perfeito.</p>
-      </div>
-
-      <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white p-4 rounded-2xl shadow-md border border-slate-700 space-y-3">
-        <div class="flex items-center justify-between border-b border-slate-700/80 pb-2">
-          <span class="text-[10px] uppercase font-bold tracking-widest text-[#C5A880] flex items-center"><i class="fa-solid fa-clock mr-1.5"></i> <span data-translate="card_checkin_header">Horários Importantes</span></span>
-        </div>
-        <div class="grid grid-cols-2 gap-3 text-center text-xs">
-          <div class="bg-white/10 p-3 rounded-xl border border-white/10">
-            <span class="uppercase text-slate-300 font-medium block" data-translate="lbl_checkin">Check-in</span>
-            <span class="text-xl font-bold text-emerald-400 block my-0.5">16:00</span>
-            <span class="text-[9px] text-slate-300 block" data-translate="sub_checkin">Entrada no Imóvel</span>
-          </div>
-          <div class="bg-white/10 p-3 rounded-xl border border-white/10">
-            <span class="uppercase text-slate-300 font-medium block" data-translate="lbl_checkout">Check-out</span>
-            <span class="text-xl font-bold text-amber-400 block my-0.5">11:00</span>
-            <span class="text-[9px] text-slate-300 block" data-translate="sub_checkout">Saída do Imóvel</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-2.5 text-xs">
-        <h3 class="text-xs font-bold text-slate-800 border-b border-slate-100 pb-2 flex items-center">
-          <i class="fa-solid fa-clipboard-check text-red-500 mr-1.5"></i> <span data-translate="checkout_header">Checklist de Saída (Check-out 11:00)</span>
-        </h3>
-        <ul class="text-[11px] text-slate-600 space-y-2 list-none">
-          <li class="flex items-start"><i class="fa-regular fa-square-check text-emerald-500 mr-2 mt-0.5"></i><span data-translate="co_1">Deixe todas as louças limpas.</span></li>
-          <li class="flex items-start"><i class="fa-regular fa-square-check text-emerald-500 mr-2 mt-0.5"></i><span data-translate="co_2">Verifique se não está esquecendo nenhum pertence pessoal.</span></li>
-          <li class="flex items-start"><i class="fa-regular fa-square-check text-emerald-500 mr-2 mt-0.5"></i><span data-translate="co_3">Feche todas as janelas e portas.</span></li>
-          <li class="flex items-start"><i class="fa-regular fa-square-check text-emerald-500 mr-2 mt-0.5"></i><span data-translate="co_4">Desligue o ar condicionado e apague todas as luzes.</span></li>
-          <li class="flex items-start"><i class="fa-regular fa-square-check text-emerald-500 mr-2 mt-0.5"></i><span data-translate="co_5">Informe-nos se algum dano pequeno tiver acontecido.</span></li>
-          <li class="flex items-start"><i class="fa-regular fa-square-check text-emerald-500 mr-2 mt-0.5"></i><span data-translate="co_6">Chaves: Por favor, combinar sua saída da casa para que nossa equipe possa auxiliar e recolher as chaves.</span></li>
-        </ul>
-      </div>
-
-      <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-2xl flex flex-col items-center text-center space-y-2">
-        <div class="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center text-lg"><i class="fa-brands fa-whatsapp"></i></div>
+      <!-- SCREEN 2: EXPLORAR -->
+      <section id="tab-explore" class="app-screen space-y-6 hidden">
         <div>
-          <h4 class="text-xs font-bold text-slate-800" data-translate="hor_deb_title">Dúvidas sobre Horários ou Chaves?</h4>
-          <p class="text-[10px] text-slate-500" data-translate="hor_deb_sub">Fale diretamente com Deborah no WhatsApp para organizar seu check-out.</p>
+          <h2 class="text-lg font-bold text-slate-800" data-translate="exp_title">Guia Completo de Vila Preá</h2>
+          <p class="text-xs text-slate-400" data-translate="exp_sub">Guia de aventuras, praias e alta gastronomia.</p>
         </div>
-        <a href="https://wa.me/5565996731160?text=Olá%20Deborah,%20gostaria%20de%20combinar%20meu%20horário%20de%20saída/check-out." target="_blank" class="w-full py-2 bg-emerald-500 text-white font-bold rounded-xl text-xs flex items-center justify-center space-x-1.5 shadow-sm">
-          <i class="fa-brands fa-whatsapp text-sm"></i>
-          <span data-translate="hor_deb_btn">Falar com Deborah no WhatsApp</span>
-        </a>
-      </div>
-    </section>
-  </main>
 
-  <!-- FLOATING Q&A AI ASSISTANT BUTTON -->
-  <div class="fixed bottom-20 right-4 z-50">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm text-xs text-slate-700 space-y-1.5">
+            <h3 class="font-bold text-slate-800 mb-1"><i class="fa-solid fa-person-walking text-[#C5A880] mr-1.5"></i> <span data-translate="dist_header">Distâncias a pé da Villa:</span></h3>
+            <p data-translate="dist_1">• 5 min até a praia</p>
+            <p data-translate="dist_2">• 2 min até o mercado Atacadão do Vale</p>
+            <p data-translate="dist_3">• 10 min até o Rancho do Kite</p>
+          </div>
+
+          <div class="relative h-36 md:h-auto rounded-2xl overflow-hidden shadow-sm">
+            <img src="https://lh3.googleusercontent.com/d/1L5c0BRRFA1wCdi7fjTJgRsdcRkWsEE4U" class="w-full h-full object-cover brightness-75" alt="Praia do Preá" loading="lazy" decoding="async">
+            <div class="absolute inset-0 p-4 flex flex-col justify-end text-white">
+              <span class="text-[10px] font-bold uppercase tracking-widest text-amber-300" data-translate="beach_card_tag">Praia do Preá</span>
+              <p class="text-sm font-semibold" data-translate="beach_card_desc">O paraíso mundial do Kitesurfe e do pôr do sol</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- KITE & EXCURSIONS -->
+        <div class="space-y-3">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-400 block" data-translate="cat_kite_header">Kite & Passeios</span>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm p-4 space-y-2 flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start mb-2">
+                  <span class="bg-sky-100 text-sky-700 text-[10px] font-bold px-2.5 py-0.5 rounded-full">KITE CLUB</span>
+                  <span class="text-xs font-bold text-amber-500"><i class="fa-solid fa-star"></i> 4.8</span>
+                </div>
+                <h4 class="text-xs md:text-sm font-bold text-slate-800">Rancho do Kite</h4>
+                <p class="text-xs text-slate-500 mt-1" data-translate="place_1_desc">Escola de kitesurfe no Preá, com restaurante, música, piscina e atividades culturais em datas especiais.</p>
+              </div>
+              <div class="flex justify-between items-center text-xs pt-2 border-t border-slate-50 mt-2">
+                <span class="text-slate-400" data-translate="walk_rancho"><i class="fa-solid fa-person-walking mr-1"></i>10 min a pé</span>
+                <a href="https://maps.google.com/?q=Rancho+do+Kite+Prea" target="_blank" class="text-[#C5A880] font-bold" data-translate="ver_rota">Ver Rota →</a>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm p-4 space-y-2 flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start mb-2">
+                  <span class="bg-amber-100 text-amber-700 text-[10px] font-bold px-2.5 py-0.5 rounded-full">RALLY & UTVS</span>
+                  <span class="text-xs font-bold text-amber-500"><i class="fa-solid fa-star"></i> 4.9</span>
+                </div>
+                <h4 class="text-xs md:text-sm font-bold text-slate-800">Sertões Experience</h4>
+                <p class="text-xs text-slate-500 mt-1" data-translate="place_2_desc">Troque o buggy tradicional pela adrenalina de pilotar UTVs, motos ou quadriciclos com suporte de luxo.</p>
+              </div>
+              <div class="flex justify-between items-center text-xs pt-2 border-t border-slate-50 mt-2">
+                <span class="text-slate-400" data-translate="drive_sertoes"><i class="fa-solid fa-car mr-1"></i>Tour Guiado</span>
+                <a href="https://wa.me/558897104187" target="_blank" class="text-[#C5A880] font-bold" data-translate="reservar">Reservar →</a>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm p-4 space-y-2 flex flex-col justify-between">
+              <div>
+                <h4 class="text-xs md:text-sm font-bold text-slate-800 mb-1">Lagoa do Paraíso & Sandê Open Mall</h4>
+                <p class="text-xs text-slate-500 leading-relaxed" data-translate="lagoa_desc">Águas cristalinas em tons azul e verde com redes na água. O Sandê Mall oferece lojas, almoço em família e drinks frente ao mar.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RESTAURANTS SECTION -->
+        <div class="space-y-4">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-400" data-translate="cat_rest_header">Gastronomia & Restaurantes</span>
+            <a href="https://www.tripadvisor.it/Restaurants-g2527937-Prea_Cruz_State_of_Ceara.html" target="_blank" class="text-xs text-[#C5A880] font-bold underline" data-translate="see_more_ta">TripAdvisor Preá Ranking →</a>
+          </div>
+
+          <!-- Highlight Favorite -->
+          <div class="bg-amber-50/70 border border-amber-200/80 rounded-2xl p-4 space-y-2 shadow-sm">
+            <div class="flex justify-between items-start">
+              <span class="bg-amber-500 text-white text-[10px] font-bold px-2.5 py-0.5 rounded" data-translate="our_favourite_badge">Our favourite</span>
+              <span class="text-xs font-bold text-amber-600"><i class="fa-solid fa-star"></i> TripAdvisor</span>
+            </div>
+            <h4 class="text-sm font-bold text-slate-800">Restaurante da Lu</h4>
+            <p class="text-xs text-slate-600 leading-relaxed" data-translate="rest_dalu_desc">Autêntica culinária local com frutos do mar frescos e pratos regionais acolhedores no Preá.</p>
+            <div class="pt-1">
+              <a href="https://www.tripadvisor.it/Restaurant_Review-g2527937-d11841691-Reviews-Restaurante_da_Lu-Prea_Cruz_State_of_Ceara.html" target="_blank" class="text-xs text-[#C5A880] font-bold underline" data-translate="ta_review_link">Ver no TripAdvisor →</a>
+            </div>
+          </div>
+
+          <!-- Restaurant List Widget -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm space-y-3">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+              <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-award text-emerald-600 text-sm"></i>
+                <span class="text-xs font-bold text-slate-800" data-translate="top_ta_rest">Top Restaurantes Preá (TripAdvisor)</span>
+              </div>
+              <span class="text-[10px] bg-emerald-100 text-emerald-700 font-bold px-2.5 py-0.5 rounded-full" data-translate="ta_badge">Ranking Oficial</span>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+              <div class="p-2.5 bg-slate-50 rounded-xl flex justify-between items-center">
+                <div>
+                  <p class="font-bold text-slate-800">1. Gato Na Brasa Steakhouse</p>
+                  <p class="text-[10px] text-slate-400">Steakhouse, Brasiliana • €€-€€€</p>
+                </div>
+                <div class="text-right">
+                  <span class="font-bold text-amber-500"><i class="fa-solid fa-star text-[10px]"></i> 4,8</span>
+                  <span class="text-[10px] text-slate-400 block">(58 recensioni)</span>
+                </div>
+              </div>
+
+              <div class="p-2.5 bg-slate-50 rounded-xl flex justify-between items-center">
+                <div>
+                  <p class="font-bold text-slate-800">2. Quintalzin Restaurante</p>
+                  <p class="text-[10px] text-slate-400">Brasiliana, Pesce • €€-€€€</p>
+                </div>
+                <div class="text-right">
+                  <span class="font-bold text-amber-500"><i class="fa-solid fa-star text-[10px]"></i> 4,9</span>
+                  <span class="text-[10px] text-slate-400 block">(143 recensioni)</span>
+                </div>
+              </div>
+
+              <div class="p-2.5 bg-slate-50 rounded-xl flex justify-between items-center">
+                <div>
+                  <p class="font-bold text-slate-800">3. La Cantina Restaurante</p>
+                  <p class="text-[10px] text-slate-400">Italiana, Mediterranea • €€-€€€</p>
+                </div>
+                <div class="text-right">
+                  <span class="font-bold text-amber-500"><i class="fa-solid fa-star text-[10px]"></i> 5,0</span>
+                  <span class="text-[10px] text-slate-400 block">(188 recensioni)</span>
+                </div>
+              </div>
+
+              <div class="p-2.5 bg-slate-50 rounded-xl flex justify-between items-center">
+                <div>
+                  <p class="font-bold text-slate-800">4. Restaurante da Lu</p>
+                  <p class="text-[10px] text-slate-400">Brasiliana, Pesce • €€-€€€</p>
+                </div>
+                <div class="text-right">
+                  <span class="font-bold text-amber-500"><i class="fa-solid fa-star text-[10px]"></i> 4,8</span>
+                  <span class="text-[10px] text-slate-400 block">(303 recensioni)</span>
+                </div>
+              </div>
+
+              <div class="p-2.5 bg-slate-50 rounded-xl flex justify-between items-center">
+                <div>
+                  <p class="font-bold text-slate-800">5. Quintal do Denis</p>
+                  <p class="text-[10px] text-slate-400">Brasiliana, Pesce • €€-€€€</p>
+                </div>
+                <div class="text-right">
+                  <span class="font-bold text-amber-500"><i class="fa-solid fa-star text-[10px]"></i> 4,6</span>
+                  <span class="text-[10px] text-slate-400 block">(81 recensioni)</span>
+                </div>
+              </div>
+
+              <div class="p-2.5 bg-slate-50 rounded-xl flex justify-between items-center">
+                <div>
+                  <p class="font-bold text-slate-800">6. Le Rooftop</p>
+                  <p class="text-[10px] text-slate-400">Messicana, Brasiliana • €€-€€€</p>
+                </div>
+                <div class="text-right">
+                  <span class="font-bold text-amber-500"><i class="fa-solid fa-star text-[10px]"></i> 5,0</span>
+                  <span class="text-[10px] text-slate-400 block">(20 recensioni)</span>
+                </div>
+              </div>
+            </div>
+
+            <a href="https://www.tripadvisor.it/Restaurants-g2527937-Prea_Cruz_State_of_Ceara.html" target="_blank" class="block w-full text-center py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition-colors" data-translate="see_all_ta">
+              <i class="fa-solid fa-arrow-up-right-from-square mr-1 text-[10px]"></i> Ver Lista Completa no TripAdvisor
+            </a>
+          </div>
+        </div>
+
+        <!-- PREÁ BY NIGHT SECTION -->
+        <div class="space-y-3 pt-2">
+          <span class="text-xs font-bold uppercase tracking-wider text-[#C5A880] block" data-translate="night_section_header">🌙 Preá by Night & Vida Noturna</span>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-white rounded-2xl border border-slate-100 p-4 space-y-1.5 shadow-sm">
+              <div class="flex justify-between items-center">
+                <h4 class="text-xs md:text-sm font-bold text-slate-800">Cabaré Du Vento</h4>
+                <span class="text-[10px] bg-purple-100 text-purple-700 font-bold px-2.5 py-0.5 rounded-full">Live Music & Djs</span>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed" data-translate="night_cabare">Música ao vivo e DJs consagrados para curtir um pôr do sol mágico à beira-mar com drinks exclusivos e atmosfera vibrante.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-100 p-4 space-y-1.5 shadow-sm">
+              <div class="flex justify-between items-center">
+                <h4 class="text-xs md:text-sm font-bold text-slate-800">RARO Life</h4>
+                <span class="text-[10px] bg-rose-100 text-rose-700 font-bold px-2.5 py-0.5 rounded-full">Samba aos Sábados</span>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed" data-translate="night_raro">O ponto de encontro perfeito para curtir rodas de samba imperdíveis aos sábados à noite em uma pousada boutique sofisticada.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-100 p-4 space-y-1.5 shadow-sm">
+              <div class="flex justify-between items-center">
+                <h4 class="text-xs md:text-sm font-bold text-slate-800">Kite Brisa Preá</h4>
+                <span class="text-[10px] bg-sky-100 text-sky-700 font-bold px-2.5 py-0.5 rounded-full">Eventos & Social</span>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed" data-translate="night_kitebrisa">Acompanhe a programação especial de festas e encontros de kite na página do Instagram <a href="https://instagram.com/kitebrisaprea" target="_blank" class="text-[#C5A880] font-bold underline">@kitebrisaprea</a>.</p>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-100 p-4 space-y-1.5 shadow-sm">
+              <div class="flex justify-between items-center">
+                <h4 class="text-xs md:text-sm font-bold text-slate-800">Chalé Conveniência</h4>
+                <span class="text-[10px] bg-amber-100 text-amber-700 font-bold px-2.5 py-0.5 rounded-full">Karaokê & Noite Tardia</span>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed" data-translate="night_chale">Experiência local autêntica de música até tarde, petiscos e karaokê animado. Confira a programação semanal em <a href="https://instagram.com/chaleconvenienciaprea" target="_blank" class="text-[#C5A880] font-bold underline">@chaleconvenienciaprea</a>.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 3: SERVIÇOS -->
+      <section id="tab-servicos" class="app-screen space-y-6 hidden">
+        <div>
+          <h2 class="text-lg font-bold text-slate-800" data-translate="serv_title">Serviços Exclusivos & Parceiros</h2>
+          <p class="text-xs text-slate-400" data-translate="serv_sub">Contatos diretos para tornar sua estadia inesquecível.</p>
+        </div>
+
+        <div class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm space-y-4">
+          <h3 class="text-xs font-bold text-slate-700 border-b border-slate-100 pb-3 flex items-center">
+            <i class="fa-solid fa-concierge-bell mr-2 text-[#C5A880]"></i> <span data-translate="serv_list_header">Lista de Serviços Recomendados</span>
+          </h3>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="flex justify-between items-center text-xs p-3 bg-slate-50/50 rounded-2xl border border-slate-100">
+              <div>
+                <p class="font-semibold text-slate-800" data-translate="contact_1_name">Transfers, Táxi e Quadriciclo (Deborah)</p>
+                <p class="text-[10px] text-slate-400">+55 65 99673 1160</p>
+              </div>
+              <a href="https://wa.me/5565996731160" target="_blank" class="px-3.5 py-1.5 bg-emerald-500 text-white font-semibold rounded-full text-[10px] hover:bg-emerald-600 transition-colors"><i class="fa-brands fa-whatsapp mr-1"></i><span data-translate="chamar">Chamar</span></a>
+            </div>
+
+            <div class="flex justify-between items-center text-xs p-3 bg-slate-50/50 rounded-2xl border border-slate-100">
+              <div>
+                <p class="font-semibold text-slate-800" data-translate="contact_2_name">Quadriciclo e Moto (Carlim)</p>
+                <p class="text-[10px] text-slate-400">+55 88 99710 4187</p>
+              </div>
+              <a href="https://wa.me/5588997104187" target="_blank" class="px-3.5 py-1.5 bg-emerald-500 text-white font-semibold rounded-full text-[10px] hover:bg-emerald-600 transition-colors"><i class="fa-brands fa-whatsapp mr-1"></i><span data-translate="chamar">Chamar</span></a>
+            </div>
+
+            <div class="flex justify-between items-center text-xs p-3 bg-slate-50/50 rounded-2xl border border-slate-100">
+              <div>
+                <p class="font-semibold text-slate-800" data-translate="contact_3_name">Aluguel Fatbikes (Bike Mania Preá)</p>
+                <p class="text-[10px] text-slate-400">+55 88 99949 8504</p>
+              </div>
+              <a href="https://wa.me/5588999498504" target="_blank" class="px-3.5 py-1.5 bg-emerald-500 text-white font-semibold rounded-full text-[10px] hover:bg-emerald-600 transition-colors"><i class="fa-brands fa-whatsapp mr-1"></i><span data-translate="chamar">Chamar</span></a>
+            </div>
+
+            <div class="flex justify-between items-center text-xs p-3 bg-slate-50/50 rounded-2xl border border-slate-100">
+              <div>
+                <p class="font-semibold text-slate-800">Chef de Cozinha Privado (Matias)</p>
+                <p class="text-[10px] text-slate-400">+55 88 99602 8932</p>
+              </div>
+              <a href="https://wa.me/5588996028932" target="_blank" class="px-3.5 py-1.5 bg-emerald-500 text-white font-semibold rounded-full text-[10px] hover:bg-emerald-600 transition-colors"><i class="fa-brands fa-whatsapp mr-1"></i><span data-translate="chamar">Chamar</span></a>
+            </div>
+
+            <div class="flex justify-between items-center text-xs p-3 bg-slate-50/50 rounded-2xl border border-slate-100">
+              <div>
+                <p class="font-semibold text-slate-800">Chef de Cozinha Privado (Erica)</p>
+                <p class="text-[10px] text-slate-400">+55 81 99282 2051</p>
+              </div>
+              <a href="https://wa.me/5581992822051" target="_blank" class="px-3.5 py-1.5 bg-emerald-500 text-white font-semibold rounded-full text-[10px] hover:bg-emerald-600 transition-colors"><i class="fa-brands fa-whatsapp mr-1"></i><span data-translate="chamar">Chamar</span></a>
+            </div>
+
+            <div class="flex justify-between items-center text-xs p-3 bg-slate-50/50 rounded-2xl border border-slate-100">
+              <div>
+                <p class="font-semibold text-slate-800">Chef de Cozinha Privado (Clara)</p>
+                <p class="text-[10px] text-slate-400">+55 88 98816 9835</p>
+              </div>
+              <a href="https://wa.me/5588988169835" target="_blank" class="px-3.5 py-1.5 bg-emerald-500 text-white font-semibold rounded-full text-[10px] hover:bg-emerald-600 transition-colors"><i class="fa-brands fa-whatsapp mr-1"></i><span data-translate="chamar">Chamar</span></a>
+            </div>
+
+            <div class="flex justify-between items-center text-xs p-3 bg-slate-50/50 rounded-2xl border border-slate-100">
+              <div>
+                <p class="font-semibold text-slate-800" data-translate="serv_babysitter_title">Serviço de Babysitter</p>
+                <p class="text-[10px] text-slate-400">@baby_sitter_prea</p>
+              </div>
+              <a href="https://instagram.com/baby_sitter_prea" target="_blank" class="px-3.5 py-1.5 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-full text-[10px] flex items-center space-x-1.5"><i class="fa-brands fa-instagram"></i><span>Instagram</span></a>
+            </div>
+
+            <div class="flex justify-between items-center text-xs p-3 bg-slate-50/50 rounded-2xl border border-slate-100">
+              <div>
+                <p class="font-semibold text-slate-800">Salão de Beleza</p>
+                <p class="text-[10px] text-slate-400">+55 92 98167 0037</p>
+              </div>
+              <a href="https://wa.me/5592981670037" target="_blank" class="px-3.5 py-1.5 bg-emerald-500 text-white font-semibold rounded-full text-[10px] hover:bg-emerald-600 transition-colors"><i class="fa-brands fa-whatsapp mr-1"></i><span data-translate="chamar">Chamar</span></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 4: HORÁRIOS & CHECK-OUT -->
+      <section id="tab-horarios" class="app-screen space-y-6 hidden">
+        <div>
+          <h2 class="text-lg font-bold text-slate-800" data-translate="hor_title">Horários & Procedimentos de Saída</h2>
+          <p class="text-xs text-slate-400" data-translate="hor_sub">Informações para garantir um check-out perfeito.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white p-5 rounded-3xl shadow-md border border-slate-700 space-y-4 flex flex-col justify-between">
+            <div class="flex items-center justify-between border-b border-slate-700/80 pb-3">
+              <span class="text-xs uppercase font-bold tracking-widest text-[#C5A880] flex items-center"><i class="fa-solid fa-clock mr-2"></i> <span data-translate="card_checkin_header">Horários Importantes</span></span>
+            </div>
+            <div class="grid grid-cols-2 gap-3 text-center text-xs">
+              <div class="bg-white/10 p-3.5 rounded-2xl border border-white/10">
+                <span class="uppercase text-slate-300 font-medium block text-[10px]" data-translate="lbl_checkin">Check-in</span>
+                <span class="text-2xl font-bold text-emerald-400 block my-1">16:00</span>
+                <span class="text-[10px] text-slate-300 block" data-translate="sub_checkin">Entrada no Imóvel</span>
+              </div>
+              <div class="bg-white/10 p-3.5 rounded-2xl border border-white/10">
+                <span class="uppercase text-slate-300 font-medium block text-[10px]" data-translate="lbl_checkout">Check-out</span>
+                <span class="text-2xl font-bold text-amber-400 block my-1">11:00</span>
+                <span class="text-[10px] text-slate-300 block" data-translate="sub_checkout">Saída do Imóvel</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-emerald-50 border border-emerald-200 p-5 rounded-3xl flex flex-col items-center justify-center text-center space-y-3">
+            <div class="w-12 h-12 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xl shadow-sm"><i class="fa-brands fa-whatsapp"></i></div>
+            <div>
+              <h4 class="text-xs md:text-sm font-bold text-slate-800" data-translate="hor_deb_title">Dúvidas sobre Horários ou Chaves?</h4>
+              <p class="text-xs text-slate-500 mt-1 max-w-xs" data-translate="hor_deb_sub">Fale diretamente com Deborah no WhatsApp para organizar seu check-out.</p>
+            </div>
+            <a href="https://wa.me/5565996731160?text=Olá%20Deborah,%20gostaria%20de%20combinar%20meu%20horário%20de%20saída/check-out." target="_blank" class="w-full md:w-auto px-6 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl text-xs flex items-center justify-center space-x-2 shadow-sm transition-colors">
+              <i class="fa-brands fa-whatsapp text-sm"></i>
+              <span data-translate="hor_deb_btn">Falar com Deborah no WhatsApp</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm space-y-3 text-xs">
+          <h3 class="text-xs font-bold text-slate-800 border-b border-slate-100 pb-2.5 flex items-center">
+            <i class="fa-solid fa-clipboard-check text-red-500 mr-2"></i> <span data-translate="checkout_header">Checklist de Saída (Check-out 11:00)</span>
+          </h3>
+          <ul class="text-xs text-slate-600 space-y-2.5 list-none leading-relaxed">
+            <li class="flex items-start"><i class="fa-regular fa-square-check text-emerald-500 mr-2.5 mt-0.5"></i><span data-translate="co_1">Deixe todas as louças limpas.</span></li>
+            <li class="flex items-start"><i class="fa-regular fa-square-check text-emerald-500 mr-2.5 mt-0.5"></i><span data-translate="co_2">Verifique se não está esquecendo nenhum pertence pessoal.</span></li>
+            <li class="flex items-start"><i class="fa-regular fa-square-check text-emerald-500 mr-2.5 mt-0.5"></i><span data-translate="co_3">Feche todas as janelas e portas.</span></li>
+            <li class="flex items-start"><i class="fa-regular fa-square-check text-emerald-500 mr-2.5 mt-0.5"></i><span data-translate="co_4">Desligue o ar condicionado e apague todas as luzes.</span></li>
+            <li class="flex items-start"><i class="fa-regular fa-square-check text-emerald-500 mr-2.5 mt-0.5"></i><span data-translate="co_5">Informe-nos se algum dano pequeno tiver acontecido.</span></li>
+            <li class="flex items-start"><i class="fa-regular fa-square-check text-emerald-500 mr-2.5 mt-0.5"></i><span data-translate="co_6">Chaves: Por favor, combinar sua saída da casa para que nossa equipe possa auxiliar e recolher as chaves.</span></li>
+          </ul>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- FLOATING AI ASSISTANT BUTTON -->
+  <div class="fixed bottom-20 md:bottom-6 right-4 md:right-8 z-50">
     <button onclick="toggleQAModal()" class="bg-[#C5A880] text-white px-4 py-3 rounded-full shadow-lg flex items-center space-x-2 font-bold text-xs hover:bg-[#b0926a] transition-all active:scale-95">
       <i class="fa-solid fa-wand-magic-sparkles text-sm"></i>
       <span data-translate="qa_btn">Dúvidas? Pergunte aqui</span>
@@ -604,61 +662,60 @@
   </div>
 
   <!-- Q&A MODAL DIALOG -->
-  <div id="qa-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex flex-col justify-end max-w-md mx-auto">
-    <div class="bg-white rounded-t-3xl p-4 h-[80vh] flex flex-col justify-between shadow-2xl animate-in slide-in-from-bottom duration-300">
+  <div id="qa-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex flex-col justify-end md:justify-center items-center p-0 md:p-4">
+    <div class="bg-white rounded-t-3xl md:rounded-3xl p-5 w-full md:max-w-xl h-[85vh] md:h-[650px] flex flex-col justify-between shadow-2xl animate-in slide-in-from-bottom duration-300">
       <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-        <div class="flex items-center space-x-2">
-          <div class="w-7 h-7 rounded-full bg-[#C5A880] text-white flex items-center justify-center text-xs"><i class="fa-solid fa-robot"></i></div>
+        <div class="flex items-center space-x-3">
+          <div class="w-8 h-8 rounded-full bg-[#C5A880] text-white flex items-center justify-center text-xs"><i class="fa-solid fa-robot"></i></div>
           <div>
-            <h3 class="text-xs font-bold text-slate-800">Assistente Ariah AI</h3>
-            <p class="text-[9px] text-slate-400" data-translate="qa_header_sub">Inteligência Artificial 24/7</p>
+            <h3 class="text-xs md:text-sm font-bold text-slate-800">Assistente Ariah AI</h3>
+            <p class="text-[10px] text-slate-400" data-translate="qa_header_sub">Inteligência Artificial 24/7</p>
           </div>
         </div>
-        <button onclick="toggleQAModal()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center text-xs"><i class="fa-solid fa-xmark"></i></button>
+        <button onclick="toggleQAModal()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center text-xs hover:bg-slate-200"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
       <div id="chat-messages" class="flex-1 overflow-y-auto my-3 space-y-3 px-1 no-scrollbar text-xs">
-        <div id="welcome-bubble" class="bg-amber-50 p-3 rounded-2xl border border-amber-100 text-slate-700"></div>
+        <div id="welcome-bubble" class="bg-amber-50 p-3.5 rounded-2xl border border-amber-100 text-slate-700 leading-relaxed"></div>
       </div>
 
-      <div id="quick-chips" class="flex space-x-1.5 overflow-x-auto no-scrollbar py-1 text-[10px]"></div>
+      <div id="quick-chips" class="flex space-x-2 overflow-x-auto no-scrollbar py-1 text-[10px] md:text-xs"></div>
 
-      <div class="flex items-center space-x-2 pt-2 border-t border-slate-100">
-        <input type="text" id="user-query" placeholder="Digite sua dúvida..." class="flex-1 bg-slate-100 text-xs px-3.5 py-2.5 rounded-full outline-none focus:ring-1 focus:ring-[#C5A880]" onkeypress="if(event.key==='Enter') answerQuestion()" data-translate-attr="placeholder:placeholder_txt">
-        <button onclick="answerQuestion()" class="w-9 h-9 rounded-full bg-[#C5A880] text-white flex items-center justify-center shrink-0"><i class="fa-solid fa-paper-plane text-xs"></i></button>
+      <div class="flex items-center space-x-2 pt-3 border-t border-slate-100">
+        <input type="text" id="user-query" placeholder="Digite sua dúvida..." class="flex-1 bg-slate-100 text-xs px-4 py-3 rounded-full outline-none focus:ring-1 focus:ring-[#C5A880]" onkeypress="if(event.key==='Enter') answerQuestion()" data-translate-attr="placeholder:placeholder_txt">
+        <button onclick="answerQuestion()" class="w-10 h-10 rounded-full bg-[#C5A880] text-white flex items-center justify-center shrink-0 hover:bg-[#b0926a] transition-colors"><i class="fa-solid fa-paper-plane text-xs"></i></button>
       </div>
     </div>
   </div>
 
-  <!-- PDF DOWNLOAD LANGUAGE SELECTION MODAL -->
+  <!-- PDF DOWNLOAD LANGUAGE MODAL -->
   <div id="pdf-download-modal" class="fixed inset-0 bg-black/65 backdrop-blur-sm z-50 hidden flex flex-col items-center justify-center p-4">
-    <div class="bg-white rounded-3xl p-5 max-w-xs w-full space-y-4 shadow-2xl text-center text-xs animate-in zoom-in-95 duration-200">
+    <div class="bg-white rounded-3xl p-6 max-w-sm w-full space-y-4 shadow-2xl text-center text-xs animate-in zoom-in-95 duration-200">
       <div class="w-12 h-12 bg-amber-50 text-[#C5A880] rounded-full flex items-center justify-center mx-auto text-lg shadow-sm">
         <i class="fa-solid fa-file-arrow-down"></i>
       </div>
       <div>
         <h3 class="font-bold text-slate-800 text-sm">Download Guide PDF</h3>
-        <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">Select your preferred language to download the interactive guide:</p>
+        <p class="text-xs text-slate-600 mt-1 leading-relaxed">Select your preferred language to download the interactive guide:</p>
       </div>
 
-      <!-- Language Selection Grid -->
       <div class="grid grid-cols-2 gap-2">
-        <button onclick="downloadPDF('en')" class="p-2.5 bg-slate-50 hover:bg-amber-50 hover:border-[#C5A880] border border-slate-200 rounded-xl font-bold text-slate-700 flex items-center justify-center space-x-1.5 transition-colors">
+        <button onclick="downloadPDF('en')" class="p-3 bg-slate-50 hover:bg-amber-50 hover:border-[#C5A880] border border-slate-200 rounded-xl font-bold text-slate-700 flex items-center justify-center space-x-2 transition-colors">
           <span>🇺🇸</span> <span>English</span>
         </button>
-        <button onclick="downloadPDF('pt')" class="p-2.5 bg-slate-50 hover:bg-amber-50 hover:border-[#C5A880] border border-slate-200 rounded-xl font-bold text-slate-700 flex items-center justify-center space-x-1.5 transition-colors">
+        <button onclick="downloadPDF('pt')" class="p-3 bg-slate-50 hover:bg-amber-50 hover:border-[#C5A880] border border-slate-200 rounded-xl font-bold text-slate-700 flex items-center justify-center space-x-2 transition-colors">
           <span>🇧🇷</span> <span>Português</span>
         </button>
-        <button onclick="downloadPDF('it')" class="p-2.5 bg-slate-50 hover:bg-amber-50 hover:border-[#C5A880] border border-slate-200 rounded-xl font-bold text-slate-700 flex items-center justify-center space-x-1.5 transition-colors">
+        <button onclick="downloadPDF('it')" class="p-3 bg-slate-50 hover:bg-amber-50 hover:border-[#C5A880] border border-slate-200 rounded-xl font-bold text-slate-700 flex items-center justify-center space-x-2 transition-colors">
           <span>🇮🇹</span> <span>Italiano</span>
         </button>
-        <button onclick="downloadPDF('es')" class="p-2.5 bg-slate-50 hover:bg-amber-50 hover:border-[#C5A880] border border-slate-200 rounded-xl font-bold text-slate-700 flex items-center justify-center space-x-1.5 transition-colors">
+        <button onclick="downloadPDF('es')" class="p-3 bg-slate-50 hover:bg-amber-50 hover:border-[#C5A880] border border-slate-200 rounded-xl font-bold text-slate-700 flex items-center justify-center space-x-2 transition-colors">
           <span>🇪🇸</span> <span>Español</span>
         </button>
-        <button onclick="downloadPDF('fr')" class="p-2.5 bg-slate-50 hover:bg-amber-50 hover:border-[#C5A880] border border-slate-200 rounded-xl font-bold text-slate-700 flex items-center justify-center space-x-1.5 transition-colors">
+        <button onclick="downloadPDF('fr')" class="p-3 bg-slate-50 hover:bg-amber-50 hover:border-[#C5A880] border border-slate-200 rounded-xl font-bold text-slate-700 flex items-center justify-center space-x-2 transition-colors">
           <span>🇫🇷</span> <span>Français</span>
         </button>
-        <button onclick="downloadPDF('de')" class="p-2.5 bg-slate-50 hover:bg-amber-50 hover:border-[#C5A880] border border-slate-200 rounded-xl font-bold text-slate-700 flex items-center justify-center space-x-1.5 transition-colors">
+        <button onclick="downloadPDF('de')" class="p-3 bg-slate-50 hover:bg-amber-50 hover:border-[#C5A880] border border-slate-200 rounded-xl font-bold text-slate-700 flex items-center justify-center space-x-2 transition-colors">
           <span>🇩🇪</span> <span>Deutsch</span>
         </button>
       </div>
@@ -667,9 +724,9 @@
     </div>
   </div>
 
-  <!-- Bottom Navigation Bar -->
-  <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/90 backdrop-blur-md border-t border-slate-200/80 grid grid-cols-4 py-2 z-40">
-    <button onclick="switchTab('house')" id="btn-house" class="flex flex-col items-center justify-center text-slate-400 active:text-[#C5A880]">
+  <!-- Bottom Mobile Navigation Bar -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/90 backdrop-blur-md border-t border-slate-200/80 grid grid-cols-4 py-2 z-40">
+    <button onclick="switchTab('house')" id="btn-house" class="flex flex-col items-center justify-center text-slate-400">
       <i class="fa-solid fa-house text-base mb-0.5"></i><span class="text-[10px] font-medium" data-translate="nav_lbl_house">A Casa</span>
     </button>
     <button onclick="switchTab('explore')" id="btn-explore" class="flex flex-col items-center justify-center text-slate-400">
@@ -687,7 +744,6 @@
     let currentLanguage = 'pt';
     const GEMINI_API_KEY = "AQ.Ab8RN6LPSYGICaYoDgO283_ZS2DKJlTeEjYIMlCW86QVlkKE-Q";
 
-    // Direct Google Drive download mapping
     const drivePdfLinks = {
       en: "https://drive.google.com/uc?export=download&id=1TqizjYUI554rUW2GyEz4HHwVggPaw5CJ",
       pt: "https://drive.google.com/uc?export=download&id=1ff4wH9_fLSKjCQFPs6NZv_mpt9LW0enI",
@@ -720,7 +776,6 @@
       closePdfModal();
     }
 
-    // Register Service Worker for PWA Offline Capabilities
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
@@ -729,10 +784,9 @@
       });
     }
 
-    // --- TRANSLATIONS DICTIONARY ---
     const translations = {
       pt: {
-        app_title: "Ariah Luxury Villas", app_location: "Vila Preá, CE",
+        app_title: "Ariah Luxury Villas", app_location: "Praia do Preá, CE",
         install_btn: "Download PDF", close_btn: "Fechar",
         hero_tag: "Guia Digital do Hóspede", hero_subtitle: "Sua Estadia dos Sonhos no Preá",
         btn_label_wifi: "Wi-Fi", btn_label_map: "Mapa", btn_label_chat: "Chat", btn_label_hours: "Horários",
@@ -753,7 +807,7 @@
         qa_btn: "Dúvidas? Pergunte aqui", qa_header_sub: "Inteligência Artificial 24/7", welcome_bubble_msg: "👋 Olá! Sou o assistente com IA da **Ariah Luxury Villas**. Faça sua pergunta sobre Wi-Fi, check-in, transfers, passeios ou amenidades do imóvel!", chip_wifi: "📶 Senha Wi-Fi", chip_airport: "🚖 Transfer/Aeroporto", chip_checkout: "⏰ Horário Checkout", chip_rules: "📜 Regras da Casa", placeholder_txt: "Digite sua dúvida aqui...", pensandotxt: "Pensando...", conn_prob_txt: "Tive um pequeno problema de conexão.", falar_wa_txt: "Falar no WhatsApp", ai_wa_redirect_msg: "Olá Karime & André, estou no guia da casa e gostaria de saber: ", nav_lbl_house: "A Casa", nav_lbl_explore: "Explorar", nav_lbl_services: "Serviços", nav_lbl_hours: "Horários"
       },
       en: {
-        app_title: "Ariah Luxury Villas", app_location: "Vila Preá, CE",
+        app_title: "Ariah Luxury Villas", app_location: "Praia do Preá, CE",
         install_btn: "Download PDF", close_btn: "Close",
         hero_tag: "Guest Digital Guide", hero_subtitle: "Your Dream Stay in Preá",
         btn_label_wifi: "Wi-Fi", btn_label_map: "Map", btn_label_chat: "Chat", btn_label_hours: "Hours",
@@ -774,7 +828,7 @@
         qa_btn: "Questions? Ask AI", qa_header_sub: "24/7 AI Virtual Concierge", welcome_bubble_msg: "👋 Hello! I am the AI Concierge for **Ariah Luxury Villas**. Ask me anything about Wi-Fi, check-in, transfers, tours, or house amenities!", chip_wifi: "📶 Wi-Fi Password", chip_airport: "🚖 Airport Transfer", chip_checkout: "⏰ Check-out Time", chip_rules: "📜 House Rules", placeholder_txt: "Type your question here...", pensandotxt: "Thinking...", conn_prob_txt: "I experienced a connection issue.", falar_wa_txt: "Contact on WhatsApp", ai_wa_redirect_msg: "Hello Karime & André, I am on the digital guide and would like to ask: ", nav_lbl_house: "The Villa", nav_lbl_explore: "Explore", nav_lbl_services: "Services", nav_lbl_hours: "Hours"
       },
       it: {
-        app_title: "Ariah Luxury Villas", app_location: "Vila Preá, CE",
+        app_title: "Ariah Luxury Villas", app_location: "Praia do Preá, CE",
         install_btn: "Download PDF", close_btn: "Chiudi",
         hero_tag: "Guida Digitale per gli Ospiti", hero_subtitle: "La Tua Vacanza da Sogno a Preá",
         btn_label_wifi: "Wi-Fi", btn_label_map: "Mappa", btn_label_chat: "Chat", btn_label_hours: "Orari",
@@ -795,7 +849,7 @@
         qa_btn: "Domande? Chiedi all'IA", qa_header_sub: "Assistente IA 24/7", welcome_bubble_msg: "👋 Ciao! Sono l'assistente IA di **Ariah Luxury Villas**. Chiedimi qualsiasi cosa su Wi-Fi, check-in, transfer, escursioni o servizi della casa!", chip_wifi: "📶 Password Wi-Fi", chip_airport: "🚖 Transfer Aeroporto", chip_checkout: "⏰ Orario Check-out", chip_rules: "📜 Regole della Casa", placeholder_txt: "Scrivi qui la tua domanda...", pensandotxt: "Elaborazione...", conn_prob_txt: "Ho riscontrato un problema di connessione.", falar_wa_txt: "Scrivi su WhatsApp", ai_wa_redirect_msg: "Ciao Karime & André, sono sulla guida della villa e vorrei chiedere: ", nav_lbl_house: "La Villa", nav_lbl_explore: "Esplora", nav_lbl_services: "Servizi", nav_lbl_hours: "Orari"
       },
       es: {
-        app_title: "Ariah Luxury Villas", app_location: "Vila Preá, CE",
+        app_title: "Ariah Luxury Villas", app_location: "Praia do Preá, CE",
         install_btn: "Download PDF", close_btn: "Cerrar",
         hero_tag: "Guía Digital del Huésped", hero_subtitle: "Su Estancia Soñada en Preá",
         btn_label_wifi: "Wi-Fi", btn_label_map: "Mapa", btn_label_chat: "Chat", btn_label_hours: "Horarios",
@@ -816,7 +870,7 @@
         qa_btn: "¿Dudas? Pregunte a la IA", qa_header_sub: "Asistente IA 24/7", welcome_bubble_msg: "👋 ¡Hola! Soy el asistente IA de **Ariah Luxury Villas**. Pregúnteme sobre Wi-Fi, check-in, traslados o reglas de la casa.", chip_wifi: "📶 Contraseña Wi-Fi", chip_airport: "🚖 Traslado / Aeropuerto", chip_checkout: "⏰ Horario Check-out", chip_rules: "📜 Reglas de Casa", placeholder_txt: "Escriba su duda aquí...", pensandotxt: "Pensando...", conn_prob_txt: "Tuve un pequeño problema de conexión.", falar_wa_txt: "Hablar por WhatsApp", ai_wa_redirect_msg: "Hola Karime & André, estoy en la guía de la villa y quisiera consultar: ", nav_lbl_house: "La Villa", nav_lbl_explore: "Explorar", nav_lbl_services: "Servicios", nav_lbl_hours: "Horarios"
       },
       fr: {
-        app_title: "Ariah Luxury Villas", app_location: "Vila Preá, CE",
+        app_title: "Ariah Luxury Villas", app_location: "Praia do Preá, CE",
         install_btn: "Download PDF", close_btn: "Fermer",
         hero_tag: "Guide Numérique Invité", hero_subtitle: "Votre Séjour de Rêve à Preá",
         btn_label_wifi: "Wi-Fi", btn_label_map: "Carte", btn_label_chat: "Chat", btn_label_hours: "Horaires",
@@ -837,7 +891,7 @@
         qa_btn: "Des questions? Posez à l'IA", qa_header_sub: "Assistant Virtuel IA 24/7", welcome_bubble_msg: "👋 Bonjour! Je suis l'assistant IA de **Ariah Luxury Villas**. Posez-moi vos questions sur le Wi-Fi, l'arrivée, les transferts ou le règlement!", chip_wifi: "📶 Mot de passe Wi-Fi", chip_airport: "🚖 Transfert Aéroport", chip_checkout: "⏰ Heure de Départ", chip_rules: "📜 Règlement Intérieur", placeholder_txt: "Écrivez votre question ici...", pensandotxt: "Réflexion...", conn_prob_txt: "J'ai rencontré un problème de connexion.", falar_wa_txt: "Contacter sur WhatsApp", ai_wa_redirect_msg: "Bonjour Karime & André, je suis sur le guide numérique et j'aimerais demander: ", nav_lbl_house: "La Villa", nav_lbl_explore: "Explorer", nav_lbl_services: "Services", nav_lbl_hours: "Horaires"
       },
       de: {
-        app_title: "Ariah Luxury Villas", app_location: "Vila Preá, CE",
+        app_title: "Ariah Luxury Villas", app_location: "Praia do Preá, CE",
         install_btn: "Download PDF", close_btn: "Schließen",
         hero_tag: "Digitaler Gäste-Guide", hero_subtitle: "Ihr Traumaufenthalt in Preá",
         btn_label_wifi: "Wi-Fi", btn_label_map: "Karte", btn_label_chat: "Chat", btn_label_hours: "Zeiten",
@@ -894,7 +948,6 @@
       }, 100);
     }
 
-    // --- HYBRID LOCAL KNOWLEDGE & AI FALLBACK SYSTEM ---
     function getLocalSmartAnswer(query, lang) {
       const q = query.toLowerCase();
       const d = translations[lang] || translations['pt'];
@@ -988,7 +1041,7 @@
           body: JSON.stringify({
             contents: [{
               parts: [
-                { text: `You are the AI Concierge for Ariah Luxury Villas in Vila Preá. Answer in ${currentLanguage.toUpperCase()}.` },
+                { text: `You are the AI Concierge for Ariah Luxury Villas in Praia do Preá. Answer in ${currentLanguage.toUpperCase()}.` },
                 { text: `Guest Question: "${query}"` }
               ]
             }]
@@ -1038,7 +1091,7 @@
         const text = translations[currentLanguage][key];
         const btn = document.createElement('button');
         btn.onclick = () => askPreset(key);
-        btn.className = "bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full shrink-0";
+        btn.className = "bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-1 rounded-full shrink-0 transition-colors";
         btn.innerText = text;
         chipsContainer.appendChild(btn);
       });
@@ -1047,12 +1100,23 @@
     function switchTab(tabId) {
       document.querySelectorAll('.app-screen').forEach(el => el.classList.add('hidden'));
       document.getElementById('tab-' + tabId).classList.remove('hidden');
+      
+      // Update Mobile Nav Bar
       ['house', 'explore', 'servicos', 'horarios'].forEach(id => {
         const btn = document.getElementById('btn-' + id);
         if (btn) {
           btn.className = (id === tabId) ? "flex flex-col items-center justify-center text-[#C5A880] font-bold" : "flex flex-col items-center justify-center text-slate-400 font-medium";
         }
       });
+
+      // Update Desktop Nav Bar
+      ['house', 'explore', 'servicos', 'horarios'].forEach(id => {
+        const topBtn = document.getElementById('top-btn-' + id);
+        if (topBtn) {
+          topBtn.className = (id === tabId) ? "text-[#C5A880] font-bold border-b-2 border-[#C5A880] pb-0.5" : "hover:text-[#C5A880] transition-colors py-1";
+        }
+      });
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
